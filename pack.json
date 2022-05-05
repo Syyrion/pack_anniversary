@@ -1,0 +1,42 @@
+{
+	"disambiguator": "CADA-661D-DAEE",
+	"name": "Anniverasry",
+	// Add your name
+	"author": "Syyrion",
+	"description": "",
+	"version": 1000,
+	"priority": -100,
+	"dependencies":
+	[
+		{
+			"disambiguator": "ohvrvanilla",
+			"name": "base",
+			"author": "vittorio romeo",
+			"min_version": 1
+		},
+		{
+			"disambiguator": "library_polywall",
+			"name": "polywall",
+			"author": "syyrion",
+			"min_version": 2201
+		},
+		{
+			"disambiguator": "library_slider",
+			"name": "slider",
+			"author": "syyrion",
+			"min_version": 2006
+		},
+		{
+			"disambiguator": "library_extbase",
+			"name": "extbase",
+			"author": "syyrion",
+			"min_version": 1103
+		},
+		{
+			"disambiguator": "library_patternizer",
+			"name": "patternizer",
+			"author": "syyrion",
+			"min_version": 2017
+		}
+	]
+}
