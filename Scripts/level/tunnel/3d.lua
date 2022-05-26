@@ -131,7 +131,6 @@ end
 function Quad:delete()
     self.instances[self] = nil
     cw_setVertexPos4(self.key.K, 0, 0, 0, 0, 0, 0, 0, 0)
-    cw_setVertexColor4Same(self.key.K, 0, 0, 0, 0)
     cw_destroy(self.key.K)
 end
 
