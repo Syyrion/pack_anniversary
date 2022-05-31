@@ -2,15 +2,16 @@ u_execDependencyScript("library_patternizer", "patternizer", "syyrion", "master.
 
 SIDES = 6
 
-u_execScript("level/tunnel/object.lua")
-
+local speedInc
 
 function onInit()
-    l_setSpeedMult(1)
-	l_setRotationSpeed(0.02)
+    speedInc = Incrementer:new(1, 1.875, 7)
+	l_setSpeedMult(speedInc:get())
+	l_setSpeedMax(math.huge)
+
 	l_setDelayMult(1)
 	l_setSides(SIDES)
-	l_setIncEnabled(false)
+    l_setIncTime(15)
 
 	l_setManualPulseControl(true)
     l_setPulse(50)
@@ -20,13 +21,15 @@ function onInit()
     l_setShowPlayerTrail(false)
 
     l_setRadiusMin(50)
-
-    l_setRotation(0)
     l_setPlayerSpeedMult(0.75)
 
+    u_execScript("level/tunnel/object.lua")
 end
 
 local ticker
+local isIncrementing = false
+local rotationSpeed = SliderPerlin:new(5, 0.1)
+local pattern
 
 function onLoad()
     s_setStyle("tunnel")
@@ -34,138 +37,193 @@ function onLoad()
     Torus:create()
     Player:create()
 
-    local pattern
-    do
-        local PATTERNS = {
-            -- Non repeating random barrage
-            [[
-                8 12 rnd for
-                    r 40 p:_|.
-                    dup if
-                        1 $sides 1 - rnd rmv
-                        spath 100 + thsleep
-                    end
+    local PATTERNS = {
+        -- Tunnel
+        [[
+            a 80 p:.
+            1 rmv
+            -2
+            4 for
+                r 1 i p:_|.
+                dup if
+                    swap
+                    dup rmv
+                    -1 *
+                    swap
+                    a lpath 1 i + p:.
                 end
-                1 rsleep
-            ]],
-            -- Tunnel
-            [[
-                a 80 p:.
+            end
+            1 rsleep
+        ]],
+        -- Spiral
+        [[
+            8 12 rnd for
+                r 1 i p:..
                 1 rmv
-                -2
-                3 5 rnd for
-                    r 1 i p:_|.
-                    dup if
-                        swap
-                        dup rmv
-                        -1 *
-                        swap
-                        a lpath 0.5 i + p:.
-                    end
-                end
-                1 rsleep
-            ]],
-            -- Spiral
-            [[
-                8 12 rnd for
-                    r 1 i p:..
-                    1 rmv
-                end
-                1 rsleep
-            ]],
-            -- Alt-barrage
-            [[
-                6 for
-                    r 40 p:|._
-                    1 rmv
-                    125 thsleep
-                end
-                0.75 rsleep
-            ]],
-            -- Ex-barrage
-            [[
-                3 for
-                    r 40 p:_|.-_|.
-                    1 rmv
-                    125 thsleep
-                end
-                4 for
-                    r 40 p:_|.-_|.
-                    -1 rmv
-                    125 thsleep
-                end
-                0.5 rsleep
-            ]],
-            -- Alt-Half
-            [[
-                1
-                4 6 rnd for
-                    swap
-                    dup if
-                        a 40 p:|_-|.
-                    else
-                        a 40 p:|.-|_
-                    end
-                    not
-                    swap
-                    125 thsleep
-                end
-                0.5 rsleep
-            ]],
-            -- Alt-tunnel
-            [[
-                a 80 p:.
+            end
+            1 rsleep
+        ]],
+        -- Alt-barrage
+        [[
+            6 for
+                r 40 p:|._
                 1 rmv
-                0 1 rnd
-                3 5 rnd for
-                    swap
-                    dup if
-                        a 40 p:.|._
-                    else
-                        a 40 p:.|_.
-                    end
-                    not
-                    swap
-                    dup if
-                        a 125 p:.
-                    end
+                125 thsleep
+            end
+            0.75 rsleep
+        ]],
+        -- Ex-barrage
+        [[
+            3 for
+                r 40 p:_|.-_|.
+                1 rmv
+                125 thsleep
+            end
+            4 for
+                r 40 p:_|.-_|.
+                -1 rmv
+                125 thsleep
+            end
+            0.5 rsleep
+        ]],
+        -- Alt-Half
+        [[
+            1
+            4 6 rnd for
+                swap
+                dup if
+                    a 40 p:|_-|.
+                else
+                    a 40 p:|.-|_
                 end
-                1 rsleep
-            ]],
-            -- Inverse
-            [[
-                2 4 rnd for
-                    r 40 p:_|.
-                    $hsides 0 1 rnd if floor else ceil end rmv
-                    spath 0.75 i + thsleep
+                not
+                swap
+                125 thsleep
+            end
+            0.5 rsleep
+        ]],
+        -- Alt-tunnel
+        [[
+            a 80 p:.
+            1 rmv
+            0 1 rnd
+            3 5 rnd for
+                swap
+                dup if
+                    a 40 p:.|._
+                else
+                    a 40 p:.|_.
                 end
-            ]],
-            -- Barrage Spiral
-            [[
-                5 8 rnd for
-                    r 40 p:_|.
-                    1 rmv
-                    dup if
-                        2 i thsleep
-                    end
+                not
+                swap
+                dup if
+                    a 125 p:.
                 end
-                1 rsleep
-            ]]
-        }
-        pattern = Patternizer:new(unpack(PATTERNS))
-    end
+            end
+            1 rsleep
+        ]],
+        -- Inverse
+        [[
+            4 6 rnd for
+                r 40 p:_|.
+                $hsides 0 1 rnd if floor else ceil end rmv
+                spath 1 i + thsleep
+            end
+        ]],
+        -- Barrage Spiral
+        [[
+            10 for
+                r 40 p:_|.
+                1 rmv
+                dup if
+                    2 i thsleep
+                end
+            end
+            1.5 rsleep
+        ]],
+        -- Barrage Spiral
+        [[
+            10 for
+                r 40 p:_|.
+                2 rmv
+                dup if
+                    3 i thsleep
+                end
+            end
+            1.5 rsleep
+        ]],
+        -- Cave
+        [[
+            r 1 i p:_|.
+            -1 rmv
+
+            2.25 i thsleep
+
+            r 1 i p:|.-_
+            -2 rmv
+            r 1 i p:_|.
+
+            a 2 i p:.
+
+            r 1 i p:.-.
+            1 rmv
+            r 1 i p:~|.-|_. 
+
+            a 2 i p:.-.
+
+            1 rmv
+            r 1 i p:|.-|_.
+
+            1.5 rsleep
+        ]],
+        -- Double Tunnel
+        [[
+            a 80 p:r
+            1 rmv
+            -2
+            5 8 rnd for
+                r 1 i p:_rr
+                dup if
+                    a 125 p:r
+                end
+                swap dup rmv
+                -1 *
+                swap
+            end
+            1.5 rsleep
+        ]]
+    }
+    pattern = Patternizer:new(unpack(PATTERNS))
 
 
     ticker = TimerRate:new(60, function (mFrameTime)
         TorusAngle:step(mFrameTime)
+        MINOR_RADIUS:step(mFrameTime)
+
         pattern:run(mFrameTime)
-        BeatPulse.r:step(mFrameTime)
-        BeatPulse.delay:step(mFrameTime)
-        Player:update()
         Wall:update(mFrameTime)
+        Player:update()
         Torus:update()
         Quad:sort()
+
+        rotationSpeed:step(mFrameTime)
+        l_setRotationSpeed(rotationSpeed:getValue())
+
+        if isIncrementing then
+            if not Wall.pw:hasWalls(1) then
+                Wall.pw.speed:freeze()
+                pattern:resume()
+                isIncrementing = false
+            end
+        end
     end)
+end
+
+function onIncrement()
+    TorusAngle:increment()
+    l_setSpeedMult(speedInc:increment())
+	isIncrementing = true
+    pattern:pause()
 end
 
 function onUpdate(mFrameTime)

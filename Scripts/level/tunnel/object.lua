@@ -3,16 +3,26 @@ u_execDependencyScript("library_slider", "slider", "syyrion", "master.lua")
 u_execDependencyScript("library_polywall", "polywall", "syyrion", "master.lua")
 
 MAJOR_RADIUS = 1000
-local MINOR_RADIUS = SliderTarget:new(0.15, easeExpoOut, 100)
-BeatPulse = {r = MINOR_RADIUS}
-BeatPulse.delay = TimerPeriodic:new(0.5, function ()
-    BeatPulse.r:setValue(107)
-    BeatPulse.r:newTarget(100)
-end)
+MINOR_RADIUS = SliderTriangle:new(0.485833333, 6, 100)
+MINOR_RADIUS:setPhase(-10)
+MINOR_RADIUS:setAsymmetry(0.05)
 
 u_execScript("level/tunnel/3d.lua")
 
-TorusAngle = SliderSawtooth:new(10, math.pi)
+TorusAngle = {
+    inc = Incrementer:new(1, 6, 7),
+    angle = SliderSawtooth:new(7, math.pi),
+    increment = function (self)
+        self.angle:setTimescale(self.inc:increment())
+    end,
+    getValue = function (self)
+        return self.angle:getValue()
+    end,
+
+    step = function (self, mFrameTime)
+        self.angle:step(mFrameTime)
+    end
+}
 
 local MAJOR_DIVISIONS = 256
 local MAJOR_ARC = math.tau / MAJOR_DIVISIONS
@@ -132,6 +142,7 @@ end
 local RADIANS_PER_THICKNESS = MAJOR_ARC * 2 / THICKNESS
 
 local SPAWN_POSITION = FRONT_LIMIT * MAJOR_ARC
+
 local MIN_DESPAWN_POSITION = REAR_LIMIT * MAJOR_ARC
 
 Wall = {
@@ -150,11 +161,13 @@ Wall = {
 Wall.pw.vertex:chset(0, 0, 0, 0)
 Wall.pw.limit.origin:set(750)
 
+Wall.pw.speed:freeze()
+
 Wall.pw:template(0, SIDES)
 Wall.pw:regularize(0, SIDES, -MINOR_ARC)
 
 function Wall:new(side, thickness)
-    local sections = RADIANS_PER_THICKNESS * (thickness or THICKNESS) / MAJOR_ARC
+    local sections = RADIANS_PER_THICKNESS * ((thickness or THICKNESS) + 4) / MAJOR_ARC
 
     local newInst = {
         position = SPAWN_POSITION,
@@ -194,7 +207,7 @@ end
 function Wall:update(mFrameTime)
     self.pw:fill(1)
     self.pw:move(1, mFrameTime)
-    local speed = RADIANS_PER_THICKNESS * getWallSpeedInUnitsPerFrame()
+    local speed = RADIANS_PER_THICKNESS * self.pw.speed:get()
     local ta = TorusAngle:getValue()
     local r0 = MINOR_RADIUS:getValue()
     local r1 = r0 + self.OFFSET
