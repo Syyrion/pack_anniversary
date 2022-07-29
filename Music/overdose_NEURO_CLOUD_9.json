@@ -1,0 +1,15 @@
+{
+	"id": "overdose_NEURO_CLOUD_9",
+
+	"file_name": "overdose_NEURO_CLOUD_9.ogg",
+
+	"name": "NEURO-CLOUD-9",
+	"album": "INSANE INFLAME",
+	"author": "Camellia",
+	
+	// segments are controlled by the lua script, not here
+	"segments": 
+	[
+		{ "time": 0 }
+	]
+}
