@@ -1,0 +1,43 @@
+{
+	// Style data id
+	"id": "overdose_menu",
+
+	// Hue options
+	"hue_min": 120,
+	"hue_max": 480,
+	"hue_ping_pong": false,
+	"hue_increment": 5,
+	
+	// Pulse options
+	"pulse_min": 1,
+	"pulse_max": 1,
+	"pulse_increment": 0.08,
+
+	// 3D options
+	"3D_depth": 0,	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	"max_swap_time": 0,
+	
+	"text_color": { "dynamic": false, "value": [250, 255, 250, 230], "pulse": [0, 0, 0, 0] },
+	
+	// Main color
+	"main": { "main": true, "dynamic": true, "value": [230, 144, 144, 255], "pulse": [150, 150, 150, 0] },
+	
+	
+	// Background colors
+	"colors":
+	[
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 1.0, "value": [0, 0, 0, 255], "pulse": [0, 0, 0, 0]},
+		{ "dynamic": true, "dynamic_offset": false, "dynamic_darkness": 7, "value": [20, 20, 20, 255], "pulse": [0, 0, 0, 0]}
+	]
+}
