@@ -1,0 +1,18 @@
+{
+	"id": "tunnel",
+
+	"name": "Tunnel",
+	"description": "There is no light at the end",
+	"author": "Syyrion",
+
+	"menuPriority": 0,
+
+	"selectable": true,
+
+	"styleId": "tunnelmenu",
+	"musicId": "digitalchaos",
+
+	"luaFile": "Scripts/level/tunnel/main.lua",
+
+	"difficultyMults": []
+}

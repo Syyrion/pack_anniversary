@@ -1,0 +1,12 @@
+{
+	"id": "tunnelmenu",
+	"max_swap_time": 0,
+	"3D_depth": 0,
+	"3D_skew": 0,
+	"main": {"value": [248, 216, 88, 255]},
+	"colors":
+	[
+		{"value": [35, 4, 108, 255]},
+		{"value": [68, 4, 153, 255]}
+	]
+}
