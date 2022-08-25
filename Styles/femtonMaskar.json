@@ -1,0 +1,144 @@
+{
+	// Style data id. This id can be used in level JSON files and inside Lua
+	// scripts to set or change the visual style of a level.
+	"id": "femtonMaskar",
+
+	// Hue options. Continuously changes the hue of the level colors.
+	"hue_min": 270,
+	"hue_max": 300,
+	"hue_ping_pong": true, // Does the hue cycle, or go back and forth?
+	"hue_increment": 0.5,   // How fast does the hue change?
+
+	// Pulse options. Periodically affects the level's colors, brightening and
+	// darkening them over a time interval.
+	"pulse_min": 0.0,
+	"pulse_max": 1.0,
+	"pulse_increment": 0.0,
+
+	// Pseudo-3D effects.
+	"3D_depth": 0,     // How many "copies" of the level should be rendered?
+	"3D_skew": 0.2,   // How intense is the tilt of the pseudo-3D effect?
+	"3D_spacing": 0.4, // How distant are 3D layers between each others?
+	"3D_pulse_min": 1.0,
+	"3D_pulse_max": 5.0,
+	"3D_pulse_speed": 0.01,
+
+	// Main color.
+	"main": {
+		"main": true,
+		"dynamic": false,           // Is the color affected by the hue options?
+		"value": [255, 255, 255, 255], // RGBA values.
+		"pulse": [0, 0, 0, 0]  // Per-channel pulse factors.
+	},
+
+	// Center polygon color. Can be one of:
+	// - "main"
+	// - "main_darkened"
+	// - { "legacy": true, "index": 0 }
+	// - { "legacy": false, "dynamic": true, "value": [...] ... }
+	"cap_color": "main",
+
+	// Background colors. Array of colors that are going to be applied to the
+	// background, in an alternate fashion.
+	"colors":
+	[
+		{
+			"dynamic": true,
+			"dynamic_offset": false,
+			"dynamic_darkness": 1.5,
+			"value": [180, 0, 255, 255],
+			"pulse": [0, 0, 0, 0]
+		},
+		{
+			"dynamic": true,
+			"dynamic_offset": false,
+			"dynamic_darkness": 2,
+			"value": [140, 0, 215, 255],
+			"pulse": [0, 0, 0, 0]
+		},
+		{
+			"dynamic": true,
+			"dynamic_offset": false,
+			"dynamic_darkness": 1.5,
+			"value": [180, 0, 255, 255],
+			"pulse": [0, 0, 0, 0]
+		},
+		{
+			"dynamic": true,
+			"dynamic_offset": false,
+			"dynamic_darkness": 2,
+			"value": [140, 0, 215, 255],
+			"pulse": [0, 0, 0, 0]
+		},
+		{
+			"dynamic": true,
+			"dynamic_offset": false,
+			"dynamic_darkness": 1.5,
+			"value": [180, 0, 255, 255],
+			"pulse": [0, 0, 0, 0]
+		},
+		{
+			"dynamic": true,
+			"dynamic_offset": false,
+			"dynamic_darkness": 2,
+			"value": [140, 0, 215, 255],
+			"pulse": [0, 0, 0, 0]
+		},
+		{
+			"dynamic": true,
+			"dynamic_offset": false,
+			"dynamic_darkness": 1.5,
+			"value": [180, 0, 255, 255],
+			"pulse": [0, 0, 0, 0]
+		},
+		{
+			"dynamic": false,
+			"dynamic_offset": false,
+			"dynamic_darkness": 4,
+			"value": [0, 0, 0, 255],
+			"pulse": [255, 255, 255, 0]
+		},
+		{
+			"dynamic": false,
+			"dynamic_offset": false,
+			"dynamic_darkness": 4,
+			"value": [0, 0, 0, 255],
+			"pulse": [255, 255, 255, 0]
+		},
+		{
+			"dynamic": false,
+			"dynamic_offset": false,
+			"dynamic_darkness": 4,
+			"value": [0, 0, 0, 255],
+			"pulse": [255, 255, 255, 0]
+		},
+		{
+			"dynamic": false,
+			"dynamic_offset": false,
+			"dynamic_darkness": 4,
+			"value": [0, 0, 0, 255],
+			"pulse": [255, 255, 255, 0]
+		},
+		{
+			"dynamic": false,
+			"dynamic_offset": false,
+			"dynamic_darkness": 4,
+			"value": [0, 0, 0, 255],
+			"pulse": [255, 255, 255, 0]
+		},
+		{
+			"dynamic": false,
+			"dynamic_offset": false,
+			"dynamic_darkness": 4,
+			"value": [0, 0, 0, 255],
+			"pulse": [255, 255, 255, 0]
+		},
+		{
+			"dynamic": false,
+			"dynamic_offset": false,
+			"dynamic_darkness": 4,
+			"value": [0, 0, 0, 255],
+			"pulse": [255, 255, 255, 0]
+		}
+	]
+}
