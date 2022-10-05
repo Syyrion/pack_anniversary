@@ -1,5 +1,5 @@
--- include useful files
-u_execScript("/femtonMaskar/common.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "common.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "utils.lua")
 
 -- our wall
 imposterWall = {}
