@@ -1,5 +1,6 @@
 -- include useful files because we dont have anything better to do
 u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "common.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "utils.lua")
 u_execScript("/femtonMaskar/shadereffects.lua")
 
 -- yay
@@ -288,7 +289,7 @@ function onUpdate(mFrameTime)
     shdr_setUniformF(gradientShaderId, "u_random", shdrRandom);
     shdr_setUniformI(gradientShaderId, "u_mode", shdrMode);
 	
-	ArrayRemove(bgWalls, function(t, i, j)
+	ArrayRemoveIf(bgWalls, function(t, i, j)
 		local v = t[i]
 		if v.dead then
 			cw_destroy(v.cwHandle)
