@@ -1,5 +1,5 @@
 -- include useful files because we dont have anything better to do
-u_execScript("/femtonMaskar/common.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "common.lua")
 u_execScript("/femtonMaskar/shadereffects.lua")
 
 -- yay
