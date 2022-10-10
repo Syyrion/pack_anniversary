@@ -1,0 +1,27 @@
+{
+	// Level id. Should be unique per pack.
+	"id": "extras_femtonmaskaridodmansdreadlock",
+
+	// Information about the level. These are displayed in the main menu.
+	"name": "Femton Maskar",
+	"description": "Fifteen worms in the dead man's dreadlocks!",
+	"author": "Theepicosity",
+
+	// Ordering of the level compared to other levels in the same pack.
+	"menuPriority": 4,
+
+	// Whether the level is available or not.
+	"selectable": true,
+
+	// Level's style and music. These should match ids defined in the `Styles`
+	// and `Music` folder.
+	"styleId": "femtonMaskar",
+	"musicId": "femtonMaskarIDodMansDreadlock",
+
+	// Relative path to the level's Lua script.
+	"luaFile": "Scripts/femtonMaskar/femtonMaskar.lua",
+
+	// Available difficulty multipliers for the level. `1` is always available
+	// by default, implicitly.
+	"difficultyMults": [ 2.0, 3.0 ]
+}
