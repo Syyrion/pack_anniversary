@@ -7,6 +7,6 @@
 	"selectable": true,
 	"styleId": "overdose_menu",
 	"musicId": "overdose_NEURO_CLOUD_9",
-	"luaFile": "Scripts/overdose/overdose.lua",
+	"luaFile": "Scripts/level/overdose/main.lua",
 	"difficultyMults": [1.001, 1.002]
 }

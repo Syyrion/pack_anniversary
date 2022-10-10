@@ -19,7 +19,7 @@
 	"musicId": "femtonMaskarIDodMansDreadlock",
 
 	// Relative path to the level's Lua script.
-	"luaFile": "Scripts/femtonMaskar/femtonMaskar.lua",
+	"luaFile": "Scripts/level/femtonMaskar/main.lua",
 
 	// Available difficulty multipliers for the level. `1` is always available
 	// by default, implicitly.

@@ -1,9 +1,9 @@
 MUSIC_OFFSET = -0.010 -- you are allowed to change this to make it sync better on your machine. won't affect when the song loops
 
 
-u_execScript("/overdose/overdose_functions.lua")
-u_execScript("/overdose/overdose_patterns.lua")
-u_execScript("/overdose/overdose_timings.lua")
+u_execScript("level/overdose/functions.lua")
+u_execScript("level/overdose/patterns.lua")
+u_execScript("level/overdose/timings.lua")
 
 
 WALLTYPES = {
