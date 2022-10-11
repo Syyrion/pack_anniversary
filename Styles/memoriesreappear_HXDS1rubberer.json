@@ -1,0 +1,32 @@
+{
+	// Style data id
+	"id": "memoriesreappear_HXDS1rubberer",
+
+	// Hue options
+	"hue_min": 230,
+	"hue_max": 230,
+	"hue_ping_pong": true,
+	"hue_increment": 1.2,
+	
+	// Pulse options
+	"pulse_min": 0.0,
+	"pulse_max": 1.6,
+	"pulse_increment": 2.2,
+
+	// 3D options
+	"3D_depth": 0,
+	"3D_skew": 0.15,
+	"3D_spacing": 1.5,
+
+	// Main color
+	"main": { "main": true, "dynamic": true, "value": [255, 255, 255, 255], "pulse": [255, 255, 255, 255] },
+
+	// Background colors
+	"colors":
+	[
+		{ "dynamic": true, "dynamic_offset": true, "dynamic_darkness": 1.0, "value": [0, 0, 0, 255], "pulse": [10, 10, 13, 0]},
+		{ "dynamic": true, "dynamic_offset": true, "dynamic_darkness": 1.0, "value": [5, 5, 5, 255], "pulse": [6, 6, 8, 0]},
+		{ "dynamic": true, "dynamic_offset": true, "dynamic_darkness": 1.0, "value": [10, 10, 10, 255], "pulse": [3, 3, 6, 0]},
+		{ "dynamic": true, "dynamic_offset": true, "dynamic_darkness": 1.0, "value": [15, 15, 15, 255], "pulse": [0, 0, 2, 0]}
+	]
+}

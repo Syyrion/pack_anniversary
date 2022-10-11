@@ -1,0 +1,12 @@
+{
+    "id": "memoriesReappear",
+    "name": "Memories, reappear",
+    "description": "The nostalgia returns, but our memory has just begun.\n(unreleased pack from \"don\")\n(This is my final 2.1.5+ level)\n\n<<Happy 7th anniversary of (Mario) the Music Box!>>",
+    "author": "HexagonalSyndrome",
+    "menuPriority": 99999999,
+    "selectable": true,
+    "styleId": "memoriesreappear_intro",
+    "musicId": "[MemoriesReappear] Antriksh Bali - Memories, Reappear",
+    "luaFile": "Scripts/level/memoriesreappear/main.lua",
+    "difficultyMults": [0.999999, 1.00001]
+}
