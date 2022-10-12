@@ -225,7 +225,7 @@ function onStep()
                         local t, d = getRandomSide(), getRandomDir()
                         for a = 0, u_rndIntUpper(4) do
                             if d > 0 then cWallEx(t, math.ceil(getProtocolSides() / 2) - 1)
-                            else          cWallEx(t, math.floor(getProtocolSides() / 2) - 1)
+                            else          oWallEx(t, math.floor(getProtocolSides() / 2) - 1)
                             end
                             d = d * -1
                             t_wait(getPerfectDelay(THICKNESS) * 4)
