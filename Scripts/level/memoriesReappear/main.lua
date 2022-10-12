@@ -17,7 +17,7 @@ u_execScript("level/memoriesReappear/other/march31o_pattern_sets.lua")
 u_execScript("level/memoriesReappear/other/zcustomWall1.92Utils.lua")
 u_execScript("level/memoriesReappear/other/WallAccHelper1.1.lua")
 
--- override common wall code
+---- override common wall code
 function cWallBasePrimary(_side, _thickness, ...)
     if curStyle == "HXDS4pieChartV2" then
             if _side % 6 == 5 then for ex = 0, 2 do w_wall(35 + ex, _thickness or THICKNESS) end
@@ -30,6 +30,25 @@ function cWallBasePrimary(_side, _thickness, ...)
     else w_wall(_side, _thickness or THICKNESS)
     end
 end
+----
+
+---- custom function code
+-- utils
+function retSpeedMultExpectCurLevel(mSpdInc)
+    if curStyle ~= "HXDS4leftNRight" then l_setSpeedMult(l_getSpeedMult() + mSpdInc) end
+end
+
+-- commons
+function cVortaAccurate(mSide)
+    if getProtocolSides() == 9 then
+        for i = 0, 2 do
+            cWallEx(mSide + (i * 3), 1)
+        end
+    else
+        cBarrageVorta(mSide)
+    end
+end
+----
 
 -- inspired taken from modern year pack from The Sun XIX
 
@@ -112,10 +131,6 @@ end
 
 local lnr_pos = 0
 
-function retSpeedMultExpectCurLevel(mSpdInc)
-    if curStyle ~= "HXDS4leftNRight" then l_setSpeedMult(l_getSpeedMult() + mSpdInc) end
-end
-
 -- onStep is an hardcoded function that is called when the level timeline is empty
 -- onStep should contain your pattern spawning logic
 function onStep()
@@ -172,10 +187,11 @@ function onStep()
             else
                     if u_getManualIncrementTimes() == 0 then cWall(getRandomSide()) t_wait(getPerfectDelay(THICKNESS) * 11)
                 elseif u_getManualIncrementTimes() == 1 then
-                        if u_rndIntUpper(5) == 1 then rWall(getRandomSide())
-                    elseif u_rndIntUpper(5) == 2 then cAltBarrage(getRandomSide(), 2)
-                    elseif u_rndIntUpper(5) == 3 then cBarrageVorta(getRandomSide())
-                    elseif u_rndIntUpper(5) == 4 then cBarrageDoubleHoled(getRandomSide(), 0, 0)
+                        if u_rndIntUpper(6) == 1 then rWall(getRandomSide())
+                    elseif u_rndIntUpper(6) == 2 then cAltBarrage(getRandomSide(), 2)
+                    elseif u_rndIntUpper(6) == 3 then cBarrageHalf(getRandomSide())
+                    elseif u_rndIntUpper(6) == 4 then cVortaAccurate(getRandomSide())
+                    elseif u_rndIntUpper(6) == 5 then cBarrageDoubleHoled(getRandomSide(), 0, 0)
                     else                              cBarrage(getRandomSide())
                     end
                     t_wait(getPerfectDelay(THICKNESS) * 11)
@@ -193,13 +209,13 @@ function onStep()
                             cAltBarrage(t + (a * d), 2)
                             t_wait(getPerfectDelay(THICKNESS) * 4)
                         end
-                    elseif patterns == 2 then -- vorta/vortex barrage spiral
+                    elseif patterns == 2 and getProtocolSides() > 5 then -- vorta/vortex barrage spiral
                         local t, d = getRandomSide(), getRandomDir()
                         for a = 0, u_rndIntUpper(4) do
-                            cBarrageVorta(t + (a * d))
+                            cVortaAccurate(t + (a * d))
                             t_wait(getPerfectDelay(THICKNESS) * 4)
                         end
-                    elseif patterns == 3 then -- 2-holed barrage spiral
+                    elseif patterns == 3 and getProtocolSides() > 5 then -- 2-holed barrage spiral
                         local t, d = getRandomSide(), getRandomDir()
                         for a = 0, u_rndIntUpper(4) do
                             cBarrageDoubleHoled(t + (a * d), 0, 0)
@@ -208,7 +224,10 @@ function onStep()
                     else -- alt half barrage
                         local t, d = getRandomSide(), getRandomDir()
                         for a = 0, u_rndIntUpper(4) do
-                            cBarrageHalf(t + ((a % 2) * 3))
+                            if d > 0 then cWallEx(t, math.ceil(getProtocolSides() / 2) - 1)
+                            else          cWallEx(t, math.floor(getProtocolSides() / 2) - 1)
+                            end
+                            d = d * -1
                             t_wait(getPerfectDelay(THICKNESS) * 4)
                         end
                     end
