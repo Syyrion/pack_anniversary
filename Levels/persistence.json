@@ -1,0 +1,12 @@
+{
+    "id": "persistence",
+    "name": "Persistence",
+    "description": "of vision",
+    "author": "Nesa",
+    "menuPriority": 1,
+    "selectable": true,
+    "styleId": "bc_kesd2",
+    "musicId": "mpp",
+    "luaFile": "Scripts/level/mpp/persistence.lua",
+    "difficultyMults": [0.9999, 1.0001]
+}
