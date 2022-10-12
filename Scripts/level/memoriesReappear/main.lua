@@ -175,7 +175,7 @@ function onStep()
                         if u_rndIntUpper(5) == 1 then rWall(getRandomSide())
                     elseif u_rndIntUpper(5) == 2 then cAltBarrage(getRandomSide(), 2)
                     elseif u_rndIntUpper(5) == 3 then cBarrageVorta(getRandomSide())
-                    elseif u_rndIntUpper(5) == 4 then cBarrageExHoles(getRandomSide(), 1)
+                    elseif u_rndIntUpper(5) == 4 then cBarrageDoubleHoled(getRandomSide(), 0, 0)
                     else                              cBarrage(getRandomSide())
                     end
                     t_wait(getPerfectDelay(THICKNESS) * 11)
@@ -202,7 +202,7 @@ function onStep()
                     elseif patterns == 3 then -- 2-holed barrage spiral
                         local t, d = getRandomSide(), getRandomDir()
                         for a = 0, u_rndIntUpper(4) do
-                            cBarrageN(t + (a * d), 1) cWall(t + (a * d))
+                            cBarrageDoubleHoled(t + (a * d), 0, 0)
                             t_wait(getPerfectDelay(THICKNESS) * 4)
                         end
                     else -- alt half barrage
