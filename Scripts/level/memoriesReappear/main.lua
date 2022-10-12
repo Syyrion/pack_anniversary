@@ -173,7 +173,7 @@ function onStep()
                     if u_getManualIncrementTimes() == 0 then cWall(getRandomSide()) t_wait(getPerfectDelay(THICKNESS) * 11)
                 elseif u_getManualIncrementTimes() == 1 then
                         if u_rndIntUpper(5) == 1 then rWall(getRandomSide())
-                    elseif u_rndIntUpper(5) == 2 then cAltBarrage(getRandomSide())
+                    elseif u_rndIntUpper(5) == 2 then cAltBarrage(getRandomSide(), 2)
                     elseif u_rndIntUpper(5) == 3 then cBarrageVorta(getRandomSide())
                     elseif u_rndIntUpper(5) == 4 then cBarrageExHoles(getRandomSide(), 1)
                     else                              cBarrage(getRandomSide())
@@ -190,7 +190,7 @@ function onStep()
                     elseif patterns == 1 then -- alt barrage spiral
                         local t, d = getRandomSide(), getRandomDir()
                         for a = 0, u_rndIntUpper(4) do
-                            cAltBarrage(t + (a * d))
+                            cAltBarrage(t + (a * d), 2)
                             t_wait(getPerfectDelay(THICKNESS) * 4)
                         end
                     elseif patterns == 2 then -- vorta/vortex barrage spiral

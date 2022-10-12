@@ -301,6 +301,7 @@ end
 
 -- cAltBarrage: spawns a barrage of alternate walls
 function cAltBarrage(_side, _step, _thickness, ...)
+    _step = _step or 2
     for i = 0, getProtocolSides(), _step do
         cWall(_side + i, _thickness, ...)
     end
