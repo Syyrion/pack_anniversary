@@ -1,7 +1,7 @@
 {
     "id": "persistence",
     "name": "Persistence",
-    "description": "of vision",
+    "description": "of vision\n\n0.9999x - no negative skew\n1.0001x - increased speed + no center flashing",
     "author": "Nesa",
     "menuPriority": 1,
     "selectable": true,

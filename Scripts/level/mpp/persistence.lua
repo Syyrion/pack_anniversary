@@ -74,7 +74,11 @@ end
 -- `onInit` is an hardcoded function that is called when the level is first
 -- loaded. This can be used to setup initial level parameters.
 function onInit()
-	l_setSpeedMult(2.0)
+	if u_getDifficultyMult() > 1.0 then
+		l_setSpeedMult(2.7)
+	else
+		l_setSpeedMult(2.0)
+	end
 	l_setSpeedInc(0.125)
 	l_setSpeedMax(3.5)
 	l_setRotationSpeed(0)
@@ -112,7 +116,7 @@ function onLoad()
     e_eval([[shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, blackflash)]])
     e_eval([[u_setFlashEffect(255)]])
     e_eval([[hardPulse()]])
-    e_eval([[l_setRadiusMin(60)]])
+    e_eval([[l_setRadiusMin(40)]])
     e_eval([[l_setBeatPulseMax(10)]])
     e_eval([[l_setBeatPulseDelayMax(3600/234)]])
     e_eval([[l_setBeatPulseSpeedMult(1)]])
@@ -154,26 +158,29 @@ function onUpdate(mFrameTime)
 
         loopcount = loopcount + 1
         nextLoop = loopcount * (60/234) -- bpm = 170
+        --on beat events
+		shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, blackflash)
+		shdr_setActiveFragmentShader(RenderStage.PLAYERTRIS, blacks)
+		shdr_setActiveFragmentShader(RenderStage.PIVOTQUADS, blacks)
+		shdr_setActiveFragmentShader(RenderStage.CAPTRIS, blacks)
+		l_setRotationSpeed(1.0+(math.random() * 100.0)+(math.random() * 10.0))
+
+        beatCount = beatCount + 1
+		ibeatCount = 0
+    end
+
+	if ibeatCount == 30 then
 		shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, spinscan)
 		if u_getDifficultyMult() > 1.0000 then
 		else 
 			if s_get3dSkew() > 0 then
 				shdr_setActiveFragmentShader(RenderStage.PLAYERTRIS, whites)
 				shdr_setActiveFragmentShader(RenderStage.PIVOTQUADS, whites)
+				shdr_setActiveFragmentShader(RenderStage.CAPTRIS, whites)
 			end
 		end
 		if dys then dys = false else dys = true end
 		l_setRotationSpeed(0)
-        --on beat events
-        beatCount = beatCount + 1
-		ibeatCount = 0
-    end
-
-	if ibeatCount == 30 then
-		shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, blackflash)
-		shdr_setActiveFragmentShader(RenderStage.PLAYERTRIS, blacks)
-		shdr_setActiveFragmentShader(RenderStage.PIVOTQUADS, blacks)
-		l_setRotationSpeed(10)
 	end
 
 	FFrames = FFrames + 1
