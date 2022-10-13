@@ -6,7 +6,7 @@ u_execScript("level/mpp/commonpatterns.lua")
 u_execScript("level/mpp/commonpatternsv2.lua")
 u_execScript("level/mpp/expatterns.lua")
 u_execScript("level/mpp/hxdshexpatterns.lua")
-
+l_setShadersRequired(true)
 loopcount = 1
 nextLoop = 0.35
 -- This function adds a pattern to the level "timeline" based on a numeric key.
@@ -37,30 +37,73 @@ shuffle(keys)
 index = 0
 dys = false
 FFrames = 0
+BPM = 234
+pastRad = 0
+
+--cw decoration
+
+--layer 1
+cw11 = cw_createNoCollision()
+cw12 = cw_createNoCollision()
+cw13 = cw_createNoCollision()
+cw14 = cw_createNoCollision()
+cw15 = cw_createNoCollision()
+cw16 = cw_createNoCollision()
+--layer 2
+cw21 = cw_createNoCollision()
+cw22 = cw_createNoCollision()
+cw23 = cw_createNoCollision()
+cw24 = cw_createNoCollision()
+cw25 = cw_createNoCollision()
+cw26 = cw_createNoCollision()
+--layer 3
+cw31 = cw_createNoCollision()
+cw32 = cw_createNoCollision()
+cw33 = cw_createNoCollision()
+cw34 = cw_createNoCollision()
+cw35 = cw_createNoCollision()
+cw36 = cw_createNoCollision()
+
+function cwspawnwalllayer1(cw)
+	local length = 375
+	local width = 50
+	local displacement = 600
+	local alpha = 200
+    cw_setVertexPos(cw, 0, displacement+width, length)
+    cw_setVertexPos(cw, 1, displacement+width, 0-length)
+    cw_setVertexPos(cw, 2, displacement-width, 0-length)
+    cw_setVertexPos(cw, 3, displacement-width, length)
+    cw_setVertexColor4Same(cw, alpha, alpha, alpha, 255)
+end
+
+function cwspawn()
+	cwspawnwalllayer1(cw11)
+	cwspawnwalllayer1(cw12)
+	cwspawnwalllayer1(cw13)
+	cwspawnwalllayer1(cw14)
+	cwspawnwalllayer1(cw15)
+	cwspawnwalllayer1(cw16)
+	cwspin(cw12, (math.pi/3))
+	cwspin(cw13, (math.pi/3)*2)
+	cwspin(cw14, (math.pi/3)*3)
+	cwspin(cw15, (math.pi/3)*4)
+	cwspin(cw16, (math.pi/3)*5)
+end
 
 function hardPulse()
     --the fast beat pulse
     l_setManualPulseControl(true)
-    l_setPulse(120)
+    l_setPulse(40)
     l_setManualPulseControl(false) -- i have no clue whether i actually need to reset the pulse each cycle
-    l_setPulseMin(60)
-    l_setPulseMax(120)
+    l_setPulseMin(40)
+    l_setPulseMax(80)
     l_setPulseSpeed(1200)
-    l_setPulseSpeedR(6800/2281)
-    l_setPulseDelayMax(1)
+    l_setPulseSpeedR((1200*BPM)/(108000-(BPM)))
+    l_setPulseDelayMax(0)
 
 end
-function slowPulse()
-    l_setManualPulseControl(true)
-    l_setPulse(120)
-    l_setManualPulseControl(false)
-    l_setPulseMin(60)
-    l_setPulseMax(120)
-    l_setPulseSpeed(10)
-    l_setPulseSpeedR(170/223)
-    l_setPulseDelayMax(0)
-end
 function stopPulse(rad)
+    --the no beat pulse
     l_setPulseMin(rad)
     l_setPulseMax(rad)
     l_setRadiusMin(rad)
@@ -75,13 +118,13 @@ end
 -- loaded. This can be used to setup initial level parameters.
 function onInit()
 	if u_getDifficultyMult() > 1.0 then
-		l_setSpeedMult(2.7)
+		l_setSpeedMult(1.6)
 	else
-		l_setSpeedMult(2.0)
+		l_setSpeedMult(1.2)
 	end
 	l_setSpeedInc(0.125)
 	l_setSpeedMax(3.5)
-	l_setRotationSpeed(0)
+	l_setRotationSpeed(10000)
 	l_setRotationSpeedMax(9999)
 	l_setRotationSpeedInc(0)
 	l_setDelayMult(1.5)
@@ -113,6 +156,8 @@ spinscan = shdr_getShaderId("bc_spinscan.frag")
 whites = shdr_getShaderId("bc_white.frag")
 blacks = shdr_getShaderId("bc_black.frag")
 function onLoad()
+
+	e_eval([[cwspawn()]])
     e_eval([[shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, blackflash)]])
     e_eval([[u_setFlashEffect(255)]])
     e_eval([[hardPulse()]])
@@ -122,7 +167,6 @@ function onLoad()
     e_eval([[l_setBeatPulseSpeedMult(1)]])
     e_eval([[l_setRotationSpeed(0)]])
     e_eval([[t_clear()]])
-	--m_messageAdd("pretty", 130)
 end
 
 -- `onStep` is an hardcoded function that is called when the level "timeline"
@@ -154,16 +198,25 @@ ibeatCount = 0
 -- `onUpdate` is an hardcoded function that is called every frame. `mFrameTime`
 -- represents the time delta between the current and previous frame.
 function onUpdate(mFrameTime)
+	theta = (l_getRotation()*math.pi)/180 - pastRad
+	cwspin(cw11, theta)
+	cwspin(cw12, theta)
+	cwspin(cw13, theta)
+	cwspin(cw14, theta)
+	cwspin(cw15, theta)
+	cwspin(cw16, theta)
+	pastRad = (l_getRotation()*math.pi)/180
 	if l_getLevelTime() > nextLoop then -- clock
-
         loopcount = loopcount + 1
-        nextLoop = loopcount * (60/234) -- bpm = 170
+        nextLoop = loopcount * (60/234) -- bpm = 234
         --on beat events
+		stopPulse(40)
+		hardPulse()
 		shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, blackflash)
 		shdr_setActiveFragmentShader(RenderStage.PLAYERTRIS, blacks)
 		shdr_setActiveFragmentShader(RenderStage.PIVOTQUADS, blacks)
 		shdr_setActiveFragmentShader(RenderStage.CAPTRIS, blacks)
-		l_setRotationSpeed(1.0+(math.random() * 100.0)+(math.random() * 10.0))
+		l_setRotationSpeed(1.0+(math.random() * 10.0))
 
         beatCount = beatCount + 1
 		ibeatCount = 0

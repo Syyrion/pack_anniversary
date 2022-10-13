@@ -2,6 +2,31 @@
 THICKNESS = 40.0;
 
 
+function pointSpin(theta, x, y, a)
+	local r = math.sqrt((x*x) + (y*y))
+	local ct = math.atan2(y, x)
+	ct = ct + theta
+	if a then
+		return r * math.cos(ct)
+	else
+		return r * math.sin(ct)
+	end
+end
+
+function cwspin(cw, theta)
+	--convert to polar
+	local x0, y0 = cw_getVertexPos(cw, 0)
+	local x1, y1 = cw_getVertexPos(cw, 1)
+	local x2, y2 = cw_getVertexPos(cw, 2)
+	local x3, y3 = cw_getVertexPos(cw, 3)
+	--cringe
+	cw_setVertexPos4(cw, 
+		pointSpin(theta, x0, y0, true), pointSpin(theta, x0, y0, false), 
+		pointSpin(theta, x1, y1, true), pointSpin(theta, x1, y1, false), 
+		pointSpin(theta, x2, y2, true), pointSpin(theta, x2, y2, false), 
+		pointSpin(theta, x3, y3, true), pointSpin(theta, x3, y3, false)
+	)
+end
 
 function enableSwapIfDMGreaterThan(mDM)
 	if(u_getDifficultyMult() > mDM) then
