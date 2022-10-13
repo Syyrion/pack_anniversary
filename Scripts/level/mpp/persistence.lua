@@ -79,7 +79,7 @@ end
 
 function cwspawnwalllayer2(cw)
 	local length = 40
-	local width = 1
+	local width = 5
 	local displacement = 350
 	local alpha = 200
 	local conical = 0
@@ -91,11 +91,11 @@ function cwspawnwalllayer2(cw)
 end
 
 function cwspawnwalllayer3(cw)
-	local length = 0.5
-	local width = 600
-	local displacement = 900
+	local length = 4
+	local width = 1000
+	local displacement = 1350
 	local alpha = 200
-	local conical = 4
+	local conical = 30
     cw_setVertexPos(cw, 0, displacement+width, length+conical)
     cw_setVertexPos(cw, 1, displacement+width, 0-length-conical)
     cw_setVertexPos(cw, 2, displacement-width, 0-length)
@@ -168,9 +168,9 @@ end
 -- loaded. This can be used to setup initial level parameters.
 function onInit()
 	if u_getDifficultyMult() > 1.0 then
-		l_setSpeedMult(1.6)
+		l_setSpeedMult(2.0)
 	else
-		l_setSpeedMult(1.2)
+		l_setSpeedMult(1.5)
 	end
 	l_setSpeedInc(0.1)
 	l_setSpeedMax(3.5)
@@ -251,10 +251,6 @@ function onUpdate(mFrameTime)
 
 	--sustain cw decoration
 	theta = (l_getRotation()*math.pi)/180 - pastRad
-	if s_get3dSkew() < 0 then
-		theta = theta - 0.014
-	end
-	theta = theta + 0.007
 	cwspin(cw11, theta)
 	cwspin(cw12, theta)
 	cwspin(cw13, theta)
@@ -306,6 +302,30 @@ function onUpdate(mFrameTime)
 	end
 
 	FFrames = FFrames + 1
+	if FFrames % 10 == 0 then
+		cw_setVertexColor4Same(cw11, 50, 50, 50, 255)
+		cw_setVertexColor4Same(cw12, 50, 50, 50, 255)
+		cw_setVertexColor4Same(cw13, 50, 50, 50, 255)
+		cw_setVertexColor4Same(cw14, 50, 50, 50, 255)
+		cw_setVertexColor4Same(cw15, 50, 50, 50, 255)
+		cw_setVertexColor4Same(cw16, 50, 50, 50, 255)
+	end
+	if FFrames % 10 == 4 then
+		cw_setVertexColor4Same(cw11, 200, 200, 200, 255)
+		cw_setVertexColor4Same(cw12, 200, 200, 200, 255)
+		cw_setVertexColor4Same(cw13, 200, 200, 200, 255)
+		cw_setVertexColor4Same(cw14, 200, 200, 200, 255)
+		cw_setVertexColor4Same(cw15, 200, 200, 200, 255)
+		cw_setVertexColor4Same(cw16, 200, 200, 200, 255)
+	end
+	if FFrames % 10 == 8 then
+		cw_setVertexColor4Same(cw11, 200, 50, 250, 255)
+		cw_setVertexColor4Same(cw12, 200, 50, 250, 255)
+		cw_setVertexColor4Same(cw13, 200, 50, 250, 255)
+		cw_setVertexColor4Same(cw14, 200, 50, 250, 255)
+		cw_setVertexColor4Same(cw15, 200, 50, 250, 255)
+		cw_setVertexColor4Same(cw16, 200, 50, 250, 255)
+	end
 	if dys then
 		s_set3dSkew(0.01)
 	else
