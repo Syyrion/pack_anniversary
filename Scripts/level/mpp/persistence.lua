@@ -9,6 +9,7 @@ u_execScript("level/mpp/hxdshexpatterns.lua")
 l_setShadersRequired(true)
 loopcount = 1
 nextLoop = 0.35
+
 -- This function adds a pattern to the level "timeline" based on a numeric key.
 function addPattern(mKey)
     --hex patterns from Hexadorsip
@@ -39,6 +40,40 @@ dys = false
 FFrames = 0
 BPM = 234
 pastRad = 0
+
+
+--same wall + THICKNESS (created by Exschwasion)
+function rWallThick(mSide, THICKNESS)
+	w_wall(mSide, THICKNESS)
+	w_wall(mSide + getHalfSides(), THICKNESS)
+end
+
+--same wall + mThick (created by Exschwasion)
+function cWallExThick(mSide, mExtra, mThick)
+	w_wall(mSide, mThick);
+	loopDir = 1;
+
+	if mExtra < 0 then loopDir = -1 end
+	for i = 0, mExtra, loopDir do w_wall(mSide+i, mThick) end
+end
+
+--same wall + mThick
+function cBarrageThick(mSide, mThick) cBarrageNThick(mSide, 0, mThick) end
+
+--same wall + mThick
+function cAltBarrageThick(mSide, mStep, mThick)
+	for i = 0, l_getSides() / mStep, 1 do
+		w_wall(mSide + i * mStep, mThick)
+	end
+end
+
+--same wall + mThick
+function cAltBarrageThick(mSide, mStep, mThick)
+	for i = 0, l_getSides() / mStep, 1 do
+		w_wall(mSide + i * mStep, mThick)
+	end
+end
+
 function pointSpin(theta, x, y, a)
 	local r = math.sqrt((x*x) + (y*y))
 	local ct = math.atan2(y, x)
