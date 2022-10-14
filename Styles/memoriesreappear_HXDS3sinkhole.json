@@ -1,0 +1,41 @@
+{
+	// Style data id
+	"id": "memoriesreappear_HXDS3sinkhole",
+
+	// Hue options
+	"hue_min": 0,
+	"hue_max": 360,
+	"hue_ping_pong": false,
+	"hue_increment": 1.5,
+	
+	// Pulse options
+	"pulse_min": -0.5,
+	"pulse_max": 1.3,
+	"pulse_increment": 0.03,
+
+	// 3D options
+	"3D_depth": 1,
+	"3D_skew": 0.25,
+	"3D_spacing": -350,
+	"3D_darken_multiplier": 1,
+	"3D_alpha_multiplier": 0,
+	"3D_alpha_falloff": 1,
+	
+	"3D_pulse_min": 3.7,
+	"3D_pulse_speed": 0.2,
+	"3D_override_color": [190, 140, 10, -50],	
+	
+	// Main color
+	"main": { "main": true, "dynamic": false, "value": [215, 170, 40, -200], "pulse": [0, 0, 0, -200] },
+
+	// Background colors
+	"colors":
+	[
+		{ "dynamic": true, "dynamic_offset": false, "dynamic_darkness": 7, "value": [255, 0, 0, 150], "pulse": [0, 0, 0, 120]},
+		{ "dynamic": true, "dynamic_offset": false, "dynamic_darkness": 7.6, "value": [255, 0, 0, 150], "pulse": [0, 0, 0, 120]},
+		{ "dynamic": true, "dynamic_offset": false, "dynamic_darkness": 10, "value": [255, 0, 0, 150], "pulse": [0, 0, 0, 120]},
+		{ "dynamic": true, "dynamic_offset": false, "dynamic_darkness": 10.6, "value": [255, 0, 0, 150], "pulse": [0, 0, 0, 120]},
+		{ "dynamic": true, "dynamic_offset": false, "dynamic_darkness": 13, "value": [255, 0, 0, 150], "pulse": [0, 0, 0, 120]},
+		{ "dynamic": true, "dynamic_offset": false, "dynamic_darkness": 13.6, "value": [255, 0, 0, 150], "pulse": [0, 0, 0, 120]}	
+	]
+}

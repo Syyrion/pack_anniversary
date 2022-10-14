@@ -1,0 +1,18 @@
+{
+    // Music data id
+    "id": "[MemoriesReappear] Antriksh Bali - Memories, Reappear",
+
+    // Music file
+    "file_name": "[MemoriesReappear] Antriksh Bali - Memories, Reappear.ogg",
+
+    // Music information
+    "name": "Memories, Reappear (Marchionne's theme)",
+    "album": "(Mario) the Music Box ~ARC~ OST",
+    "author": "Antriksh Bali",
+
+    // Segments
+    "segments":
+    [
+        { "time": 0 }
+    ]
+}

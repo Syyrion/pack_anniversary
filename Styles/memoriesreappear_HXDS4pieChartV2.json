@@ -1,0 +1,79 @@
+{
+	// Style data id
+	"id": "memoriesreappear_HXDS4pieChartV2",
+
+	// Hue options
+	"hue_min": 110,
+	"hue_max": 120,
+	"hue_ping_pong": false,
+	"hue_increment": 15,
+	
+	// Pulse options
+	"pulse_min": -0.25,
+	"pulse_max": 0.6,
+	"pulse_increment": 0.06,
+	
+	// 3D options
+	"3D_depth": 0,
+	"3D_skew": 0.2,
+	"3D_spacing": 15,
+	"3D_darken_multiplier": 3.5,
+	"3D_alpha_multiplier": 1.5,
+	"3D_alpha_falloff": 10,
+	"3D_override_color": [0, 0, 0, 120],		
+	
+	"3D_pulse_min": 1,
+	"3D_pulse_max": 2,
+	"3D_pulse_speed": 0.1,		
+
+	// Main color
+	"main": { "main": true, "dynamic": true, "value": [245, 216, 205, 255], "pulse": [255, 255, 255, 255] },
+
+	// Background colors
+	"colors":
+	[				
+
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 1.5, "value": [13, 0, 30, 200], "pulse": [100, 100, 100, 150]}, //3
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 1.5, "value": [13, 0, 30, 200], "pulse": [100, 100, 100, 150]},	
+		
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 2.5, "value": [0, 21, 28, 200], "pulse": [100, 100, 100, 150]}, //4
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 2.5, "value": [0, 21, 28, 200], "pulse": [100, 100, 100, 150]},	
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 2.5, "value": [0, 21, 28, 200], "pulse": [100, 100, 100, 150]},
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 2.5, "value": [0, 21, 28, 200], "pulse": [100, 100, 100, 150]},
+	
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 3.5, "value": [0, 52, 11, 200], "pulse": [100, 100, 100, 150]}, //5
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 3.5, "value": [0, 52, 11, 200], "pulse": [100, 100, 100, 150]},
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 3.5, "value": [0, 52, 11, 200], "pulse": [100, 100, 100, 150]},
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 3.5, "value": [0, 52, 11, 200], "pulse": [100, 100, 100, 150]},
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 3.5, "value": [0, 52, 11, 200], "pulse": [100, 100, 100, 150]},
+		
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 4.5, "value": [92, 72, 0, 200], "pulse": [100, 100, 100, 150]}, //7
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 4.5, "value": [92, 72, 0, 200], "pulse": [100, 100, 100, 150]},
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 4.5, "value": [92, 72, 0, 200], "pulse": [100, 100, 100, 150]},
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 4.5, "value": [92, 72, 0, 200], "pulse": [100, 100, 100, 150]},	
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 4.5, "value": [92, 72, 0, 200], "pulse": [100, 100, 100, 150]},
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 4.5, "value": [92, 72, 0, 200], "pulse": [100, 100, 100, 150]},
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 4.5, "value": [92, 72, 0, 200], "pulse": [100, 100, 100, 150]},
+		
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 5.5, "value": [80, 16, 0, 200], "pulse": [100, 100, 100, 150]}, //8	
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 5.5, "value": [80, 16, 0, 200], "pulse": [100, 100, 100, 150]},	
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 5.5, "value": [80, 16, 0, 200], "pulse": [100, 100, 100, 150]},		
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 5.5, "value": [80, 16, 0, 200], "pulse": [100, 100, 100, 150]},			
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 5.5, "value": [80, 16, 0, 200], "pulse": [100, 100, 100, 150]},		
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 5.5, "value": [80, 16, 0, 200], "pulse": [100, 100, 100, 150]},		
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 5.5, "value": [80, 16, 0, 200], "pulse": [100, 100, 100, 150]},		
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 5.5, "value": [80, 16, 0, 200], "pulse": [100, 100, 100, 150]},		
+		
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 6.5, "value": [24, 0, 19, 200], "pulse": [100, 100, 100, 150]}, //9	
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 6.5, "value": [24, 0, 19, 200], "pulse": [100, 100, 100, 150]},	
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 6.5, "value": [24, 0, 19, 200], "pulse": [100, 100, 100, 150]},	
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 6.5, "value": [24, 0, 19, 200], "pulse": [100, 100, 100, 150]},
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 6.5, "value": [24, 0, 19, 200], "pulse": [100, 100, 100, 150]},	
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 6.5, "value": [24, 0, 19, 200], "pulse": [100, 100, 100, 150]},	
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 6.5, "value": [24, 0, 19, 200], "pulse": [100, 100, 100, 150]},	
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 6.5, "value": [24, 0, 19, 200], "pulse": [100, 100, 100, 150]},	
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 6.5, "value": [24, 0, 19, 200], "pulse": [100, 100, 100, 150]},		
+		
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 1.5, "value": [13, 0, 30, 200], "pulse": [100, 100, 100, 150]}	
+	]
+}

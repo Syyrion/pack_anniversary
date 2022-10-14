@@ -1,0 +1,18 @@
+{
+    // Music data id
+    "id": "[MemoriesReappearSHFL] Antriksh Bali - Memories, Reappear (Paulstretched)",
+
+    // Music file
+    "file_name": "[MemoriesReappearSHFL] Antriksh Bali - Memories, Reappear (Paulstretched).ogg",
+
+    // Music information
+    "name": "Memories, Reappear (Marchionne's theme) [Paulstretched ver.]",
+    "album": "(Mario) the Music Box ~ARC~ OST",
+    "author": "Antriksh Bali",
+
+    // Segments
+    "segments":
+    [
+        { "time": 0 }
+    ]
+}

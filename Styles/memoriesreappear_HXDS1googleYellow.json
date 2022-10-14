@@ -1,0 +1,30 @@
+{
+	// Style data id
+	"id": "memoriesreappear_HXDS1googleYellow",
+
+	// Hue options
+	"hue_min": 0,
+	"hue_max": 360,
+	"hue_ping_pong": true,
+	"hue_increment": 5.0,
+	
+	// Pulse options
+	"pulse_min": 0.0,
+	"pulse_max": 0.0,
+	"pulse_increment": 0.025,
+
+	// 3D options
+	"3D_depth": 0,
+	"3D_skew": 0.15,
+	"3D_spacing": 1.5,
+	
+	// Main color
+	"main": { "main": true, "dynamic": false, "value": [255, 186, 3, 255], "pulse": [255, 186, 3, 255] },
+
+	// Background colors
+	"colors":
+	[
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 0.5, "value": [255, 255, 255, 255], "pulse": [0, 0, 0, 255]},
+		{ "dynamic": false, "dynamic_offset": false, "dynamic_darkness": 0.5, "value": [255, 235, 211, 255], "pulse": [0, 0, 0, 255]}
+	]
+}
