@@ -368,20 +368,22 @@ function onUpdate(mFrameTime)
 
 	if ibeatCount == 20 then
 		shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, spinscan)
-		if s_get3dSkew() < 0 then
-			cw_setVertexColor4Same(cw31, 250, 0, 0, 255)
-			cw_setVertexColor4Same(cw32, 250, 0, 0, 255)
-			cw_setVertexColor4Same(cw33, 250, 0, 0, 255)
-			cw_setVertexColor4Same(cw34, 250, 0, 0, 255)
-			cw_setVertexColor4Same(cw35, 250, 0, 0, 255)
-			cw_setVertexColor4Same(cw36, 250, 0, 0, 255)
-		else
+		if s_get3dSkew() < -1 then
 			cw_setVertexColor4Same(cw31, 170, 170, 170, 255)
 			cw_setVertexColor4Same(cw32, 170, 170, 170, 255)
 			cw_setVertexColor4Same(cw33, 170, 170, 170, 255)
 			cw_setVertexColor4Same(cw34, 170, 170, 170, 255)
 			cw_setVertexColor4Same(cw35, 170, 170, 170, 255)
 			cw_setVertexColor4Same(cw36, 170, 170, 170, 255)
+		else
+			if roundThousand(u_getDifficultyMult()) >= roundThousand(1.000) then
+				cw_setVertexColor4Same(cw31, 250, 0, 0, 255)
+				cw_setVertexColor4Same(cw32, 250, 0, 0, 255)
+				cw_setVertexColor4Same(cw33, 250, 0, 0, 255)
+				cw_setVertexColor4Same(cw34, 250, 0, 0, 255)
+				cw_setVertexColor4Same(cw35, 250, 0, 0, 255)
+				cw_setVertexColor4Same(cw36, 250, 0, 0, 255)
+			end
 		end
 		if dys then dys = false else dys = true end
 		l_setRotationSpeed(0)
@@ -404,28 +406,52 @@ function onUpdate(mFrameTime)
 		cw_setVertexColor4Same(cw25, 250, 250, 250, 255)
 		cw_setVertexColor4Same(cw26, 250, 250, 250, 255)
 		
-		cw_setVertexColor4Same(cw17, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
-		cw_setVertexColor4Same(cw18, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
-		cw_setVertexColor4Same(cw19, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
-		cw_setVertexColor4Same(cw10, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
-		cw_setVertexColor4Same(cw1a, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
-		cw_setVertexColor4Same(cw1b, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
+		if s_get3dSkew() > -1 then
+			cw_setVertexColor4Same(cw17, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
+			cw_setVertexColor4Same(cw18, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
+			cw_setVertexColor4Same(cw19, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
+			cw_setVertexColor4Same(cw10, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
+			cw_setVertexColor4Same(cw1a, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
+			cw_setVertexColor4Same(cw1b, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
+		else 
+			cw_setVertexColor4Same(cw17, 250, 0, 0, 255)
+			cw_setVertexColor4Same(cw18, 250, 0, 0, 255)
+			cw_setVertexColor4Same(cw19, 250, 0, 0, 255)
+			cw_setVertexColor4Same(cw10, 250, 0, 0, 255)
+			cw_setVertexColor4Same(cw1a, 250, 0, 0, 255)
+			cw_setVertexColor4Same(cw1b, 250, 0, 0, 255)
+		end
 	end
 	if FFrames % 10 == 7 then
-		cw_setVertexColor4Same(cw11, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
-		cw_setVertexColor4Same(cw12, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
-		cw_setVertexColor4Same(cw13, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
-		cw_setVertexColor4Same(cw14, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
-		cw_setVertexColor4Same(cw15, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
-		cw_setVertexColor4Same(cw16, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
+		if s_get3dSkew() > -1 then
+			cw_setVertexColor4Same(cw11, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
+			cw_setVertexColor4Same(cw12, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
+			cw_setVertexColor4Same(cw13, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
+			cw_setVertexColor4Same(cw14, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
+			cw_setVertexColor4Same(cw15, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
+			cw_setVertexColor4Same(cw16, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
 
-		cw_setVertexColor4Same(cw21, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
-		cw_setVertexColor4Same(cw22, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
-		cw_setVertexColor4Same(cw23, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
-		cw_setVertexColor4Same(cw24, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
-		cw_setVertexColor4Same(cw25, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
-		cw_setVertexColor4Same(cw26, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
-
+			cw_setVertexColor4Same(cw21, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
+			cw_setVertexColor4Same(cw22, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
+			cw_setVertexColor4Same(cw23, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
+			cw_setVertexColor4Same(cw24, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
+			cw_setVertexColor4Same(cw25, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
+			cw_setVertexColor4Same(cw26, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
+		else
+			cw_setVertexColor4Same(cw11, 250, 0, 0, 255)
+			cw_setVertexColor4Same(cw12, 250, 0, 0, 255)
+			cw_setVertexColor4Same(cw13, 250, 0, 0, 255)
+			cw_setVertexColor4Same(cw14, 250, 0, 0, 255)
+			cw_setVertexColor4Same(cw15, 250, 0, 0, 255)
+			cw_setVertexColor4Same(cw16, 250, 0, 0, 255)
+	
+			cw_setVertexColor4Same(cw21, 250, 0, 0, 255)
+			cw_setVertexColor4Same(cw22, 250, 0, 0, 255)
+			cw_setVertexColor4Same(cw23, 250, 0, 0, 255)
+			cw_setVertexColor4Same(cw24, 250, 0, 0, 255)
+			cw_setVertexColor4Same(cw25, 250, 0, 0, 255)
+			cw_setVertexColor4Same(cw26, 250, 0, 0, 255)
+		end
 		cw_setVertexColor4Same(cw17, 250, 250, 250, 255)
 		cw_setVertexColor4Same(cw18, 250, 250, 250, 255)
 		cw_setVertexColor4Same(cw19, 250, 250, 250, 255)
@@ -437,7 +463,7 @@ function onUpdate(mFrameTime)
 		s_set3dSkew(0.01)
 		s_set3dDepth(0)
 	else
-		if u_getDifficultyMult() >= 1.0000 then
+		if roundThousand(u_getDifficultyMult()) >= roundThousand(1.000) then
 			s_set3dSkew(-2.01)
 			s_set3dDepth(3)
 		end
