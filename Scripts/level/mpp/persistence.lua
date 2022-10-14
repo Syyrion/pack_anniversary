@@ -207,18 +207,6 @@ function hardPulse()
     l_setPulseDelayMax(0)
 
 end
-function stopPulse(rad)
-    --the no beat pulse
-    l_setPulseMin(rad)
-    l_setPulseMax(rad)
-    l_setRadiusMin(rad)
-    l_setPulseSpeed(0)
-    l_setPulseSpeedR(0)
-    l_setPulseDelayMax(0)
-    l_setBeatPulseMax(0)
-    l_setBeatPulseDelayMax(0)
-    l_setBeatPulseSpeedMult(0)
-end
 function roundThousand(mFloat)
 	return math.floor(mFloat * 1000 + 0.1)
 end
@@ -259,14 +247,13 @@ blackflash = shdr_getShaderId("bc_blackflash.frag")
 spinscan = shdr_getShaderId("bc_spinscan.frag")
 function onLoad()
 
-	if roundThousand(u_getDifficultyMult()) > 1.0 then
+	if roundThousand(u_getDifficultyMult()) > roundThousand(1.0) then
 		l_setSpeedMult(2.0)
 	else
 		l_setSpeedMult(1.5)
 	end
 	e_eval([[cwspawn()]])
     e_eval([[shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, blackflash)]])
-    e_eval([[u_setFlashEffect(255)]])
     e_eval([[hardPulse()]])
     e_eval([[l_setRadiusMin(40)]])
     e_eval([[l_setBeatPulseMax(10)]])
