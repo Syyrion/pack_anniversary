@@ -1,4 +1,5 @@
-u_execScript("level/mpp/common.lua")
+
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "common.lua")
 
 -- commonpatternsv2: second version of commonpatterns (modifications made by Hexadorsip and other players)
 

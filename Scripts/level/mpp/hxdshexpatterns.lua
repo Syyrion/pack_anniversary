@@ -1,4 +1,4 @@
-u_execScript("level/mpp/common.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "common.lua")
 
 -- Hexadorsip's patterns. Inspired by Exschwasion and Super Hexagon. (if sides = 6)
 

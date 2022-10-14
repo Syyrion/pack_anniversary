@@ -1,8 +1,8 @@
 -- Include useful files or existing libraries. These are found in the `Scripts`
 -- folder.
-u_execScript("level/mpp/utils.lua")
-u_execScript("level/mpp/common.lua")
-u_execScript("level/mpp/commonpatterns.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "utils.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "common.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "commonpatterns.lua")
 u_execScript("level/mpp/commonpatternsv2.lua")
 u_execScript("level/mpp/expatterns.lua")
 u_execScript("level/mpp/hxdshexpatterns.lua")
@@ -39,7 +39,31 @@ dys = false
 FFrames = 0
 BPM = 234
 pastRad = 0
+function pointSpin(theta, x, y, a)
+	local r = math.sqrt((x*x) + (y*y))
+	local ct = math.atan2(y, x)
+	ct = ct + theta
+	if a then
+		return r * math.cos(ct)
+	else
+		return r * math.sin(ct)
+	end
+end
 
+function cwspin(cw, theta)
+	--convert to polar
+	local x0, y0 = cw_getVertexPos(cw, 0)
+	local x1, y1 = cw_getVertexPos(cw, 1)
+	local x2, y2 = cw_getVertexPos(cw, 2)
+	local x3, y3 = cw_getVertexPos(cw, 3)
+	--cringe
+	cw_setVertexPos4(cw, 
+		pointSpin(theta, x0, y0, true), pointSpin(theta, x0, y0, false), 
+		pointSpin(theta, x1, y1, true), pointSpin(theta, x1, y1, false), 
+		pointSpin(theta, x2, y2, true), pointSpin(theta, x2, y2, false), 
+		pointSpin(theta, x3, y3, true), pointSpin(theta, x3, y3, false)
+	)
+end
 --cw decoration
 
 --layer 1 - rings

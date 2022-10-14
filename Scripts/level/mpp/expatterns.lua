@@ -1,4 +1,4 @@
-u_execScript("level/mpp/common.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "common.lua")
 
 -- Exschwasion's patterns (and some adds)
 
