@@ -1,0 +1,17 @@
+{
+    "id": "mpp",
+
+    "file_name": "mpp.ogg",
+
+    "name": "M1LLI0N PP",
+    "album": "Tera I/O",
+    "author": "Camellia",
+
+    "segments":
+    [
+        { "time": 54.124 },
+        { "time": 127.969 },
+        { "time": 199.674 },
+        { "time": 325.058 }
+    ]
+}

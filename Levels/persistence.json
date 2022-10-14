@@ -1,0 +1,12 @@
+{
+    "id": "persistence",
+    "name": "Persistence",
+    "description": "of vision\n\n0.999x - no negative skew\n1.001x - increased speed\n1.002x - ambiguous scanning",
+    "author": "Nesa",
+    "menuPriority": 1,
+    "selectable": true,
+    "styleId": "bc_kesd2",
+    "musicId": "mpp",
+    "luaFile": "Scripts/level/mpp/persistence.lua",
+    "difficultyMults": [0.999, 1.001, 1.002]
+}
