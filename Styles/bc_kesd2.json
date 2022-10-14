@@ -14,11 +14,11 @@
 	"pulse_increment": 0.411,
 
 	// 3D options
-	"3D_depth": 1,
+	"3D_depth": 0,
 	"3D_pulse_min": -10.0,
 	"3D_pulse_max": 10.0,
 	"3D_skew": 0.1,
-	"3D_spacing": 5,
+	"3D_spacing": 3,
 	"3D_pulse_speed": 0.0,
 	"3D_alpha_falloff": 0.1,
 	

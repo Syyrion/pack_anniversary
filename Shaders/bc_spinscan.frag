@@ -1,6 +1,7 @@
 uniform vec2 u_resolution;
 uniform float u_time;
 uniform float u_skew;
+uniform int u_dd;
 //inspired by ufo
 void main() {
     vec2 st = gl_FragCoord.xy/u_resolution.y;
@@ -39,6 +40,12 @@ void main() {
         } else {
             color.x = 1.0;
         }
+    }
+    if(u_skew < 0.0) {
+        color.yz = vec2(0.0, 0.0);
+    }
+    if(u_dd == 0) {
+        color.yz = vec2(0.0, 0.0);
     }
 
     gl_FragColor = vec4(color,1.0);
