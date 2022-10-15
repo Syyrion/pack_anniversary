@@ -115,7 +115,7 @@ cw19 = cw_createNoCollision()
 cw10 = cw_createNoCollision()
 cw1a = cw_createNoCollision()
 cw1b = cw_createNoCollision()
---layer 2 - ends
+
 cw21 = cw_createNoCollision()
 cw22 = cw_createNoCollision()
 cw23 = cw_createNoCollision()
@@ -131,11 +131,11 @@ cw35 = cw_createNoCollision()
 cw36 = cw_createNoCollision()
 
 function cwspawnwalllayer1(cw)
-	local length = 400
-	local width = 10
+	local length = 100
+	local width = 7
 	local displacement = 700
 	local alpha = 200
-	local conical = 10
+	local conical = 0
     cw_setVertexPos(cw, 0, displacement+width, length+conical)
     cw_setVertexPos(cw, 1, displacement+width, 0-length-conical)
     cw_setVertexPos(cw, 2, displacement-width, 0-length)
@@ -146,7 +146,7 @@ end
 function cwspawnwalllayer1a(cw)
 local length = 50
 local width = 5
-local displacement = 570
+local displacement = 500
 local alpha = 200
 local conical = 0
 cw_setVertexPos(cw, 0, displacement+width, length+conical)
@@ -170,9 +170,9 @@ function cwspawnwalllayer2(cw)
 end
 
 function cwspawnwalllayer3(cw)
-	local length = 4
+	local length = 1
 	local width = 1000
-	local displacement = 1350
+	local displacement = 1250
 	local alpha = 200
 	local conical = 30
     cw_setVertexPos(cw, 0, displacement+width, length+conical)
@@ -330,12 +330,6 @@ function onUpdate(mFrameTime)
 
 	--sustain cw decoration
 	theta = (l_getRotation()*math.pi)/180 - pastRad
-	cwspin(cw11, theta)
-	cwspin(cw12, theta)
-	cwspin(cw13, theta)
-	cwspin(cw14, theta)
-	cwspin(cw15, theta)
-	cwspin(cw16, theta)
 	cwspin(cw31, theta)
 	cwspin(cw32, theta)
 	cwspin(cw33, theta)
@@ -351,6 +345,13 @@ function onUpdate(mFrameTime)
 		cwspin(cw24, theta)
 		cwspin(cw25, theta)
 		cwspin(cw26, theta)
+		theta = theta + math.random()*10
+		cwspin(cw11, theta)
+		cwspin(cw12, theta)
+		cwspin(cw13, theta)
+		cwspin(cw14, theta)
+		cwspin(cw15, theta)
+		cwspin(cw16, theta)
 	end
 
 
@@ -377,12 +378,12 @@ function onUpdate(mFrameTime)
 			cw_setVertexColor4Same(cw36, 170, 170, 170, 255)
 		else
 			if roundThousand(u_getDifficultyMult()) >= roundThousand(1.000) then
-				cw_setVertexColor4Same(cw31, 250, 0, 0, 255)
-				cw_setVertexColor4Same(cw32, 250, 0, 0, 255)
-				cw_setVertexColor4Same(cw33, 250, 0, 0, 255)
-				cw_setVertexColor4Same(cw34, 250, 0, 0, 255)
-				cw_setVertexColor4Same(cw35, 250, 0, 0, 255)
-				cw_setVertexColor4Same(cw36, 250, 0, 0, 255)
+				cw_setVertexColor4Same(cw31, 0, 250, 250, 255)
+				cw_setVertexColor4Same(cw32, 0, 250, 250, 255)
+				cw_setVertexColor4Same(cw33, 0, 250, 250, 255)
+				cw_setVertexColor4Same(cw34, 0, 250, 250, 255)
+				cw_setVertexColor4Same(cw35, 0, 250, 250, 255)
+				cw_setVertexColor4Same(cw36, 0, 250, 250, 255)
 			end
 		end
 		if dys then dys = false else dys = true end
@@ -414,12 +415,12 @@ function onUpdate(mFrameTime)
 			cw_setVertexColor4Same(cw1a, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
 			cw_setVertexColor4Same(cw1b, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
 		else 
-			cw_setVertexColor4Same(cw17, 250, 0, 0, 255)
-			cw_setVertexColor4Same(cw18, 250, 0, 0, 255)
-			cw_setVertexColor4Same(cw19, 250, 0, 0, 255)
-			cw_setVertexColor4Same(cw10, 250, 0, 0, 255)
-			cw_setVertexColor4Same(cw1a, 250, 0, 0, 255)
-			cw_setVertexColor4Same(cw1b, 250, 0, 0, 255)
+			cw_setVertexColor4Same(cw17, 0, 250, 250, 255)
+			cw_setVertexColor4Same(cw18, 0, 250, 250, 255)
+			cw_setVertexColor4Same(cw19, 0, 250, 250, 255)
+			cw_setVertexColor4Same(cw10, 0, 250, 250, 255)
+			cw_setVertexColor4Same(cw1a, 0, 250, 250, 255)
+			cw_setVertexColor4Same(cw1b, 0, 250, 250, 255)
 		end
 	end
 	if FFrames % 10 == 7 then
@@ -438,19 +439,19 @@ function onUpdate(mFrameTime)
 			cw_setVertexColor4Same(cw25, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
 			cw_setVertexColor4Same(cw26, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
 		else
-			cw_setVertexColor4Same(cw11, 250, 0, 0, 255)
-			cw_setVertexColor4Same(cw12, 250, 0, 0, 255)
-			cw_setVertexColor4Same(cw13, 250, 0, 0, 255)
-			cw_setVertexColor4Same(cw14, 250, 0, 0, 255)
-			cw_setVertexColor4Same(cw15, 250, 0, 0, 255)
-			cw_setVertexColor4Same(cw16, 250, 0, 0, 255)
+			cw_setVertexColor4Same(cw11, 0, 250, 250, 255)
+			cw_setVertexColor4Same(cw12, 0, 250, 250, 255)
+			cw_setVertexColor4Same(cw13, 0, 250, 250, 255)
+			cw_setVertexColor4Same(cw14, 0, 250, 250, 255)
+			cw_setVertexColor4Same(cw15, 0, 250, 250, 255)
+			cw_setVertexColor4Same(cw16, 0, 250, 250, 255)
 	
-			cw_setVertexColor4Same(cw21, 250, 0, 0, 255)
-			cw_setVertexColor4Same(cw22, 250, 0, 0, 255)
-			cw_setVertexColor4Same(cw23, 250, 0, 0, 255)
-			cw_setVertexColor4Same(cw24, 250, 0, 0, 255)
-			cw_setVertexColor4Same(cw25, 250, 0, 0, 255)
-			cw_setVertexColor4Same(cw26, 250, 0, 0, 255)
+			cw_setVertexColor4Same(cw21, 0, 250, 250, 255)
+			cw_setVertexColor4Same(cw22, 0, 250, 250, 255)
+			cw_setVertexColor4Same(cw23, 0, 250, 250, 255)
+			cw_setVertexColor4Same(cw24, 0, 250, 250, 255)
+			cw_setVertexColor4Same(cw25, 0, 250, 250, 255)
+			cw_setVertexColor4Same(cw26, 0, 250, 250, 255)
 		end
 		cw_setVertexColor4Same(cw17, 250, 250, 250, 255)
 		cw_setVertexColor4Same(cw18, 250, 250, 250, 255)

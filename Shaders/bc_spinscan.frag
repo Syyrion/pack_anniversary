@@ -26,26 +26,26 @@ void main() {
     if(floor(mod(floor((theta-(u_time*20.0))/(pi/3.0)), 2.0)) == 0.0) {
     } 
     else {
+        
             theta = mod((theta-(u_time*20.0)), (pi)/3.0);
         float a = tan(theta);
         color = seco*a;
         color -= 0.5;
     }
 
-
-
     if(mod(atan(st.y, st.x)+(3.141592653589793642/6.0)+0.01,(3.141592653589793642/3.0)) < 0.02) {
         if(u_skew > 0.0) {
-            color.yz = vec2(1.0, 1.0);
+            color.xyz = vec3(1.0, 1.0, 1.0);
         } else {
-            color.x = 1.0;
+            color.yz = vec2(1.0);
         }
     }
+
     if(u_skew < 0.0) {
-        color.yz = vec2(0.0, 0.0);
+        color.x = 0.0;
     }
     if(u_dd == 0) {
-        color.yz = vec2(0.0, 0.0);
+        color.x = 0.0;
     }
 
     gl_FragColor = vec4(color,1.0);

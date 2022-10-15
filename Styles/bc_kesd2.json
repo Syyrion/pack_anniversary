@@ -18,7 +18,7 @@
 	"3D_pulse_min": -10.0,
 	"3D_pulse_max": 10.0,
 	"3D_skew": 0.1,
-	"3D_spacing": 3,
+	"3D_spacing": 1,
 	"3D_pulse_speed": 0.0,
 	"3D_alpha_falloff": 0.1,
 	

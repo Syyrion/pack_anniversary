@@ -11,9 +11,9 @@ void main() {
     vec3 seco = vec3(1.0, 1.0, 1.0);
     
     if(u_skew > 0.0) {
-        seco = vec3(0.0, 1.0, 1.0);
+        seco = vec3(1.0, 1.0, 1.0);
     } else {
-        seco = vec3(1.0, 0.0, 0.0);
+        seco = vec3(0.0, 1.0, 1.0);
     }
 
     float s = sin(0.0);
