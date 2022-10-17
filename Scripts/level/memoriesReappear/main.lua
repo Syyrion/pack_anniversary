@@ -123,7 +123,7 @@ function onLoad()
     getMainKey()
     if not u_inMenu() then
         s_setStyle("memoriesreappear_intro")
-        wallFromPicture("Packs/anniversary_leftovers/Scripts/level/memoriesReappear/image.bmp", 0, 0, 15, 2.5, 0, getRandomSide(), 0.015, 2.75)
+        wallFromPicture("level/memoriesReappear/image.bmp", 0, 0, 15, 2.5, 0, getRandomSide(), 0.015, 2.75)
         t_eval([[l_setSides(6) l_setSpeedMult(1)]])
         t_eval([[u_setFlashColor(0, 0, 0) u_setFlashEffect(255)]])
     end

@@ -14,6 +14,12 @@ w_wallAcc = w_wallAcc or wallAcc
 l_getSpeedMult = l_getSpeedMult or getSpeedMult
 l_getSides = l_getSides or getSides
 ----------------------------------------------------------------------------
+
+--[[
+execute included <reader.lua>, Reader:open() is avail right there.
+]]
+u_execScript('reader.lua')
+
 --[[
 wallDist: main function, allows you to place a wall at a certain distance
 	from the center of the center of the level.
@@ -81,7 +87,7 @@ xos, yos: the X/Y offset of the center of the resulting pattern, 1 being
 	half the width (xos) or the height (yos) of the picture.
 ]]
 function loadBMPPicture(path, xos, yos)
-	local input = io.open(path)
+	local input = Reader:open(path)
 	-- helper function to read a byte as number and not as ASCII
 	local function readHex(bytes)
 		local result = 0
