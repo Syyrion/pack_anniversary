@@ -40,7 +40,7 @@ dys = false
 FFrames = 0
 BPM = 234
 pastRad = 0
-
+blinkTime = 6
 
 --same wall + THICKNESS (created by Exschwasion)
 function rWallThick(mSide, THICKNESS)
@@ -314,7 +314,9 @@ end
 -- `onIncrement` is an hardcoded function that is called when the level
 -- difficulty is incremented.
 function onIncrement()
-	-- ...
+	if blinkTime < 30 then
+		blinkTime = blinkTime + 3
+	end
 end
 
 
@@ -367,7 +369,7 @@ function onUpdate(mFrameTime)
 		ibeatCount = 0
     end
 
-	if ibeatCount == 20 then
+	if ibeatCount == blinkTime then
 		shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, spinscan)
 		if s_get3dSkew() < -1 then
 			cw_setVertexColor4Same(cw31, 170, 170, 170, 255)
