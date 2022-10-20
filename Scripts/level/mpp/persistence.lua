@@ -362,14 +362,17 @@ function onUpdate(mFrameTime)
         nextLoop = loopcount * (60/234) -- bpm = 234
         --on beat events
 		hardPulse()
-		shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, blackflash)
-		l_setRotationSpeed(10.0+(math.random() * 100.0))
+		if beatCount % 2 == 1 then
+			shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, blackflash)
+			l_setRotationSpeed(10.0+(math.random() * 100.0))
+		end
 
         beatCount = beatCount + 1
 		ibeatCount = 0
     end
 
-	if ibeatCount == blinkTime then
+	if ibeatCount == blinkTime*2 then
+		if beatCount % 2 == 0 then
 		shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, spinscan)
 		if s_get3dSkew() < -1 then
 			cw_setVertexColor4Same(cw31, 170, 170, 170, 255)
@@ -390,6 +393,7 @@ function onUpdate(mFrameTime)
 		end
 		if dys then dys = false else dys = true end
 		l_setRotationSpeed(0)
+	end
 	end
 
 	FFrames = FFrames + 1
