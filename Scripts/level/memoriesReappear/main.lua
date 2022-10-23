@@ -454,7 +454,7 @@ function onUpdate(mFrameTime)
                     sh_levelName = sh_levelNames[closeValue(sh_level, 1, 10)]
                     if sh_level == 10 then
                         sh_isFinalEngage = true
-                        a_setMusic("[MemoriesReappearSHFL] Antriksh Bali - Memories, Reappear (Paulstretched)")
+                        a_setMusic("memoriesreappearpaulstretched")
                         e_messageAddImportant("You've been reached after mega hexagonest.\nGreatestest job.", 120)
                         e_messageAddImportant("You can now beat the high scores\nif you completed this level.", 120)
                     end
