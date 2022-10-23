@@ -3,7 +3,7 @@
 	"name": "Overdose",
 	"description": "\nThis level has no ending",
 	"author": "Vipre",	
-	"menuPriority": 1,
+	"menuPriority": 0,
 	"selectable": true,
 	"styleId": "overdose_menu",
 	"musicId": "overdose_NEURO_CLOUD_9",
