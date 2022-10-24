@@ -1,5 +1,6 @@
-u_execScript("common.lua")
-u_execScript("utils.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "utils.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "common.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "commonpatterns.lua")
 
 --[[ vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 -- Note: DO NOT EXECUTE THIS SCRIPT WITHOUT THE IMPOSTER WALL SCRIPT STUFF IN YOUR LEVEL!
