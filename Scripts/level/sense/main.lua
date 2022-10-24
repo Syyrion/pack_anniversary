@@ -1,11 +1,11 @@
-u_execScript("babacommon.lua")
-u_execScript("babapatterns.lua")
-u_execScript("zcustomWallFractalRequirements.lua")
-u_execScript("zimposterspecial.lua")
-u_execScript("zimposterpatterns.lua")
-u_execScript("sensepatterns.lua")
-u_execScript("zxfuncs.lua")
-u_execScript("customwalls.lua")
+u_execScript("level/sense/patterns/babacommon.lua")
+u_execScript("level/sense/patterns/babapatterns.lua")
+u_execScript("level/sense/patterns/zcustomWallFractalRequirements.lua")
+u_execScript("level/sense/patterns/zimposterspecial.lua")
+u_execScript("level/sense/patterns/zimposterpatterns.lua")
+u_execScript("level/sense/patterns/sensepatterns.lua")
+u_execScript("level/sense/patterns/zxfuncs.lua")
+u_execScript("level/sense/patterns/customwalls.lua")
 
 imposterWall = {}
 imposterWall.__index = imposterWall
