@@ -1,5 +1,6 @@
-u_execScript("common.lua")
-u_execScript("utils.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "utils.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "common.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "commonpatterns.lua")
 
 function fractal(mTimes, mSides, mSidewidth, mSideInc, mThickness, mDistanceStart, mDistanceInc, mRed, mGreen, mBlue, mAlpha)
 	for a = 0, mTimes - 1 do
