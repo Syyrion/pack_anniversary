@@ -1,0 +1,35 @@
+{
+    // Style data id
+    "id": "sense",
+
+	// Hue options
+	"hue_min": 60,
+	"hue_max": 110,
+	"hue_ping_pong": true,
+	"hue_increment": 2.5,
+	
+	// Pulse options
+	"pulse_min": 0,
+	"pulse_max": 1.1,
+	"pulse_increment": 0.01,
+
+	// 3D options
+	"3D_depth": 15,
+	"3D_skew": 0.38,
+	"3D_spacing": 20.5,
+    "3D_darken_multiplier": 3,
+	"3D_alpha_multiplier": 1.5,
+    "3D_alpha_falloff": 8,
+	"3D_pulse_speed": 0,
+
+	// Main color
+	"main": { "main": true, "dynamic": false, "value": [0, 0, 0, 115], "pulse": [0, 0, 0, 0] },
+	"text_color": { "main": true, "dynamic": false, "value": [0, 0, 0, 205], "pulse": [0, 0, 0, 0] },
+	"cap_color": "main",
+
+	// Background colors
+	"colors":
+	[
+		{ "dynamic": false, "dynamic_offset": false, "hue_shift": 20, "dynamic_darkness": 12.0, "value": [165, 165, 165, 255], "pulse": [-70, -70, -70, 100]}
+	]
+}
