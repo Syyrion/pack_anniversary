@@ -1,6 +1,6 @@
-u_execScript("utils.lua")
-u_execScript("common.lua")
-u_execScript("commonpatterns.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "utils.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "common.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "commonpatterns.lua")
 u_execScript("zimposterpatterns.lua")
 u_execScript("zimposterspecial.lua")
 
