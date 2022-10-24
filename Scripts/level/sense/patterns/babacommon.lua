@@ -1,6 +1,7 @@
 -- these are mainly to make complicated things simpler, they arent required, but useful as all heck!
-u_execScript("utils.lua")
-u_execScript("common.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "utils.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "common.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "commonpatterns.lua")
 
 isPressed = 0
 
