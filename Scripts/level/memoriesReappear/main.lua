@@ -386,7 +386,7 @@ function onUpdate(mFrameTime)
         s_set3dPulseMax(u_rndInt(5, 15))
     elseif curStyle == "EXSCH2space" then
         rgb_color = (rgb_color + 120)%360
-        forceSetPulse(rgb_color)
+        forceSetHue(rgb_color)
         l_setRotationSpeed(rotation * rotdir * rotmult)
     elseif curStyle == "EXSCH2invert_blackwhite" then
             if etEvent:detect(0,                     0, false) then s_setStyle("memoriesreappear_EXSCH2invert_blackwhite") invRot()
