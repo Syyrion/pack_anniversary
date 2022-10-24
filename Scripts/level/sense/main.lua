@@ -1,3 +1,6 @@
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "utils.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "common.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "commonpatterns.lua")
 u_execScript("level/sense/patterns/babacommon.lua")
 u_execScript("level/sense/patterns/babapatterns.lua")
 u_execScript("level/sense/patterns/zcustomWallFractalRequirements.lua")
