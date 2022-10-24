@@ -2,7 +2,7 @@
 u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "utils.lua")
 u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "common.lua")
 u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "commonpatterns.lua")
-u_execScript("zimposterpatterns.lua")
+u_execScript("level/sense/patterns/zimposterpatterns.lua")
 
 -- our wall
 imposterWall = {}
