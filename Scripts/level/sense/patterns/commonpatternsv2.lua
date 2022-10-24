@@ -1,4 +1,6 @@
-u_execScript("common.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "utils.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "common.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "commonpatterns.lua")
 
 -- commonpatternsv2: second version of commonpatterns (modifications made by Hexadorsip and other players)
 
