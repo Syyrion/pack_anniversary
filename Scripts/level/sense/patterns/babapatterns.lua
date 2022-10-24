@@ -1,7 +1,7 @@
 -- baba's patterns, use them if you want i dont care
-u_execScript("utils.lua")
-u_execScript("common.lua")
-u_execScript("babacommon.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "utils.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "common.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "commonpatterns.lua")
 
 t = getRandomSide()
 m = 0
