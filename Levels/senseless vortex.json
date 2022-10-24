@@ -1,0 +1,12 @@
+{
+    "id": "senseless vortex",
+    "name": "senseless vortex",
+    "description": "call of the void",
+    "author": "zXdasfsa",
+    "menuPriority": 1,
+    "selectable": true,
+    "styleId": "sense",
+    "musicId": "darkleaves",
+    "luaFile": "Scripts/Levels/sense/main.lua",
+    "difficultyMults": [1.01]
+}
