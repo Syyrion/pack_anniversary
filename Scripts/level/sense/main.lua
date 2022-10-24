@@ -17,6 +17,9 @@ bgWall = {}
 bgWall.__index = bgWall
 bgWalls = {}
 
+l_set3dRequired(true)
+l_setShowPlayerTrail(false)
+
 rbmult = 2.2
 udelay = 1.15
 
