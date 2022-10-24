@@ -1,7 +1,7 @@
 -- include useful files
-u_execScript("utils.lua")
-u_execScript("common.lua")
-u_execScript("commonpatterns.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "utils.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "common.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "commonpatterns.lua")
 u_execScript("zimposterpatterns.lua")
 
 -- our wall
@@ -58,7 +58,7 @@ function wImpWall(mSide, mDistance, mSpeed, mThickness, mShape, mRed, mGreen, mB
 	
 	
 	iw = imposterWall:new(cwHandle)
-	-- set up The Shit™
+	-- set up The Shitâ„¢
 	iw.distance = mDistance
 	iw.speed = mSpeed
 	iw.side = mSide
