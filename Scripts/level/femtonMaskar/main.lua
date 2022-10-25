@@ -112,9 +112,9 @@ function addPattern(mKey)
         end
 	elseif mKey == 4 then 
 		if (l_getSides() < 4) then
-			pHalfBarrageSpiral(math.random(2,3),1.5)
+			pHalfBarrageSpiral(3,1.475)
         elseif (l_getSides() < 5) then
-			pHalfBarrageSpiral(math.random(2,3),1)
+			pHalfBarrageSpiral(3,1.3)
         else
 			pChangeSwapBarrage(delaytime)
         end
