@@ -70,69 +70,6 @@ function separateWalls(delayPre, timesDo, mode)
 	end
 end
 
--- mode: 0 for always right, 1 for left or right
-function doubleSpiral(delayPre, timesDo, mode)
-	local side = getRandomSide()
-	local thicknessSpiral = 38 * l_getSpeedMult()
-	local loopMax = math.random(timesDo[1], timesDo[2])
-	local direction = 1
-	
-	if mode == 1 then direction = getRandomDir() end
-	
-	t_wait(delayPre)
-	for i = 0, loopMax do
-		if i > 0 then t_wait(oneSideMinDelay()) end
-		w_wall(side + i * direction, thicknessSpiral)
-		w_wall(side + i * direction + math.floor(l_getSides() / 2), thicknessSpiral)
-	end
-	t_wait(l_getSpeedMult() / 1.35)
-end
-
--- mode: 0 for always right, 1 for left or right
-function veryThinSpiral(delayPre, timesDo, mode)
-	local side = getRandomSide()
-	local thicknessSpiral = 40 * math.min(l_getSpeedMult(), 3) / 3
-	local loopMax = math.random(timesDo[1], timesDo[2])
-	local direction = 1
-	
-	if mode == 1 then direction = getRandomDir() end
-	
-	t_wait(delayPre)
-	for i = 0, loopMax do
-		if i > 0 then t_wait(oneSideMinDelay()) end
-		singleOneOpenSide(side + i * direction, thicknessSpiral)
-	end
-end
-
--- mode: 0 patterns can have same position (new - old = 0), 1 can't
-function randomOneOpenSide(delay, timesDo, mode)
-
-	local function newDelayCalc(oldSide, side)
-		local sideDiff = math.abs(side - oldSide) -- the difference between the new and old positions
-		if sideDiff > math.floor(l_getSides() / 2) then sideDiff = l_getSides() - sideDiff end -- the delay is reduced if the difference is more than half, as the new pattern approaches the old position on the other side
-		return sideDiff
-	end
-
-	local side = getRandomSide()
-	local direction = getRandomDir()
-	local loopCount = math.random(timesDo[1], timesDo[2])
-	
-	local oldSide = side
-	local newDelay = delay
-	
-	for i = 0, loopCount do
-		t_wait(newDelay)
-		
-		singleOneOpenSide(side, thickness)
-		
-		side = getRandomSide()
-		if mode == 1 then while (side - oldSide) == 0 do side = getRandomSide() end end
-		
-		newDelay = getCommonDelayMult() / 10 * (halfSidesMinDelay() / 2 + halfSidesMinDelay() / l_getSides() * newDelayCalc(oldSide, side)) -- half of the delay is constant for any position, the other half is relative
-		oldSide = side
-	end
-end
-
 function altBarrage(delay, firstDelay, timesDo)
 	local side = getRandomSide()
 	local loopMax = math.random(timesDo[1], timesDo[2])

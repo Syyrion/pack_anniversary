@@ -1,12 +1,9 @@
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "common.lua")
+u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "utils.lua")
+
 function getCommonDelayMult() return l_getDelayMult() * 10 end
 
-function getRandomSide() return math.random(1, l_getSides()) end
-
 function getHalfSides(i) return math.floor(l_getSides() / 2) + (i % 2) * (l_getSides() % 2) end -- half the number of sides (i even - the smaller half, odd - the larger half; if the number of sides is odd)
-
-function getRandomDir() local firstNumber = math.random(1, 2) return firstNumber - 2 / firstNumber end
-
-function getSign(value) return value / math.abs(value) end
 
 function oneSideMinDelay() -- multiplier for one side (minimum delay limit)
 local mult = 1
@@ -41,15 +38,6 @@ function shuffle(x)
 	end
 end
 
-function shuffle2D(x)
-	for k = 1, #x do
-		for i = #x[k], 2, -1 do
-			local j = u_rndIntUpper(i)
-			x[k][i], x[k][j] = x[k][j], x[k][i]
-		end
-	end
-end
-
 function whyCantIJustGoToTheMenu()
 	e_kill() -- that sucks less
 end
@@ -68,12 +56,6 @@ function setHue(value) s_setHueMin(value) s_setHueMax(value) end
 function setRotation(value) l_setRotationSpeed(value) end
 
 function setSkew(value) s_set3dPulseMin(value) s_set3dPulseMax(value) end
-
-function message(text, time) e_messageAddImportantSilent(text, time) end
-
-function messageDifficulty(text, time) if u_getDifficultyMult() >= 1 then e_messageAddImportantSilent(text, time) end end
-
-function getRoundedDifficulty() return math.ceil(u_getDifficultyMult() * 10000) / 10000 end
 
 function getRoundedDifficulty3() return math.ceil(math.floor(u_getDifficultyMult() * 10000) / 10) / 1000 end -- ...
 
@@ -94,10 +76,6 @@ function coreLevelSettings()
 end
 
 function time() return l_getLevelTime() end
-
-function track(x) l_addTracked(x, x) end
-
-function message(text, time) e_messageAddImportantSilent(text, time) end
 
 function getBpmPulses(diff, bpm, ratio)
     x = (ratio + 1) * diff * bpm / 3600.0 / ratio

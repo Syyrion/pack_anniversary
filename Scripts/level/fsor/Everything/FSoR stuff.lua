@@ -94,24 +94,6 @@ function flickTimer()
 	end
 end
 
--- Kick
-kickTimerVariable = time()
-kickValue = 0
-kickTimerEnabled = false
-
-function kickTimer()
-	if time() - kickTimerVariable >= 0.411 then
-		kickTimerVariable = time()
-		kickValue = 180
-	end
-end
-
-function kickEnabled(status)
-	if status == true then kickTimerEnabled = true kickTimerVariable = time()
-	else kickTimerEnabled = false
-	end
-end
-
 -- Rotation direction switch
 rotationDirection = -1
 rotationSwitchTimerValue = time()
@@ -213,12 +195,12 @@ function timersAndStuff()
 
 	-- drop
 	elseif time() - eventTimer >= 45.935 - OFFSET and eventCount == 5.5 then eventCount = 6 patternsEnabled = true thickness = 30 staticPulse = -5 addAdditionalBgPatterns(1)
-	elseif time() - eventTimer >= 47.055 - OFFSET and eventCount == 6 then eventCount = 7 s_setStyle("FSoR") fadeBrightnessPulse = 0.71 stylePulseIncr = 0.15 staticRotation = ROTATION_DROP kickEnabled(false) directionTimerAndIncr(1.644, false) l_setDelayMult(DELAY_DROP) switchedStylePulse = true
+	elseif time() - eventTimer >= 47.055 - OFFSET and eventCount == 6 then eventCount = 7 s_setStyle("FSoR") fadeBrightnessPulse = 0.71 stylePulseIncr = 0.15 staticRotation = ROTATION_DROP directionTimerAndIncr(1.644, false) l_setDelayMult(DELAY_DROP) switchedStylePulse = true
 	elseif time() - eventTimer >= 60.205 - OFFSET and eventCount == 7 then eventCount = 7.3 emulateIncrementSomehow() patternsEnabled = false
 	elseif time() - eventTimer >= 60.7275 - OFFSET and eventCount == 7.3 then eventCount = 7.5 patternsEnabled = true allowPreDelay = 0
 	elseif time() - eventTimer >= 60.7375 - OFFSET and eventCount == 7.5 then eventCount = 8 allowPreDelay = 1
 	elseif time() - eventTimer >= 73.356 - OFFSET and eventCount == 8 then eventCount = 9 s_set3dSkew(0.075)  l_setPulseSpeed(0.7) l_setPulseSpeedR(0) changeFlickSize(2) blackPulse(true) enableFlick(2) directionTimerAndIncr(1.644 / 2, true) fadeBrightnessPulse = 0.8 switchedStylePulse = false
-	elseif time() - eventTimer >= 98.836 - OFFSET and eventCount == 9 then eventCount = 10 kickEnabled(false) staticRotation = ROTATION_END directionTimerAndIncr(0, false) enableFlick(0)
+	elseif time() - eventTimer >= 98.836 - OFFSET and eventCount == 9 then eventCount = 10 staticRotation = ROTATION_END directionTimerAndIncr(0, false) enableFlick(0)
 	elseif time() - eventTimer >= 99.658 - OFFSET and eventCount == 10 then eventCount = 11 whyCantIJustGoToTheMenu()
 	end
 
@@ -228,8 +210,6 @@ function timersAndStuff()
 	if fadeTimerEnabled == true then fadeInTimer() end
 
 	if enableFlickTimer == true then flickTimer() end
-
-	if kickTimerEnabled == true then kickTimer() end
 
 	if rotationSwitchTimerEnabled == true then rotationSwitchTimer() end
 
@@ -244,9 +224,6 @@ function timersAndStuff()
 			rotationFlickValue = 0
 			rotationFlickDivider = 1
 		end
-
-		kickValue = kickValue - 6
-		if kickValue < 0 then kickValue = 0 end
 
 		hueValue = hueValue + 0.1 * hueDirection
 		if hueValue >= 360 then
@@ -268,7 +245,5 @@ function timersAndStuff()
 
 	setHue(hueValue)
 
-	if kickTimerEnabled == false then l_setBeatPulse(staticPulse)
-	else l_setBeatPulse(staticPulse + (math.sqrt(math.sin(kickValue / 360 * 3.14))^2)*15)
-	end
+	l_setBeatPulse(staticPulse)
 end

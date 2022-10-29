@@ -15,9 +15,3 @@ function singleHalfBarrage(side, m, thick) -- used for two open sides (l-l-r-r l
 		w_wall(side + i - m, thick)
 	end
 end
-
-function singleHalfBarrageB(side, m, thick) -- used for alternating half sides (with a delay between the two parts: left -> delay -> right)
-	for i = 0, getHalfSides(m) - 1 do
-		w_wall(side + i - m, thick)
-	end
-end
