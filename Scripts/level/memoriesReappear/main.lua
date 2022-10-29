@@ -35,7 +35,7 @@ end
 ---- custom function code
 -- utils
 function retSpeedMultExpectCurLevel(mSpdInc)
-    if curStyle ~= "HXDS4leftNRight" then l_setSpeedMult(l_getSpeedMult() + mSpdInc) end
+    if curStyle ~= "HXDS4leftNRight" and (isNostalgiaStarts) then l_setSpeedMult(l_getSpeedMult() + mSpdInc) end
 end
 
 -- commons
@@ -166,7 +166,19 @@ function onStep()
                 else
                     local sh_patType = (sh_level < 4 and 0) or (sh_level >= 4 and sh_level < 7 and 1) or 2
                     local sh_hyperMode = (sh_level == 3 and true) or (sh_level == 6 and true) or false
-                        if curStyle == "SHhexagon"       then spawnSHPattern(getKeys[pat_index], sh_patType, sh_hyperMode, sh_level > 9)
+                        if curStyle == "SHhexagon" then spawnSHPattern(getKeys[pat_index], sh_patType, sh_hyperMode, sh_level > 9)
+
+                    elseif curStyle == "EXSCH1ftl" or
+                           curStyle == "EXSCH1glitched" or
+                           curStyle == "EXSCHLmalfunction" or
+                           curStyle == "EXSCHLsesism" or
+                           curStyle == "EXSCH2space" or
+                           curStyle == "EXSCH2invert_blackwhite" or
+                           curStyle == "EXSCH3reversal" or
+                           curStyle == "EXSCH3stutter" or
+                           curStyle == "EXSCH4radar1" or
+                           curStyle == "EXSCH4asymptote" then spawnExschPattern(getKeys[pat_index])
+
                     elseif curStyle == "HXDS1cPentagon"  then l_setSides(5) spawnHxdsCrazyPentPattern(getKeys[pat_index])
                     elseif curStyle == "HXDS1rubberer"   then l_setSides(4) spawnHxdsHexV1Pattern(getKeys[pat_index])
                     elseif curStyle == "HXDS2solaris1"   then p_setOverrideShape(2, 6) l_setSides(30) spawnHxdsV2Pattern(getKeys[pat_index], true)
@@ -263,6 +275,7 @@ hexest_oldHue = 0
 
 sh_level = 0
 rgb_color = 0
+rgb_abberation = 0
 
 local curStyleRadar = 1
 
@@ -354,9 +367,9 @@ function onUpdate(mFrameTime)
 
     if curStyle == "SHhexagonest" then
         if etEvent:detect(0, 0, false) then
+            hexest_oldHue = hexest_targetHue
             repeat hexest_targetHue = hexest_hues[u_rndIntUpper(#hexest_hues)]
             until  hexest_targetHue ~= hexest_oldHue
-            hexest_oldHue = hexest_targetHue
         elseif etEvent:detect(getBPM(levSync, 1, 2), 1, false) then etEvent:resetEvents(true)
         end
         if hexest_targetHue < s_getHueMin() then forceSetHue((s_getHueMin() - 1))
@@ -386,7 +399,7 @@ function onUpdate(mFrameTime)
         s_set3dPulseMax(u_rndInt(5, 15))
     elseif curStyle == "EXSCH2space" then
         rgb_color = (rgb_color + 120)%360
-        forceSetPulse(rgb_color)
+        forceSetHue(rgb_color)
         l_setRotationSpeed(rotation * rotdir * rotmult)
     elseif curStyle == "EXSCH2invert_blackwhite" then
             if etEvent:detect(0,                     0, false) then s_setStyle("memoriesreappear_EXSCH2invert_blackwhite") invRot()
@@ -442,6 +455,11 @@ function onUpdate(mFrameTime)
         if l_getPulseDetectorTimes() == 9 then s_setStyle("memoriesreappear_rainbowmain") forceSetPulse(-1)
         elseif l_getPulseDetectorTimes() > 12 then
             isNostalgiaStarts = true
+            -- after exschwaison's rgb level load, increment this level
+            if curStyle == "EXSCH2space" then
+                rgb_abberation = rgb_abberation + 1
+                l_setCameraShake(rgb_abberation)
+            end
             if (l_getPulseDetectorTimes() % 2 == 1) then
                 rotmult = 1
                 shadows_spacingMult = 1.3
@@ -454,7 +472,7 @@ function onUpdate(mFrameTime)
                     sh_levelName = sh_levelNames[closeValue(sh_level, 1, 10)]
                     if sh_level == 10 then
                         sh_isFinalEngage = true
-                        a_setMusic("[MemoriesReappearSHFL] Antriksh Bali - Memories, Reappear (Paulstretched)")
+                        a_setMusic("memoriesreappearpaulstretched")
                         e_messageAddImportant("You've been reached after mega hexagonest.\nGreatestest job.", 120)
                         e_messageAddImportant("You can now beat the high scores\nif you completed this level.", 120)
                     end
@@ -462,9 +480,9 @@ function onUpdate(mFrameTime)
                     elseif sh_level >= 4 then getKeySHAfterHexagon()
                     end
                 else
+                    oldCurStyle = curStyle
                     repeat curStyle = styles[u_rndIntUpper(#styles)]
                     until  curStyle ~= oldCurStyle
-                    oldCurStyle = curStyle
                     sh_level = sh_levelNumbers[closeValue(u_rndIntUpper(#styles), 1, 10)]
                     s_setStyle("memoriesreappear_" .. curStyle)
                 end
@@ -488,9 +506,9 @@ function onUpdate(mFrameTime)
 
     if sh_level == 7 then
         if etEvent:detect(0, 0, false) then
+            hexest_oldHue = hexest_targetHue
             repeat hexest_targetHue = hexest_hues[u_rndIntUpper(#hexest_hues)]
             until  hexest_targetHue ~= hexest_oldHue
-            hexest_oldHue = hexest_targetHue
         elseif etEvent:detect(getBPM(levSync, 1, 2), 1, false) then etEvent:resetEvents(true)
         end
         if hexest_targetHue < s_getHueMin() then forceSetHue((s_getHueMin() - 1))

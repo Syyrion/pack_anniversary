@@ -3,7 +3,7 @@
     "name": "Persistence",
     "description": "of vision\n\n0.999x - no negative skew\n1.001x - increased speed\n1.002x - ambiguous scanning",
     "author": "Nesa",
-    "menuPriority": 1,
+    "menuPriority": 3,
     "selectable": true,
     "styleId": "bc_kesd2",
     "musicId": "mpp",

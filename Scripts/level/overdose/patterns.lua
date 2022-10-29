@@ -15,11 +15,7 @@ function neuroThickness(mDelay, mMult)
 	return (mDelay + 0.15) * u_getSpeedMultDM() * mMult
 end
 
-
--- recreate usual patterns but with neuroDelay. this file kinda sucks honestly
-
 interPatternDelay = 14 -- the delay between patterns in units of neuroDelay, keep it above 12.3
-
 
 function pAltBarrage(mTimes, mDelayMult)
 	for i = 1, mTimes do
@@ -28,20 +24,6 @@ function pAltBarrage(mTimes, mDelayMult)
 	end
 	
 	t_wait(neuroDelay(interPatternDelay) - neuroDelayPerfect(5.25 * mDelayMult))
-end
-
-function pAltBarrageOdd(mTimes, mDelayMult)
-	local startSide = getRandomSide()
-	local delay = neuroDelayPerfect(5.25 * mDelayMult)
-	
-	for i = 1, mTimes do
-		cSpacedWalls(startSide, getHalfSides() - 1)
-		t_wait(delay)
-		cSpacedWalls(startSide + 1, getHalfSides() - 2)
-		t_wait(delay)
-	end
-	
-	t_wait(neuroDelay(interPatternDelay) - delay)
 end
 
 function pRandomBarrageNoRepeats(mTimes, mDelayMult)
@@ -182,36 +164,7 @@ function pMirrorSpiral(mTimes, mDelayMult)
 	t_wait(neuroDelay(interPatternDelay) - delay)
 end
 
-function pMirrorSpiralDouble(mTimes, mDelayMult)
-	delay = neuroDelay(4 * mDelayMult)
-	howThick = neuroThickness(delay)
-	startSide = getRandomSide()
-	loopDir = getRandomDir()
-	local function rWall(mSide)
-		w_wall(startSide, howThick)
-		w_wall(startSide + getHalfSides(), howThick)
-	end
-	
-	for i = 1, mTimes - 1 do
-		rWall(startSide)
-		startSide = startSide + loopDir
-		t_wait(delay)
-	end
-	
-	rWall(startSide)
-	loopDir = loopDir * -1
-	t_wait(delay * 0.6)
-	
-	for i = 1, mTimes do
-		rWall(startSide)
-		startSide = startSide + loopDir
-		t_wait(delay)
-	end
-	
-	t_wait(neuroDelay(interPatternDelay) - delay)
-end
-
--- simplified tunnel code. the walls are thin because fuck you
+-- simplified tunnel code. the walls are thin because i like it that way
 function pTunnel(mTimes, mDelayMult)
 	delay = neuroDelay(15 * mDelayMult)
 	startSide = getRandomSide()
@@ -231,124 +184,3 @@ function pTunnel(mTimes, mDelayMult)
 	
 	t_wait(neuroDelay(interPatternDelay))
 end
-
-
-function pBackAndForth(mTimes, mDelayMult)
-	delay = neuroDelayPerfect(5 * mDelayMult)
-	startSide = getRandomSide()
-
-	for i = 1, mTimes do
-		if i < mTimes then
-			w_wall(startSide, neuroThickness(delay, 16.15))
-			w_wall(startSide + getHalfSides(), neuroThickness(delay, 16.15))
-		end
-		
-		rWall(startSide + 1)
-		t_wait(delay)
-		rWall(startSide + 2)
-		t_wait(delay)
-	end
-	
-	t_wait(neuroDelay(interPatternDelay) - delay)
-end
-
--- TRIANGLE PATTERNS
-
-function pTriRandomBarrage(mTimes, mDelayMult)
-	side = getRandomSide()
-	
-	for i = 1, mTimes do	
-		cBarrage(side)
-		side = side + getRandomDir()
-		
-		t_wait(neuroDelay(7.95 * mDelayMult))
-	end
-	
-	t_wait(interPatternDelay - 8)
-end
-
-function pTriBarrageWall(mTimes, mDelayMult)
-	delay = neuroDelayPerfect(7.5 * mDelayMult)
-	startSide = getRandomSide()
-	
-	for i = 1, mTimes do
-		cBarrage(startSide)
-		t_wait(delay)
-		cWall(startSide)
-		t_wait(delay)
-	end
-	
-	cBarrage(startSide)
-	
-	t_wait(neuroDelay(interPatternDelay))
-end
-
-function pTriBarrageVortex(mTimes, mStep, mDelayMult) -- not a vortex, but it has the same controls (so you can do LLRR, LRRRL, etc)
-	delay = neuroDelay(7.5 * mDelayMult)
-	startSide = getRandomSide()
-	wallDir = getRandomDir()
-	
-	for j = 1, mTimes do
-		for i = 1, mStep do
-			cBarrage(startSide)
-			t_wait(delay)
-			
-			startSide = startSide + wallDir
-		end
-		
-		wallDir = wallDir * -1
-		
-		for i = 1, mStep + 1 do
-			cBarrage(startSide)
-			t_wait(delay)
-			
-			startSide = startSide + wallDir
-		end
-	end
-	
-	t_wait(neuroDelay(interPatternDelay) - delay)
-end
-
-function pTriRandomLR(mTimes, mDelayMult) -- this pattern is unintuitive and hard to read, don't use it
-	local delay = neuroDelayPerfect(7.5 * mDelayMult)
-	local startSide = getRandomSide()
-	local variableLR = -1
-	local function randomWall() -- this code sucks, but i needed the pattern to start with two barrages and end with one
-		variableLR = (variableLR + 1) % 2
-		if math.random(0, 1) > 0 then
-			cBarrage(startSide + variableLR)
-		else
-			cWall(startSide + (variableLR + 1) % 2)
-		end
-		t_wait(delay)
-	end
-	
-	variableLR = (variableLR + 1) % 2
-	cBarrage(startSide + variableLR)
-	t_wait(delay)
-	variableLR = (variableLR + 1) % 2
-	cBarrage(startSide + variableLR)
-	t_wait(delay)
-	for i = 4, mTimes do
-		randomWall()
-	end
-	variableLR = (variableLR + 1) % 2
-	cBarrage(startSide + variableLR)
-	
-	t_wait(neuroDelay(interPatternDelay))
-end
-
-function pTriSpiral(mTimes, mDir, mDelayMult)
-	delay = neuroDelay(7.95)
-	howThick = neuroThickness(delay)
-	startSide = getRandomSide()
-	
-	for i = 1, mTimes do
-		w_wall(startSide, howThick)
-		t_wait(delay)
-		startSide = startSide + mDir
-	end
-	
-	t_wait(neuroDelay(interPatternDelay))
-end
-

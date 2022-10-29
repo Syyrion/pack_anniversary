@@ -1,0 +1,21 @@
+{
+    "id": "whirly_madness",
+    "name": "Whirly madness",
+    "description": "Ends after 2 minutes\nDifficulty Mult: s.d\ns: segment to start at\nd: difficulty",
+    "author": "Baum",
+    "menuPriority": 5,
+    "selectable": true,
+    "styleId": "whirly_madness_menu",
+    "musicId": "shuffle_heaven",
+    "luaFile": "Scripts/level/whirly_madness/whirly_madness.lua",
+    "difficultyMults": [
+	    1.1,
+	    1.2,
+	    2.0,
+	    2.1,
+	    2.2,
+	    3.0,
+	    3.1,
+	    3.2
+    ]
+}
