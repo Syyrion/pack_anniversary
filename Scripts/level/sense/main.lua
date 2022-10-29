@@ -36,7 +36,7 @@ function addPattern(mKey)
     elseif mKey == 12 then pWallExVortexS(math.random(0, 1), 0, 1, udelay)
 	end
 end
-keys = { 0, 0, 3, 3, 4, 4, 5, 5, 8, 9, 9, 10, 10, 12, 12 }
+keys = { 0, 0, 3, 3, 4, 4, 5, 5, 9, 9, 10, 10, 12, 12 }
 shuffle(keys)
 index = 0
 achievementUnlocked = false
