@@ -1,0 +1,12 @@
+{
+	"id": "FSoR",
+	"name": "FSoR", // sometimes an acronym unknown to anyone has as much sense as its real meaning
+	"description": "Generical generic, pretty much",
+	"author": "The Sun XIX",
+	"menuPriority": 19,
+	"selectable": true,
+	"styleId": "FSoRmenu",
+	"musicId": "[FSoR] Paralitic Twins - Three Levels",
+	"luaFile": "Scripts/level/fsor/FSoR.lua",
+	"difficultyMults": [0.99, 0.995, 0.998, 0.999, 1.001, 1.002, 1.005] // secret elite diffs 0.991, 0.992,
+}

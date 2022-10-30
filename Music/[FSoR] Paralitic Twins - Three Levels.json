@@ -1,0 +1,21 @@
+{
+	// Music data id
+	"id": "[FSoR] Paralitic Twins - Three Levels",
+
+	// Music file
+	"file_name": "[FSoR] Paralitic Twins - Three Levels.ogg",
+
+	// Music information
+	"name": "Three Levels",
+	"album": "Birth Of Cosmos",
+	"author": "Paralitic Twins",
+	
+	// Segments
+	"segments":
+	[
+		{ "time": 0 }
+	]
+
+	//	This track is released using Creative Commons Licence
+	//	https://creativecommons.org/licenses/by-nc-nd/4.0/
+}
