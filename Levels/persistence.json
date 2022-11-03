@@ -6,7 +6,7 @@
     "menuPriority": 3,
     "selectable": true,
     "styleId": "bc_kesd2",
-    "musicId": "mpp",
+    "musicId": "feral",
     "luaFile": "Scripts/level/mpp/persistence.lua",
     "difficultyMults": [0.999, 1.001, 1.002]
 }

@@ -1,0 +1,17 @@
+{
+    "id": "feral",
+
+    "file_name": "feral.ogg",
+
+    "name": "Feral",
+    "album": "Eclipse",
+    "author": "meganeko",
+
+    "segments":
+    [
+        { "time": 47.079 },
+        { "time": 144.564 },
+        { "time": 193.241 },
+        { "time": 216.219 }
+    ]
+}

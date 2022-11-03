@@ -38,7 +38,7 @@ shuffle(keys)
 index = 0
 dys = false
 FFrames = 0
-BPM = 234
+BPM = 160
 pastRad = 0
 blinkTime = 6
 
@@ -359,20 +359,9 @@ function onUpdate(mFrameTime)
 
 	if l_getLevelTime() > nextLoop then -- clock
         loopcount = loopcount + 1
-        nextLoop = loopcount * (60/234) -- bpm = 234
+        nextLoop = loopcount * (60/BPM) -- bpm = 234
         --on beat events
 		hardPulse()
-		if beatCount % 2 == 1 then
-			shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, blackflash)
-			l_setRotationSpeed(10.0+(math.random() * 100.0))
-		end
-
-        beatCount = beatCount + 1
-		ibeatCount = 0
-    end
-
-	if ibeatCount == blinkTime*2 then
-		if beatCount % 2 == 0 then
 		shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, spinscan)
 		if s_get3dSkew() < -1 then
 			cw_setVertexColor4Same(cw31, 170, 170, 170, 255)
@@ -393,7 +382,14 @@ function onUpdate(mFrameTime)
 		end
 		if dys then dys = false else dys = true end
 		l_setRotationSpeed(0)
-	end
+
+        beatCount = beatCount + 1
+		ibeatCount = 0
+    end
+
+	if ibeatCount == ((60/BPM)*240)/2 then
+		shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, blackflash)
+		l_setRotationSpeed(10.0+(math.random() * 100.0))
 	end
 
 	FFrames = FFrames + 1

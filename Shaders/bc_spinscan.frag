@@ -23,11 +23,11 @@ void main() {
     if(st.x < 0.0) {
         theta += pi;
     }
-    if(floor(mod(floor((theta-(u_time*20.0))/(pi/3.0)), 2.0)) == 0.0) {
+    if(floor(mod(floor((theta-(u_time*(pi*3.0)*1.5))/(pi/3.0)), 2.0)) == 0.0) {
     } 
     else {
         
-            theta = mod((theta-(u_time*20.0)), (pi)/3.0);
+            theta = mod((theta-(u_time*(pi*3.0)*1.5)), (pi)/3.0);
         float a = tan(theta);
         color = seco*a;
         color -= 0.5;
