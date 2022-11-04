@@ -40,7 +40,8 @@ dys = false
 FFrames = 0
 BPM = 160
 pastRad = 0
-blinkTime = 6
+speedd = l_getSpeedMult()
+l_addTracked("speedd", "speed multiplier")
 
 --same wall + THICKNESS (created by Exschwasion)
 function rWallThick(mSide, THICKNESS)
@@ -132,7 +133,7 @@ cw36 = cw_createNoCollision()
 
 function cwspawnwalllayer1(cw)
 	local length = 100
-	local width = 7
+	local width = 5
 	local displacement = 700
 	local alpha = 200
 	local conical = 0
@@ -145,7 +146,7 @@ end
 
 function cwspawnwalllayer1a(cw)
 local length = 50
-local width = 5
+local width = 3
 local displacement = 500
 local alpha = 200
 local conical = 0
@@ -158,7 +159,7 @@ end
 
 function cwspawnwalllayer2(cw)
 	local length = 20
-	local width = 3
+	local width = 2
 	local displacement = 350
 	local alpha = 255
 	local conical = 0
@@ -170,16 +171,16 @@ function cwspawnwalllayer2(cw)
 end
 
 function cwspawnwalllayer3(cw)
-	local length = 1
+	local length = 1000
 	local width = 1000
-	local displacement = 1250
-	local alpha = 200
+	local displacement = 1550
+	local alpha = 0
 	local conical = 30
     cw_setVertexPos(cw, 0, displacement+width, length+conical)
     cw_setVertexPos(cw, 1, displacement+width, 0-length-conical)
     cw_setVertexPos(cw, 2, displacement-width, 0-length)
     cw_setVertexPos(cw, 3, displacement-width, length)
-    cw_setVertexColor4Same(cw, alpha, alpha, alpha, 255)
+    cw_setVertexColor4Same(cw, alpha, alpha, alpha, 100)
 end
 
 function cwspawn()
@@ -268,10 +269,11 @@ function onInit()
 	l_setPulseSpeedR(2)
 	l_setPulseDelayMax(18)
 
+	
+
 	l_setDarkenUnevenBackgroundChunk(false)
 	l_setBeatPulseMax(17)
 	l_setBeatPulseDelayMax(21.818181818181818181818181818182)
-
 	enableSwapIfDMGreaterThan(2.5)
 	disableIncIfDMGreaterThan(3)
 end
@@ -282,11 +284,13 @@ blackflash = shdr_getShaderId("bc_blackflash.frag")
 spinscan = shdr_getShaderId("bc_spinscan.frag")
 function onLoad()
 
+
 	if roundThousand(u_getDifficultyMult()) > roundThousand(1.0) then
 		l_setSpeedMult(2.0)
 	else
 		l_setSpeedMult(1.5)
 	end
+	speedd = l_getSpeedMult()
 	e_eval([[cwspawn()]])
     e_eval([[shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, blackflash)]])
     e_eval([[hardPulse()]])
@@ -314,9 +318,7 @@ end
 -- `onIncrement` is an hardcoded function that is called when the level
 -- difficulty is incremented.
 function onIncrement()
-	if blinkTime < 30 then
-		blinkTime = blinkTime + 3
-	end
+	speedd = l_getSpeedMult()
 end
 
 
@@ -330,32 +332,24 @@ ibeatCount = 0
 -- represents the time delta between the current and previous frame.
 function onUpdate(mFrameTime)
 
-	--sustain cw decoration
-	theta = (l_getRotation()*math.pi)/180 - pastRad
-	cwspin(cw31, theta)
-	cwspin(cw32, theta)
-	cwspin(cw33, theta)
-	cwspin(cw34, theta)
-	cwspin(cw35, theta)
-	cwspin(cw36, theta)
-	pastRad = (l_getRotation()*math.pi)/180
-	if l_getRotationSpeed() > 0 then
-		theta = theta + math.random()*10
-		cwspin(cw21, theta)
-		cwspin(cw22, theta)
-		cwspin(cw23, theta)
-		cwspin(cw24, theta)
-		cwspin(cw25, theta)
-		cwspin(cw26, theta)
-		theta = theta + math.random()*10
-		cwspin(cw11, theta)
-		cwspin(cw12, theta)
-		cwspin(cw13, theta)
-		cwspin(cw14, theta)
-		cwspin(cw15, theta)
-		cwspin(cw16, theta)
-	end
-
+	cwspin(cw11, (math.pi/3)/42)
+	cwspin(cw12, (math.pi/3)/42)
+	cwspin(cw13, (math.pi/3)/42)
+	cwspin(cw14, (math.pi/3)/42)
+	cwspin(cw15, (math.pi/3)/42)
+	cwspin(cw16, (math.pi/3)/42)
+	cwspin(cw17, -(math.pi/3)/45)
+	cwspin(cw18, -(math.pi/3)/45)
+	cwspin(cw19, -(math.pi/3)/45)
+	cwspin(cw10, -(math.pi/3)/45)
+	cwspin(cw1a, -(math.pi/3)/45)
+	cwspin(cw1b, -(math.pi/3)/45)
+	cwspin(cw21, (math.pi/3)/80)
+	cwspin(cw22, (math.pi/3)/80)
+	cwspin(cw23, (math.pi/3)/80)
+	cwspin(cw24, (math.pi/3)/80)
+	cwspin(cw25, (math.pi/3)/80)
+	cwspin(cw26, (math.pi/3)/80)
 
 	if l_getLevelTime() > nextLoop then -- clock
         loopcount = loopcount + 1
@@ -363,25 +357,8 @@ function onUpdate(mFrameTime)
         --on beat events
 		hardPulse()
 		shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, spinscan)
-		if s_get3dSkew() < -1 then
-			cw_setVertexColor4Same(cw31, 170, 170, 170, 255)
-			cw_setVertexColor4Same(cw32, 170, 170, 170, 255)
-			cw_setVertexColor4Same(cw33, 170, 170, 170, 255)
-			cw_setVertexColor4Same(cw34, 170, 170, 170, 255)
-			cw_setVertexColor4Same(cw35, 170, 170, 170, 255)
-			cw_setVertexColor4Same(cw36, 170, 170, 170, 255)
-		else
-			if roundThousand(u_getDifficultyMult()) >= roundThousand(1.000) then
-				cw_setVertexColor4Same(cw31, 0, 250, 250, 255)
-				cw_setVertexColor4Same(cw32, 0, 250, 250, 255)
-				cw_setVertexColor4Same(cw33, 0, 250, 250, 255)
-				cw_setVertexColor4Same(cw34, 0, 250, 250, 255)
-				cw_setVertexColor4Same(cw35, 0, 250, 250, 255)
-				cw_setVertexColor4Same(cw36, 0, 250, 250, 255)
-			end
-		end
 		if dys then dys = false else dys = true end
-		l_setRotationSpeed(0)
+		l_setRotation(roundThousand((math.random()*6)/1000)*60)
 
         beatCount = beatCount + 1
 		ibeatCount = 0
@@ -389,7 +366,6 @@ function onUpdate(mFrameTime)
 
 	if ibeatCount == ((60/BPM)*240)/2 then
 		shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, blackflash)
-		l_setRotationSpeed(10.0+(math.random() * 100.0))
 	end
 
 	FFrames = FFrames + 1
