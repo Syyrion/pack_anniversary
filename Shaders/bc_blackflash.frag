@@ -1,5 +1,6 @@
 uniform vec2 u_resolution;
 uniform float u_skew;
+uniform float u_rotation;
 
 void main() {
     vec2 st = gl_FragCoord.xy/u_resolution.y;
@@ -16,8 +17,8 @@ void main() {
         seco = vec3(0.0, 1.0, 1.0);
     }
 
-    float s = sin(0.0);
-    float c = cos(0.0);
+    float s = sin(u_rotation);
+    float c = cos(u_rotation);
     mat2 rot = mat2(c, s / skewmult, -s, c / skewmult);
     st = st * rot;
     vec3 color = prim;

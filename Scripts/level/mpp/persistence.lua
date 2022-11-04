@@ -39,9 +39,18 @@ index = 0
 dys = false
 FFrames = 0
 BPM = 160
-pastRad = 0
-speedd = l_getSpeedMult()
+notSkew = 2
+notRotation = 0.1
+rinc = 0
+
+
+function roundThousand(mFloat)
+	return math.floor(mFloat * 1000 + 0.1)
+end
+
+speedd = roundThousand(u_getSpeedMultDM())
 l_addTracked("speedd", "speed multiplier")
+l_addTracked("notRotation", "rotation")
 
 --same wall + THICKNESS (created by Exschwasion)
 function rWallThick(mSide, THICKNESS)
@@ -243,9 +252,6 @@ function hardPulse()
     l_setPulseDelayMax(0)
 
 end
-function roundThousand(mFloat)
-	return math.floor(mFloat * 1000 + 0.1)
-end
 -- `onInit` is an hardcoded function that is called when the level is first
 -- loaded. This can be used to setup initial level parameters.
 function onInit()
@@ -285,12 +291,9 @@ spinscan = shdr_getShaderId("bc_spinscan.frag")
 function onLoad()
 
 
-	if roundThousand(u_getDifficultyMult()) > roundThousand(1.0) then
-		l_setSpeedMult(2.0)
-	else
-		l_setSpeedMult(1.5)
-	end
-	speedd = l_getSpeedMult()
+	l_setSpeedMult(1.5)
+
+	speedd = roundThousand(u_getSpeedMultDM())/1000
 	e_eval([[cwspawn()]])
     e_eval([[shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, blackflash)]])
     e_eval([[hardPulse()]])
@@ -318,7 +321,9 @@ end
 -- `onIncrement` is an hardcoded function that is called when the level
 -- difficulty is incremented.
 function onIncrement()
-	speedd = l_getSpeedMult()
+	speedd = roundThousand(u_getSpeedMultDM())/1000
+	notRotation = notRotation + 0.05
+	rinc = rinc + 1
 end
 
 
@@ -357,8 +362,16 @@ function onUpdate(mFrameTime)
         --on beat events
 		hardPulse()
 		shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, spinscan)
+		if notSkew < 0 then
+			cw_setVertexColor4Same(cw31, 0, 0, 0, 100)
+			cw_setVertexColor4Same(cw32, 0, 0, 0, 100)
+			cw_setVertexColor4Same(cw33, 0, 0, 0, 100)
+			cw_setVertexColor4Same(cw34, 0, 0, 0, 100)
+			cw_setVertexColor4Same(cw35, 0, 0, 0, 100)
+			cw_setVertexColor4Same(cw36, 0, 0, 0, 100)
+		end
 		if dys then dys = false else dys = true end
-		l_setRotation(roundThousand((math.random()*6)/1000)*60)
+		l_setRotation(l_getRotation()+(roundThousand((math.random()*6)/1000)*60))
 
         beatCount = beatCount + 1
 		ibeatCount = 0
@@ -366,6 +379,12 @@ function onUpdate(mFrameTime)
 
 	if ibeatCount == ((60/BPM)*240)/2 then
 		shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, blackflash)
+		cw_setVertexColor4Same(cw31, 0, 0, 0, 255)
+		cw_setVertexColor4Same(cw32, 0, 0, 0, 255)
+		cw_setVertexColor4Same(cw33, 0, 0, 0, 255)
+		cw_setVertexColor4Same(cw34, 0, 0, 0, 255)
+		cw_setVertexColor4Same(cw35, 0, 0, 0, 255)
+		cw_setVertexColor4Same(cw36, 0, 0, 0, 255)
 	end
 
 	FFrames = FFrames + 1
@@ -385,7 +404,7 @@ function onUpdate(mFrameTime)
 		cw_setVertexColor4Same(cw25, 250, 250, 250, 255)
 		cw_setVertexColor4Same(cw26, 250, 250, 250, 255)
 		
-		if s_get3dSkew() > -1 then
+		if notSkew > -1 then
 			cw_setVertexColor4Same(cw17, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
 			cw_setVertexColor4Same(cw18, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
 			cw_setVertexColor4Same(cw19, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
@@ -402,7 +421,7 @@ function onUpdate(mFrameTime)
 		end
 	end
 	if FFrames % 10 == 7 then
-		if s_get3dSkew() > -1 then
+		if notSkew > -1 then
 			cw_setVertexColor4Same(cw11, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
 			cw_setVertexColor4Same(cw12, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
 			cw_setVertexColor4Same(cw13, 250*math.sin(FFrames/360), 250*math.cos(FFrames/360), 250, 255)
@@ -439,28 +458,27 @@ function onUpdate(mFrameTime)
 		cw_setVertexColor4Same(cw1b, 250, 250, 250, 255)
 	end
 	if dys then
-		s_set3dSkew(0.01)
+		notSkew = 2
+		s_set3dSkew(0)
 		s_set3dDepth(0)
 	else
-		if roundThousand(u_getDifficultyMult()) >= roundThousand(1.000) then
-			s_set3dSkew(-2.01)
-			s_set3dDepth(3)
-		end
+		notSkew = -2
+	end
+	if rinc % 2 == 0 then
+		l_setRotation(l_getRotation()+(notRotation*(567/240)))
+	else
+		l_setRotation(l_getRotation()+((notRotation*(567/240))*-1))
 	end
 	ibeatCount = ibeatCount + 1
 end
 function onRenderStage(rs) --cringe
 
 	shdr_setUniformFVec2(spinscan, "u_resolution", u_getWidth(), u_getHeight())
-	shdr_setUniformF(spinscan, "u_skew", s_get3dSkew())
+	shdr_setUniformF(spinscan, "u_skew", notSkew)
 	shdr_setUniformF(spinscan, "u_time", l_getLevelTime())
-
-	if roundThousand(u_getDifficultyMult()) > roundThousand(1.001) then
-		shdr_setUniformI(spinscan, "u_dd", 0)
-	else
-		shdr_setUniformI(spinscan, "u_dd", 1)
-	end
+	shdr_setUniformF(spinscan, "u_rotation", math.rad(l_getRotation()))
 
 	shdr_setUniformFVec2(blackflash, "u_resolution", u_getWidth(), u_getHeight())
 	shdr_setUniformF(blackflash, "u_skew", s_get3dSkew())
+	shdr_setUniformF(blackflash, "u_rotation", math.rad(l_getRotation()))
 end
