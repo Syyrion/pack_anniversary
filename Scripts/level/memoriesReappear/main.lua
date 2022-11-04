@@ -70,14 +70,6 @@ levSync = 50
 -- delay config
     march31oPatDel_SDMult = 0; --delay-speed multiplier (FOR PATTERNS ONLY)
 
--- Pattern effect
-function p_patternEffectStart()
-end
-function p_patternEffectCycle()
-end
-function p_patternEffectEnd()
-end
-
 zoomFactor = 40
 isNostalgiaStarts = false
 

@@ -66,8 +66,7 @@ function pMarch31osBarrage(_side, _thickness, _neighbors, _sizeMult, _skipEndDel
     p_resetPatternDelaySettings();
     p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, _thickness or THICKNESS, nil);
 
-    p_patternEffectStart();
-
+    
     local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
     if _curSide == TARGET_PATTERN_SIDE and (_isRebootingSideStat) then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
@@ -75,8 +74,7 @@ function pMarch31osBarrage(_side, _thickness, _neighbors, _sizeMult, _skipEndDel
 
     cBarrageN(_curSide, _neighbors, p_getPatternThickness() * _sizeMult);
 
-    p_patternEffectEnd();
-    -- end delay (optional arg, default false)
+        -- end delay (optional arg, default false)
     t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 8 or 11)));
 end
 
@@ -94,8 +92,7 @@ function pMarch31osRandomBarrage(_side, _thickness, _iter, _distMin, _distMax, _
     p_resetPatternDelaySettings();
     p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, _thickness or THICKNESS, nil);
 
-    p_patternEffectStart();
-
+    
     local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
     local _curDelaySpeed = (_addMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
@@ -126,8 +123,7 @@ function pMarch31osRandomBarrage(_side, _thickness, _iter, _distMin, _distMax, _
 
     cBarrage(_curSide, p_getPatternThickness() * _sizeMult);
 
-    p_patternEffectEnd();
-    -- end delay (optional arg, default false)
+        -- end delay (optional arg, default false)
     t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 8 or 11)));
 end
 
@@ -150,8 +146,7 @@ function pMarch31osAlternatingBarrage(_side, _thickness, _iter, _isSpiral, _hasC
     p_resetPatternDelaySettings();
     p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, _thickness or THICKNESS, nil);
 
-    p_patternEffectStart();
-
+    
     local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
     local _curDelaySpeed = (_addMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
@@ -161,8 +156,7 @@ function pMarch31osAlternatingBarrage(_side, _thickness, _iter, _isSpiral, _hasC
 
     _hasContainedEnd = getBooleanNumber(_hasContainedEnd);
     for a = 0, _iter, 1 do
-        p_patternEffectCycle();
-
+        
         for repeatAmount = 0, _repeatBarrageAmount, 1 do
             cWallExM(_curSide + _barrageOffset, (math.floor(getProtocolSides() / 2) - _gapLength) + (_barrageDir * 0.5 - 0.5), 2, p_getPatternThickness() * _sizeMult);
             if _barrageLoopDir > 0 and _gapLength > 0 then
@@ -188,8 +182,7 @@ function pMarch31osAlternatingBarrage(_side, _thickness, _iter, _isSpiral, _hasC
         end
     end
 
-    p_patternEffectEnd();
-    -- end delay (optional arg, default false)
+        -- end delay (optional arg, default false)
     t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 0 or 8)));
 end
 
@@ -210,8 +203,7 @@ function pMarch31osVortaBarrage(_side, _thickness, _iter, _dirType, _revFreq, _d
     p_resetPatternDelaySettings();
     p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, _thickness or THICKNESS, nil);
 
-    p_patternEffectStart();
-
+    
     local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
     local _curDelaySpeed = (_addMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
@@ -238,8 +230,7 @@ function pMarch31osVortaBarrage(_side, _thickness, _iter, _dirType, _revFreq, _d
         if _dirType == 0 then
             --spawn loop
             for a = 0, _iter + _revFreqAdd, 1 do
-                p_patternEffectCycle();
-                _vortaBarPart(_curSide, _free, p_getPatternThickness() * _sizeMult, _vortaBarType);
+                                _vortaBarPart(_curSide, _free, p_getPatternThickness() * _sizeMult, _vortaBarType);
 
                 if _dirType == 1 then
                     --check of need to change dir
@@ -263,8 +254,7 @@ function pMarch31osVortaBarrage(_side, _thickness, _iter, _dirType, _revFreq, _d
         elseif _dirType == 2 then
             for _switchII = 1, #_dirPoints, 1 do
                 for a = 0, _dirPoints[_switchII], 1 do
-                    p_patternEffectCycle();
-                    _vortaBarPart(_curSide, _free, p_getPatternThickness(), _vortaBarType);
+                                        _vortaBarPart(_curSide, _free, p_getPatternThickness(), _vortaBarType);
                     _curSide = _curSide + _direction;
                 end
                 _direction = -_direction;
@@ -272,8 +262,7 @@ function pMarch31osVortaBarrage(_side, _thickness, _iter, _dirType, _revFreq, _d
         end
     end
 
-    p_patternEffectEnd();
-    -- end delay (optional arg, default false)
+        -- end delay (optional arg, default false)
     t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 0 or 8)));
 end
 
@@ -296,8 +285,7 @@ function pMarch31osBarrageTypeBase(_side, _thickness, _iter, _gap, _holes, _offs
     p_resetPatternDelaySettings();
     p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, _thickness or THICKNESS, nil);
 
-    p_patternEffectStart();
-
+    
     local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
     local _curDelaySpeed = (_addMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
@@ -312,8 +300,7 @@ function pMarch31osBarrageTypeBase(_side, _thickness, _iter, _gap, _holes, _offs
     if _holes > 1 then _gap = 1; end
 
     for a = 0, _iter, 1 do
-        p_patternEffectCycle();
-
+        
         if a % 2 == 1 and (l_getSides() % 2 == 1) and _holes == 1 and _offsetType == 2 and getBooleanNumber(_isInvertAccurate) then cWallEx(_curSide + 1 + getHalfSides(), getProtocolSides() - (2 + _gap), p_getPatternThickness());
         else
             if _holes > 1 then cBarrageExHoles(_curSide + ((a % _typeModeModuloStat) * _typeModeMultStat * _typeModeStat * _barrageLoopDir), _holes - 1, p_getPatternThickness());
@@ -323,8 +310,7 @@ function pMarch31osBarrageTypeBase(_side, _thickness, _iter, _gap, _holes, _offs
         t_applyPatDel(customizePatternDelay(4 * _delMult * _sizeMult * _curDelaySpeed, p_getDelayPatternBool()));
     end
 
-    p_patternEffectEnd();
-    t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 0 or 8)));
+        t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 0 or 8)));
 end
 
 -- pMarch31osBarrageSpiral(): spawns a spiral of this barrage
@@ -351,8 +337,7 @@ function pMarch31osBarrageSpiralRev(_side, _thickness, _iter, _revFreq, _gap, _h
     p_resetPatternDelaySettings();
     p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, _thickness or THICKNESS, nil);
 
-    p_patternEffectStart();
-
+    
     local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
     local _curDelaySpeed = (_addMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
@@ -368,8 +353,7 @@ function pMarch31osBarrageSpiralRev(_side, _thickness, _iter, _revFreq, _gap, _h
         if r == _revFreq then _revIterAdd = 1; end
 
         for a = 0, _iter + _revIterAdd, 1 do
-            p_patternEffectCycle();
-
+            
             if _holes > 1 then cBarrageExHoles(_curSide + (_barrageOffset * _distance), _holes - 1, p_getPatternThickness());
             else cBarrageGap(_curSide + (_barrageOffset * _distance), _gap, p_getPatternThickness());
             end
@@ -380,8 +364,7 @@ function pMarch31osBarrageSpiralRev(_side, _thickness, _iter, _revFreq, _gap, _h
         _barrageLoopDir = _barrageLoopDir * -1;
     end
 
-    p_patternEffectEnd();
-    t_applyPatDel(_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0)
+        t_applyPatDel(_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0)
     if not getBooleanNumber(_skipEndDelay) then t_applyPatDel(getPerfectDelay(THICKNESS) * 8) end
 end
 
@@ -405,8 +388,7 @@ function pMarch31osWallStrip(_side, _thickness, _repetitions, _mirrorStep, _extr
     p_resetPatternDelaySettings();
     p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, _thickness or THICKNESS, nil);
 
-    p_patternEffectStart();
-
+    
     local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
     local _curDelaySpeed = (_addMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
@@ -416,18 +398,15 @@ function pMarch31osWallStrip(_side, _thickness, _repetitions, _mirrorStep, _extr
     _isThickness = getBooleanNumber(_isThickness);
     if not _isThickness then
         for a = 0, _repetitions, 1 do
-            p_patternEffectCycle();
-            cWallMirrorEx(_curSide, _mirrorStep, _extraWidth, p_getPatternThickness() * _sizeMult);
+                        cWallMirrorEx(_curSide, _mirrorStep, _extraWidth, p_getPatternThickness() * _sizeMult);
             t_applyPatDel(customizePatternDelay(2.75 * _delMult * _sizeMult * _curDelaySpeed, false));
         end
     else
-        p_patternEffectCycle();
-        cWallMirrorEx(_curSide, _mirrorStep, _extraWidth, customizePatternThickness((2.75 * _repetitions) * _delMult * _sizeMult * _curDelaySpeed, false) + (p_getPatternThickness() * _sizeMult));
+                cWallMirrorEx(_curSide, _mirrorStep, _extraWidth, customizePatternThickness((2.75 * _repetitions) * _delMult * _sizeMult * _curDelaySpeed, false) + (p_getPatternThickness() * _sizeMult));
         t_applyPatDel(customizePatternDelay((2.75 * (_repetitions + 1)) * _delMult * _sizeMult * _curDelaySpeed, false));
     end
 
-    p_patternEffectEnd();
-    t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 0 or 8)));
+        t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 0 or 8)));
 end
 
 --[ Spirals ]--
@@ -455,8 +434,7 @@ function pMarch31osWhirlwind(_side, _iter, _extraWidth, _mirrorStep, _posSpacing
     p_resetPatternDelaySettings();
     p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, nil, nil);
 
-    p_patternEffectStart();
-
+    
     local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
     local _curDelaySpeed = (_addMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
@@ -469,8 +447,7 @@ function pMarch31osWhirlwind(_side, _iter, _extraWidth, _mirrorStep, _posSpacing
         cBarrage(_curSide + _direction, customizePatternThickness(1 * _sizeMult, p_getDelayPatternBool()));
         for a = 0, _iter, 1 do
             if a == _iter then currentTimesOfDelayAmountForTriangle = 3; end
-            p_patternEffectCycle();
-            cWall(_curSide + _spiralPosistionOffset, customizePatternThickness(4 * _sizeMult, p_getDelayPatternBool()));
+                        cWall(_curSide + _spiralPosistionOffset, customizePatternThickness(4 * _sizeMult, p_getDelayPatternBool()));
             _spiralPosistionOffset = _spiralPosistionOffset + _direction;
             t_applyPatDel(customizePatternDelay(currentTimesOfDelayAmountForTriangle * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
         end
@@ -480,8 +457,7 @@ function pMarch31osWhirlwind(_side, _iter, _extraWidth, _mirrorStep, _posSpacing
         for i = 0, 1, 1 do cWall(_curSide + _spiralPosistionOffset + i * _direction, customizePatternThickness(5 * currentSizeOverride * _sizeMult, p_getDelayPatternBool())); end _spiralPosistionOffset = _spiralPosistionOffset + _direction * 2;
         t_applyPatDel(customizePatternDelay(4 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
         for a = 0, _iter + 1, 1 do --1, _iter + 2
-            p_patternEffectCycle();
-            if a == _iter + 1 then currentTimesOfThickAmountForSquare = 6; end
+                        if a == _iter + 1 then currentTimesOfThickAmountForSquare = 6; end
             cWall(_curSide + _spiralPosistionOffset, customizePatternThickness(currentTimesOfThickAmountForSquare * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
             _spiralPosistionOffset = _spiralPosistionOffset + _direction;
             t_applyPatDel(customizePatternDelay(4 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
@@ -502,8 +478,7 @@ function pMarch31osWhirlwind(_side, _iter, _extraWidth, _mirrorStep, _posSpacing
             end
         end
         for a = 0, _iter, 1 do
-            p_patternEffectCycle();
-            cWallMirrorEx(_curSide + _spiralPosistionOffset, _mirrorStep, _extraWidth, customizePatternThickness(_curSpiralThick * _sizeMult, p_getDelayPatternBool()));
+                        cWallMirrorEx(_curSide + _spiralPosistionOffset, _mirrorStep, _extraWidth, customizePatternThickness(_curSpiralThick * _sizeMult, p_getDelayPatternBool()));
             _spiralPosistionOffset = _spiralPosistionOffset + (_direction * _posSpacing);
             t_applyPatDel(customizePatternDelay(2 * currentDelayOverride * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
             if a == _iter then _spiralPosistionOffset = _spiralPosistionOffset + (_direction * _posSpacing); end
@@ -518,8 +493,7 @@ function pMarch31osWhirlwind(_side, _iter, _extraWidth, _mirrorStep, _posSpacing
     end
     t_applyPatDel(customizePatternDelay(2 * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
 
-    p_patternEffectEnd();
-    t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 0 or 8)));
+        t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 0 or 8)));
 end
 
 -- pMarch31osWhirlwindRev(): spawns a spiral of cWallMirrorEx where you need to change direction
@@ -546,8 +520,7 @@ function pMarch31osExWhirlwind(_side, _iter, _timesBeforeChangeDir, _revFreq, _e
     p_resetPatternDelaySettings();
     p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, nil, nil);
 
-    p_patternEffectStart();
-
+    
     local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
     local _curDelaySpeed = (_addMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
@@ -566,8 +539,7 @@ function pMarch31osExWhirlwind(_side, _iter, _timesBeforeChangeDir, _revFreq, _e
             for a = 0, _iter, 1 do
                 if a == _iter + 1 and rev == _revFreq then currentTimesOfDelayAmountForTriangle = 3; end
                 if a == _iter and rev < _revFreq then currentTimesOfThickAmountForTriangle = 4 + (_curDelaySpeed * _delMult); end
-                p_patternEffectCycle();
-                cWall(_curSide + _spiralPosistionOffset, customizePatternThickness(currentTimesOfThickAmountForTriangle * _sizeMult, p_getDelayPatternBool()));
+                                cWall(_curSide + _spiralPosistionOffset, customizePatternThickness(currentTimesOfThickAmountForTriangle * _sizeMult, p_getDelayPatternBool()));
                 _spiralPosistionOffset = _spiralPosistionOffset + _direction;
                 t_applyPatDel(customizePatternDelay(currentTimesOfDelayAmountForTriangle * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
             end
@@ -586,8 +558,7 @@ function pMarch31osExWhirlwind(_side, _iter, _timesBeforeChangeDir, _revFreq, _e
             end
             cBarrage(_curSide - _direction, customizePatternThickness(1 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
             for a = 0, _iter, 1 do
-                p_patternEffectCycle();
-                if a == 1 then currentThickOffsetAmountBeforeDirChangeForSquare_002 = 0; end
+                                if a == 1 then currentThickOffsetAmountBeforeDirChangeForSquare_002 = 0; end
                 if a == _iter then currentTimesOfThickAmountForSquare = 11; currentTimesOfDelayAmountForSquare = 5; end
                 cWall(_curSide, customizePatternThickness((currentTimesOfThickAmountForSquare + currentThickOffsetAmountBeforeDirChangeForSquare_001 + currentThickOffsetAmountBeforeDirChangeForSquare_002) * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
                 if a < _iter then _curSide = _curSide - _direction; end
@@ -598,8 +569,7 @@ function pMarch31osExWhirlwind(_side, _iter, _timesBeforeChangeDir, _revFreq, _e
                 cBarrage(_curSide + _direction, customizePatternThickness(1 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
                 t_applyPatDel(customizePatternDelay(5 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
                 for a = 0, _iter, 1 do
-                    p_patternEffectCycle();
-                    currentTimesOfThickAmountForSquare = 4; currentTimesOfDelayAmountForSquare = 2;
+                                        currentTimesOfThickAmountForSquare = 4; currentTimesOfDelayAmountForSquare = 2;
                     if a == _iter then currentTimesOfThickAmountForSquare = 6; currentTimesOfDelayAmountForSquare = 5; end
                     cWall(_curSide + _direction, customizePatternThickness(((a == _iter and (rev < _revFreq - 1 and 11 or 6) or 4)) * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
                     t_applyPatDel(customizePatternDelay((a == _iter and 5 or 2) * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
@@ -613,8 +583,7 @@ function pMarch31osExWhirlwind(_side, _iter, _timesBeforeChangeDir, _revFreq, _e
             for i = 0, 1, 1 do cWall(_curSide + _spiralPosistionOffset + i * _direction, customizePatternThickness(5 * currentSizeOverride * _sizeMult, p_getDelayPatternBool())); end _spiralPosistionOffset = _spiralPosistionOffset + _direction * 2;
             t_applyPatDel(customizePatternDelay(4 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
             for a = 0, _iter + 1, 1 do
-                p_patternEffectCycle();
-                if a == _iter + 1 then currentTimesOfThickAmountForSquare = 6; end
+                                if a == _iter + 1 then currentTimesOfThickAmountForSquare = 6; end
                 cWall(_curSide + _spiralPosistionOffset, customizePatternThickness((a == _iter + 1 and 7 or 9) * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
                 _spiralPosistionOffset = _spiralPosistionOffset + _direction;
                 t_applyPatDel(customizePatternDelay(4 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
@@ -638,8 +607,7 @@ function pMarch31osExWhirlwind(_side, _iter, _timesBeforeChangeDir, _revFreq, _e
         for rev = 0, _revFreq, 1 do
             local halt = _revFreq > 0 and rev == _revFreq and 1 or 0
             for a = 0, _iter - halt, 1 do
-                p_patternEffectCycle();
-                cWallMirrorEx(_curSide + _spiralPosistionOffset, _mirrorStep, _extraWidth, customizePatternThickness((_curSpiralThick + (a == _iter - halt and (_slopeAmountCycle > 0) and rev < _revFreq and 1 or 0)) * _sizeMult, p_getDelayPatternBool()));
+                                cWallMirrorEx(_curSide + _spiralPosistionOffset, _mirrorStep, _extraWidth, customizePatternThickness((_curSpiralThick + (a == _iter - halt and (_slopeAmountCycle > 0) and rev < _revFreq and 1 or 0)) * _sizeMult, p_getDelayPatternBool()));
                 if a < _iter - halt then
                     t_applyPatDel(customizePatternDelay(2 * currentDelayOverride * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
                     _spiralPosistionOffset = _spiralPosistionOffset + (_direction * _posSpacing);
@@ -688,8 +656,7 @@ function pMarch31osExWhirlwind(_side, _iter, _timesBeforeChangeDir, _revFreq, _e
     end
     t_applyPatDel(customizePatternDelay(2 * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
 
-    p_patternEffectEnd();
-    t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 0 or 8)));
+        t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 0 or 8)));
 end
 
 --[ Tunnels ]--
@@ -736,8 +703,7 @@ function pMarch31osTunnel(_side, _corridorThickOfSpeedLessThan, _corridorThickOf
     p_resetPatternDelaySettings();
     p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, _corridorThickOfSpeedLessThan or THICKNESS, _corridorThickOfSpeedGEThan);
 
-    p_patternEffectStart();
-
+    
     local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
     local _curDelaySpeed = (_addMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
@@ -760,8 +726,7 @@ function pMarch31osTunnel(_side, _corridorThickOfSpeedLessThan, _corridorThickOf
     end
 
     for a = 0, _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd, 1 do
-        p_patternEffectCycle();
-
+        
         if _largeWallDesign == 2 and (a > 0 and a < _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) then _amountOfDesignType0 = _largeWalls;
         else _amountOfDesignType0 = 1;
         end
@@ -827,6 +792,5 @@ function pMarch31osTunnel(_side, _corridorThickOfSpeedLessThan, _corridorThickOf
         if a < _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd then t_applyPatDel(customizePatternDelay(_curTunnelDel * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool())); end
     end
 
-    p_patternEffectEnd();
-    t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 8 or 12)) + (customizePatternDelay(0.5, false) * (_largeWalls / (getProtocolSides() - 2))));
+        t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 8 or 12)) + (customizePatternDelay(0.5, false) * (_largeWalls / (getProtocolSides() - 2))));
 end

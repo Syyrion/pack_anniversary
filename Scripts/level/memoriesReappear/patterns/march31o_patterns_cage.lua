@@ -66,8 +66,6 @@ function pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInvert
     p_adjustPatternDelaySettings(_spdIs_greaterThanEqual or 2, _thickMult_nonSpd or 1, nil, nil);
     _delMult = _delMult * (getBooleanNumber(isTight) and 0.75 or 1);
 
-    p_patternEffectStart()
-
     local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
     -- get delay speed, start pos, odd int checker, and rnd side rebooter
     local _curDelaySpeed = (_addMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
@@ -294,8 +292,7 @@ function pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInvert
             else
                 for aInv = 0, _freqInv do
                     for aMain = 0, _freq do
-                        p_patternEffectCycle();
-                        local thickwall = 11 + (_modeDesignTable[1] > 0 and aMain == 0 and 1 + _designDelAddTable[1] or 0) + (_modeDesignTable[2] > 0 and 1 + _designDelAddTable[2] or 0) + (_modeDesignTable[3] > 0 and aMain > 0 and 1 + (_designDelAddTable[3] * 1.5) or 0)
+                                                local thickwall = 11 + (_modeDesignTable[1] > 0 and aMain == 0 and 1 + _designDelAddTable[1] or 0) + (_modeDesignTable[2] > 0 and 1 + _designDelAddTable[2] or 0) + (_modeDesignTable[3] > 0 and aMain > 0 and 1 + (_designDelAddTable[3] * 1.5) or 0)
                         _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and _modeDesignTable[4] or _modeDesignTable[3], aMain == 0 and _neighDesignTable[4] or _neighDesignTable[3], thickwall,             5 - (_modeDesignTable[2] > 0 and 1 or 0), _designDelAddTable[4], true) --end
                         _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignTable[2],                                       _neighDesignTable[2],                                        aMain == 0 and 5 or 4, 5 + (_modeDesignTable[2] > 0 and 1 or 0), _designDelAddTable[2], true) --desk
                     end
@@ -305,8 +302,7 @@ function pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInvert
         else
             for aInv = 0, _freqInv do
                 for aMain = 0, _freq do
-                    p_patternEffectCycle();
-                    local thickwall = 11 + (_modeDesignTable[1] > 0 and aMain == 0 and 1 + _designDelAddTable[1] or 0) + (_modeDesignTable[2] > 0 and 1 + _designDelAddTable[2] or 0) + (_modeDesignTable[3] > 0 and aMain > 0 and 1 + (_designDelAddTable[3] * 1.5) or 0)
+                                        local thickwall = 11 + (_modeDesignTable[1] > 0 and aMain == 0 and 1 + _designDelAddTable[1] or 0) + (_modeDesignTable[2] > 0 and 1 + _designDelAddTable[2] or 0) + (_modeDesignTable[3] > 0 and aMain > 0 and 1 + (_designDelAddTable[3] * 1.5) or 0)
                     _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and _modeDesignTable[4] or _modeDesignTable[3], aMain == 0 and _neighDesignTable[4] or _neighDesignTable[3], thickwall,             5 - (_modeDesignTable[2] > 0 and 1 or 0), _designDelAddTable[4], true) --end
                     _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignTable[2],                                       _neighDesignTable[2],                                        aMain == 0 and 5 or 4, 5 + (_modeDesignTable[2] > 0 and 1 or 0), _designDelAddTable[2], true) --desk
                 end
@@ -339,8 +335,7 @@ function pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInvert
             else
                 for aInv = 0, _freqInv do
                     for aMain = 0, _freq do
-                        p_patternEffectCycle();
-                        local thickwall = 11 + (_modeDesignTable[1] > 0 and aMain == 0 and 1 + _designDelAddTable[1] or 0) + (_modeDesignTable[2] > 0 and 1 + _designDelAddTable[2] or 0) + (_modeDesignTable[3] > 0 and aMain > 0 and 1 + (_designDelAddTable[3] * 1.5) or 0)
+                                                local thickwall = 11 + (_modeDesignTable[1] > 0 and aMain == 0 and 1 + _designDelAddTable[1] or 0) + (_modeDesignTable[2] > 0 and 1 + _designDelAddTable[2] or 0) + (_modeDesignTable[3] > 0 and aMain > 0 and 1 + (_designDelAddTable[3] * 1.5) or 0)
                         _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and _modeDesignTable[1] or _modeDesignTable[3], aMain == 0 and _neighDesignTable[1] or _neighDesignTable[3], thickwall,                 5,                                        _designDelAddTable[1], false) --start
                         _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignTable[2],                                       _neighDesignTable[2],                                        aMain == _freq and 5 or 4, 5 + (_modeDesignTable[2] > 0 and 1 or 0), _designDelAddTable[2], false) --desk
                     end
@@ -350,8 +345,7 @@ function pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInvert
         else
             for aInv = 0, _freqInv do
                 for aMain = 0, _freq do
-                    p_patternEffectCycle();
-                    local thickwall = 11 + (_modeDesignTable[1] > 0 and aMain == 0 and 1 + _designDelAddTable[1] or 0) + (_modeDesignTable[2] > 0 and 1 + _designDelAddTable[2] or 0) + (_modeDesignTable[3] > 0 and aMain > 0 and 1 + (_designDelAddTable[3] * 1.5) or 0)
+                                        local thickwall = 11 + (_modeDesignTable[1] > 0 and aMain == 0 and 1 + _designDelAddTable[1] or 0) + (_modeDesignTable[2] > 0 and 1 + _designDelAddTable[2] or 0) + (_modeDesignTable[3] > 0 and aMain > 0 and 1 + (_designDelAddTable[3] * 1.5) or 0)
                     _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and _modeDesignTable[1] or _modeDesignTable[3], aMain == 0 and _neighDesignTable[1] or _neighDesignTable[3], thickwall,                 5,                                        _designDelAddTable[1], false) --start
                     _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignTable[2],                                       _neighDesignTable[2],                                        aMain == _freq and 5 or 4, 5 + (_modeDesignTable[2] > 0 and 1 or 0), _designDelAddTable[2], false) --desk
                 end
@@ -365,11 +359,7 @@ function pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInvert
         end
     end
     --[ -= End of pattern code =- ]--
-    p_patternEffectEnd()
-
-    -- end delay (optional arg, default false)
-    t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 8 or 11)));
-end
+    end
 pMarch31osWrapAround = pMarch31osTrapAround
 
 -- pMarch31osTrapPatternizer(): same pattern of 321 pattern, taken from patternizer.lua
@@ -392,8 +382,7 @@ function pMarch31osTrapPatternizer(_side, _iter, _delMult, _sizeMult, _hasContai
     but you can now change the '_delayMultSpdLessThan' value ]]
     p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultSpdLessThan or 1, nil, nil);
 
-    p_patternEffectStart();
-
+    
     local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
     -- First, create the '_curDelaySpeed', '_curSide', and '_curLoopDir' value.
     local _curDelaySpeed = (_altMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
@@ -458,8 +447,7 @@ function pMarch31osTrapPatternizer(_side, _iter, _delMult, _sizeMult, _hasContai
     end
     t_applyPatDel(customizePatternDelay(2 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
     --[ -= End of pattern code =- ]--
-    p_patternEffectEnd();
-
+    
     -- And finally, add the pattern of delay 't_applyPatDel' to avoid impossible patterns. Why? Because the pattern code needs to delay after it's ends here!
     t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 0 or 8)));
 end
@@ -487,8 +475,7 @@ function pMarch31osAccurateBat(_side, _design, _isOdd, _isInverted, _delMult, _s
     p_adjustPatternDelaySettings(_spdIs_greaterThanEqual or 2, _thickMult_nonSpd or 1, nil, nil);
     _delMult = closeValue(_delMult * (getBooleanNumber(isTight) and 0.75 or 1), 0, 1.5);
 
-    p_patternEffectStart();
-
+    
     local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
     -- get delay speed, start pos, odd int checker, and rnd side rebooter
     local _curDelaySpeed = (_addMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
@@ -613,8 +600,7 @@ function pMarch31osAccurateBat(_side, _design, _isOdd, _isInverted, _delMult, _s
         end
     end
     --[ -= End of pattern code =- ]--
-    p_patternEffectEnd();
-
+    
     -- end delay (optional arg, default false)
     t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 8 or 11)));
 end
@@ -641,8 +627,7 @@ function pMarch31osDiamond(_side, _iter, _endHeadFree, _exDelBit, _sizeMult, _ha
     but you can now change the '_delayMultSpdLessThan' value ]]
     p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultSpdLessThan or 1, nil, nil);
 
-    p_patternEffectStart();
-
+    
     local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
     -- First, create the '_curDelaySpeed' and '_curSide' value.
     local _curDelaySpeed = (_altMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
@@ -668,8 +653,7 @@ function pMarch31osDiamond(_side, _iter, _endHeadFree, _exDelBit, _sizeMult, _ha
     end
     t_applyPatDel(customizePatternDelay(((_exDelBit + 2) * 2) * currentSizeOverride * _curDelaySpeed * _sizeMult, p_getDelayPatternBool()));
     for a = 0, _iter, 1 do
-        p_patternEffectCycle();
-        for adj = 0, math.floor(getProtocolSides() / 2) - 2, 1 do
+                for adj = 0, math.floor(getProtocolSides() / 2) - 2, 1 do
             cWallEx(_curSide + adj + math.floor(getProtocolSides() / 2), getProtocolSides() % 2, customizePatternThickness((((getProtocolSides() - (getProtocolSides() % 2)) - (adj * 2 + 3)) * 2) * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
             cWallEx(_curSide - adj + math.floor(getProtocolSides() / 2), getProtocolSides() % 2, customizePatternThickness((((getProtocolSides() - (getProtocolSides() % 2)) - (adj * 2 + 3)) * 2) * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
             t_applyPatDel(customizePatternDelay(((1 + math.floor((adj + 1) / (math.floor(getProtocolSides() / 2) - 1)) + (_exDelBit * math.floor((adj + 1) / (math.floor(getProtocolSides() / 2) - 1)))) * 2) * currentSizeOverride * _curDelaySpeed * _sizeMult, p_getDelayPatternBool()));
@@ -694,8 +678,7 @@ function pMarch31osDiamond(_side, _iter, _endHeadFree, _exDelBit, _sizeMult, _ha
         t_applyPatDel(customizePatternDelay(2 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
     end
     --[ -= End of pattern code =- ]--
-    p_patternEffectEnd();
-
+    
     -- And finally, add the pattern of delay 't_applyPatDel' to avoid impossible patterns. Why? Because the pattern code needs to delay after it's ends here!
     t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 0 or 8)));
 end
@@ -716,8 +699,7 @@ function pMarch31osInterpretInversions(_side, _iter, _delMult, _sizeMult, _skipE
     but you can now change the '_delayMultSpdLessThan' value ]]
     p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultSpdLessThan or 1, nil, nil);
 
-    p_patternEffectStart();
-
+    
     local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
     -- First, create the '_curDelaySpeed', '_curSide', and '_curLoopDir' value.
     local _curDelaySpeed = (_altMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
@@ -737,8 +719,7 @@ function pMarch31osInterpretInversions(_side, _iter, _delMult, _sizeMult, _skipE
         end
     end
     for a = 0, _iter, 1 do
-        p_patternEffectCycle();
-        for sideAmount = 0, math.floor(getProtocolSides() / 2) - 1, 1 do
+                for sideAmount = 0, math.floor(getProtocolSides() / 2) - 1, 1 do
             local _thickSideAmountStat = (sideAmount == math.floor(getProtocolSides() / 2) - 1 and 2) or 3;
             t_applyPatDel(customizePatternDelay(2 * currentSizeOverride * _delMult * _sizeMult, p_getDelayPatternBool()));
             for sideOffset = 0, ((a % 2) * (getProtocolSides() % 2)), 1 do
@@ -750,8 +731,7 @@ function pMarch31osInterpretInversions(_side, _iter, _delMult, _sizeMult, _skipE
     end
     t_applyPatDel(customizePatternDelay(2 * currentSizeOverride * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
     --[ -= End of pattern code =- ]--
-    p_patternEffectEnd();
-
+    
     -- And finally, add the pattern of delay 't_applyPatDel' to avoid impossible patterns. Why? Because the pattern code needs to delay after it's ends here!
     t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 0 or 8)));
 end
@@ -772,8 +752,7 @@ function pMarch31osDivergencedGauntlets(_side, _iter, _delMult, _sizeMult, _skip
     but you can now change the '_delayMultSpdLessThan' value ]]
     p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultSpdLessThan or 1, nil, nil);
 
-    p_patternEffectStart();
-
+    
     local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
     -- First, create the '_curDelaySpeed' and '_curSide' value.
     local _curDelaySpeed = (_altMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
@@ -785,15 +764,13 @@ function pMarch31osDivergencedGauntlets(_side, _iter, _delMult, _sizeMult, _skip
     for i = 0, math.floor(getProtocolSides() / 2), 1 do cWall(_curSide + i, customizePatternThickness(4 * currentSizeOverride * _sizeMult, p_getDelayPatternBool())); end
     t_applyPatDel(customizePatternDelay(6 * currentSizeOverride * _delMult * _sizeMult, p_getDelayPatternBool()));
     for a = 0, _iter, 1 do
-        p_patternEffectCycle();
-        for d = 0, 1 do
+                for d = 0, 1 do
             for i = 1 - d, math.floor(getProtocolSides() / 2) + (((a + 1) % 2) * (getProtocolSides() % 2)) + (d - 1), 1 do cWall(_curSide + i + (((a + 1) % 2) * math.floor(getProtocolSides() / 2)), customizePatternThickness((3 - d) * currentSizeOverride * _sizeMult, p_getDelayPatternBool())); end
             t_applyPatDel(customizePatternDelay(((d + 1) * 2) * currentSizeOverride * _delMult * _sizeMult, p_getDelayPatternBool()));
         end
     end
     --[ -= End of pattern code =- ]--
-    p_patternEffectEnd();
-
+    
     -- And finally, add the pattern of delay 't_applyPatDel' to avoid impossible patterns. Why? Because the pattern code needs to delay after it's ends here!
     t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 0 or 8)));
 end
