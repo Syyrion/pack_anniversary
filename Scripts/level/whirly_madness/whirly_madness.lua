@@ -16,6 +16,7 @@ function onInit()
 	l_setShowPlayerTrail(false)
 	l_setDarkenUnevenBackgroundChunk(false)
 	l_setRotationSpeed(0.5)
+	l_setSides(6)
 end
 
 progress = 0
