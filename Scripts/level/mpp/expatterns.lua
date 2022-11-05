@@ -18,9 +18,9 @@ function pBackAndForth(mTimes, mDelayMult)
 		end
 		
 		rWallThick(startSide+1, oldThickness*2)
-		t_wait(delay*0.5*mDelayMult)
+		t_wait(delay*1*mDelayMult)
 		rWallThick(startSide+2, oldThickness*2)
-		t_wait(delay*0.5*mDelayMult)
+		t_wait(delay*1*mDelayMult)
 		
 	end
 	

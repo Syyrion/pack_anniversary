@@ -8,5 +8,5 @@
     "styleId": "bc_kesd2",
     "musicId": "feral",
     "luaFile": "Scripts/level/mpp/persistence.lua",
-    "difficultyMults": [0.998, 0.999]
+    "difficultyMults": [0.999, 1.001]
 }

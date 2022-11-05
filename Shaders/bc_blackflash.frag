@@ -1,6 +1,7 @@
 uniform vec2 u_resolution;
 uniform float u_skew;
 uniform float u_rotation;
+uniform int u_dead;
 
 void main() {
     vec2 st = gl_FragCoord.xy/u_resolution.y;
@@ -10,8 +11,10 @@ void main() {
     float skewmult = (1.0 / (u_skew + 1.0));
     vec3 prim = vec3(0.0, 0.0, 0.0);
     vec3 seco = vec3(1.0, 1.0, 1.0);
-    
-    if(u_skew > 0.0) {
+    if(u_dead == 1) {
+        seco = vec3(1.0, 0.0, 0.0);
+    }
+    else if(u_skew > 0.0) {
         seco = vec3(1.0, 1.0, 1.0);
     } else {
         seco = vec3(0.0, 1.0, 1.0);

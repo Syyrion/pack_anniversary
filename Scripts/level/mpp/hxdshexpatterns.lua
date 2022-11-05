@@ -194,7 +194,7 @@ end
 function pTunnelQuadruple(mTimes, mDelayMult)
 	oldThickness = THICKNESS
 	myThickness = getPerfectThickness(THICKNESS)
-	delay = getPerfectDelay(myThickness) * 2.5
+	delay = getPerfectDelay(myThickness)
 	startSide = getRandomSide()
 	
 	THICKNESS = myThickness

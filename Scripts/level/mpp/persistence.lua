@@ -7,9 +7,9 @@ u_execScript("level/mpp/commonpatternsv2.lua")
 u_execScript("level/mpp/expatterns.lua")
 u_execScript("level/mpp/hxdshexpatterns.lua")
 l_setShadersRequired(true)
+a_syncMusicToDM(false)
 loopcount = 1
 nextLoop = 0.35
-
 -- This function adds a pattern to the level "timeline" based on a numeric key.
 function addPattern(mKey)
     --hex patterns from Hexadorsip
@@ -42,15 +42,16 @@ BPM = 160
 notSkew = 2
 notRotation = 0.1
 rinc = 0
-
+pshift = 0
 
 function roundThousand(mFloat)
 	return math.floor(mFloat * 1000 + 0.1)
 end
 
-speedd = roundThousand(u_getSpeedMultDM())
+speedd = roundThousand(l_getSpeedMult())
 l_addTracked("speedd", "speed multiplier")
 l_addTracked("notRotation", "rotation")
+l_addTracked("pshift", "shift")
 
 --same wall + THICKNESS (created by Exschwasion)
 function rWallThick(mSide, THICKNESS)
@@ -238,8 +239,8 @@ function cwspawn()
 	cwspin(cw35, (math.pi/3)*4)
 	cwspin(cw36, (math.pi/3)*5)
 end
-pulsDist = 10
-pulsMin = 20
+pulsDist = 0.1
+pulsMin = 0.1
 function hardPulse()
     --the fast beat pulse
     l_setManualPulseControl(true)
@@ -255,19 +256,21 @@ end
 -- `onInit` is an hardcoded function that is called when the level is first
 -- loaded. This can be used to setup initial level parameters.
 function onInit()
-	l_setSpeedMult(1.0)
+	l_setSpeedMult(1.5)
 	l_setSpeedInc(0.1)
 	l_setSpeedMax(3.5)
 	l_setRotationSpeed(10000)
 	l_setRotationSpeedMax(9999)
 	l_setRotationSpeedInc(0)
-	l_setDelayMult(1.5)
+	l_setDelayMult(1.0)
 	l_setDelayInc(-0.01)
+	l_setDelayMin(0.01)
 	l_setFastSpin(0.0)
 	l_setSides(6)
 	l_setSidesMin(6)
 	l_setSidesMax(6)
 	l_setIncTime(15)
+    l_setRadiusMin(40)
 
 	l_setPulseMin(60)
 	l_setPulseMax(100)
@@ -285,24 +288,68 @@ function onInit()
 end
 -- `onLoad` is an hardcoded function that is called when the level is started
 -- or restarted.
-
+killed = 0
 blackflash = shdr_getShaderId("bc_blackflash.frag")
 spinscan = shdr_getShaderId("bc_spinscan.frag")
+
+function seeCheck()
+	if roundThousand(u_getDifficultyMult()) < 1000 then
+		s_setStyle("bc_grey")
+	end
+	if roundThousand(u_getDifficultyMult()) > 1000 then
+		l_setDelayMult(0.7)
+	end
+end
+
 function onLoad()
-
-
-	l_setSpeedMult(1.5)
-
-	speedd = roundThousand(u_getSpeedMultDM())/1000
+	killed = 0
+	e_eval([[seeCheck()]])
 	e_eval([[cwspawn()]])
     e_eval([[shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, blackflash)]])
     e_eval([[hardPulse()]])
     e_eval([[l_setRadiusMin(40)]])
     e_eval([[l_setBeatPulseMax(10)]])
-    e_eval([[l_setBeatPulseDelayMax(3600/234)]])
+    e_eval([[l_setBeatPulseDelayMax(3600/160)]])
     e_eval([[l_setBeatPulseSpeedMult(1)]])
     e_eval([[l_setRotationSpeed(0)]])
     e_eval([[t_clear()]])
+	speedd = roundThousand(l_getSpeedMult())/1000
+end
+
+function onDeath()
+	shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, blackflash)
+	s_setStyle("bc_death")
+
+	cw_setVertexColor4Same(cw31, 0, 0, 0, 100)
+	cw_setVertexColor4Same(cw32, 0, 0, 0, 100)
+	cw_setVertexColor4Same(cw33, 0, 0, 0, 100)
+	cw_setVertexColor4Same(cw34, 0, 0, 0, 100)
+	cw_setVertexColor4Same(cw35, 0, 0, 0, 100)
+	cw_setVertexColor4Same(cw36, 0, 0, 0, 100)
+
+	
+	cw_setVertexColor4Same(cw11, 250, 0, 0, 255)
+	cw_setVertexColor4Same(cw12, 250, 0, 0, 255)
+	cw_setVertexColor4Same(cw13, 250, 0, 0, 255)
+	cw_setVertexColor4Same(cw14, 250, 0, 0, 255)
+	cw_setVertexColor4Same(cw15, 250, 0, 0, 255)
+	cw_setVertexColor4Same(cw16, 250, 0, 0, 255)
+
+	cw_setVertexColor4Same(cw21, 250, 0, 0, 255)
+	cw_setVertexColor4Same(cw22, 250, 0, 0, 255)
+	cw_setVertexColor4Same(cw23, 250, 0, 0, 255)
+	cw_setVertexColor4Same(cw24, 250, 0, 0, 255)
+	cw_setVertexColor4Same(cw25, 250, 0, 0, 255)
+	cw_setVertexColor4Same(cw26, 250, 0, 0, 255)
+
+	cw_setVertexColor4Same(cw17, 250, 0, 0, 255)
+	cw_setVertexColor4Same(cw18, 250, 0, 0, 255)
+	cw_setVertexColor4Same(cw19, 250, 0, 0, 255)
+	cw_setVertexColor4Same(cw10, 250, 0, 0, 255)
+	cw_setVertexColor4Same(cw1a, 250, 0, 0, 255)
+	cw_setVertexColor4Same(cw1b, 250, 0, 0, 255)
+
+	killed = 1
 end
 
 -- `onStep` is an hardcoded function that is called when the level "timeline"
@@ -321,7 +368,7 @@ end
 -- `onIncrement` is an hardcoded function that is called when the level
 -- difficulty is incremented.
 function onIncrement()
-	speedd = roundThousand(u_getSpeedMultDM())/1000
+	speedd = roundThousand(l_getSpeedMult())/1000
 	notRotation = notRotation + 0.05
 	rinc = rinc + 1
 end
@@ -335,6 +382,7 @@ end
 ibeatCount = 0
 -- `onUpdate` is an hardcoded function that is called every frame. `mFrameTime`
 -- represents the time delta between the current and previous frame.
+
 function onUpdate(mFrameTime)
 
 	cwspin(cw11, (math.pi/3)/42)
@@ -360,6 +408,7 @@ function onUpdate(mFrameTime)
         loopcount = loopcount + 1
         nextLoop = loopcount * (60/BPM) -- bpm = 234
         --on beat events
+		u_setFlashEffect(10)
 		hardPulse()
 		shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, spinscan)
 		if notSkew < 0 then
@@ -371,7 +420,9 @@ function onUpdate(mFrameTime)
 			cw_setVertexColor4Same(cw36, 0, 0, 0, 100)
 		end
 		if dys then dys = false else dys = true end
-		l_setRotation(l_getRotation()+(roundThousand((math.random()*6)/1000)*60))
+		pshift = roundThousand((math.random()*6)/1000)
+		l_setRotation(l_getRotation()+pshift*60)
+
 
         beatCount = beatCount + 1
 		ibeatCount = 0
@@ -379,12 +430,14 @@ function onUpdate(mFrameTime)
 
 	if ibeatCount == ((60/BPM)*240)/2 then
 		shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, blackflash)
-		cw_setVertexColor4Same(cw31, 0, 0, 0, 255)
-		cw_setVertexColor4Same(cw32, 0, 0, 0, 255)
-		cw_setVertexColor4Same(cw33, 0, 0, 0, 255)
-		cw_setVertexColor4Same(cw34, 0, 0, 0, 255)
-		cw_setVertexColor4Same(cw35, 0, 0, 0, 255)
-		cw_setVertexColor4Same(cw36, 0, 0, 0, 255)
+		if roundThousand(u_getDifficultyMult()) > 999 then
+			cw_setVertexColor4Same(cw31, 0, 0, 0, 255)
+			cw_setVertexColor4Same(cw32, 0, 0, 0, 255)
+			cw_setVertexColor4Same(cw33, 0, 0, 0, 255)
+			cw_setVertexColor4Same(cw34, 0, 0, 0, 255)
+			cw_setVertexColor4Same(cw35, 0, 0, 0, 255)
+			cw_setVertexColor4Same(cw36, 0, 0, 0, 255)
+		end
 	end
 
 	FFrames = FFrames + 1
@@ -481,4 +534,6 @@ function onRenderStage(rs) --cringe
 	shdr_setUniformFVec2(blackflash, "u_resolution", u_getWidth(), u_getHeight())
 	shdr_setUniformF(blackflash, "u_skew", s_get3dSkew())
 	shdr_setUniformF(blackflash, "u_rotation", math.rad(l_getRotation()))
+	shdr_setUniformI(blackflash, "u_dead", killed)
 end
+
