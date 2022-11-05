@@ -1,0 +1,12 @@
+{
+	"id": "run",
+	"name": "run",
+	"description": "",
+	"author": "ndagger",
+	"menuPriority": 8,
+	"selectable": true,
+	"styleId": "run",
+	"musicId": "rocketRace",
+	"luaFile": "Scripts/level/run/main.lua",
+	"difficultyMults": [1.001]
+}
