@@ -42,13 +42,13 @@ function onLoad()
         [[
             a 80 p:.
             1 rmv
-            -2
+            -2 dup rmv
             4 for
                 r 1 i p:_|.
                 dup if
                     swap
-                    dup rmv
                     -1 *
+                    dup rmv
                     swap
                     a lpath 1 i + p:.
                 end
