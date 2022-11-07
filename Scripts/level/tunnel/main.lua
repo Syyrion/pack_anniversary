@@ -5,7 +5,7 @@ SIDES = 6
 local speedInc
 
 function onInit()
-    speedInc = Incrementer:new(1, 1.875, 7)
+    speedInc = Incrementer:new(1, 4, 24)
 	l_setSpeedMult(speedInc:get())
 	l_setSpeedMax(math.huge)
 

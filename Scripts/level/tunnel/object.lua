@@ -10,7 +10,7 @@ MINOR_RADIUS:setAsymmetry(0.05)
 u_execScript("level/tunnel/3d.lua")
 
 TorusAngle = {
-    inc = Incrementer:new(1, 6, 7),
+    inc = Incrementer:new(1, 13, 24),
     angle = SliderSawtooth:new(7, math.pi),
     increment = function (self)
         self.angle:setTimescale(self.inc:increment())
