@@ -27,31 +27,33 @@ function addPattern(mKey)
         elseif mKey == 11 then pWallExVortexLL(0, 3, 1)
         elseif mKey == 12 then pBarrageSpiralLR(math.random(2, 3), 1)
         elseif mKey == 13 then pAltBarrageStrip(1, 0)
+        elseif mKey == 14 then pBat(0.5)
 		end
 end
 beatCount = 0
 -- Shuffle the keys, and then call them to add all the patterns.
 -- Shuffling is better than randomizing - it guarantees all the patterns will
 -- be called.
-keys = { 0, 0, 1, 2, 3, 3, 4, 5, 5, 6, 7, 8, 8, 11, 12, 12, 13 }
+keys = { 0, 0, 1, 2, 3, 3, 4, 5, 5, 6, 7, 8, 8, 11, 12, 12, 13, 14 }
 shuffle(keys)
 index = 0
 dys = false
 FFrames = 0
 BPM = 160
 notSkew = 2
-notRotation = 0.1
+notRotation = 0.0
 rinc = 0
 pshift = 0
-
+difficultyName = "not loaded"
 function roundThousand(mFloat)
 	return math.floor(mFloat * 1000 + 0.1)
 end
 
 speedd = roundThousand(l_getSpeedMult())
-l_addTracked("speedd", "speed multiplier")
+l_addTracked("speedd", "speed")
 l_addTracked("notRotation", "rotation")
 l_addTracked("pshift", "shift")
+l_addTracked("difficultyName", "difficulty")
 
 --same wall + THICKNESS (created by Exschwasion)
 function rWallThick(mSide, THICKNESS)
@@ -295,9 +297,14 @@ spinscan = shdr_getShaderId("bc_spinscan.frag")
 function seeCheck()
 	if roundThousand(u_getDifficultyMult()) < 1000 then
 		s_setStyle("bc_grey")
+		difficultyName = "high vis"
 	end
 	if roundThousand(u_getDifficultyMult()) > 1000 then
 		l_setDelayMult(0.7)
+		difficultyName = "hard"
+	end
+	if roundThousand(u_getDifficultyMult()) == 1000 then
+		difficultyName = "normal"
 	end
 end
 
@@ -518,9 +525,9 @@ function onUpdate(mFrameTime)
 		notSkew = -2
 	end
 	if rinc % 2 == 0 then
-		l_setRotation(l_getRotation()+(notRotation*(567/240)))
+		l_setRotation(l_getRotation()+(notRotation*(600/240)))
 	else
-		l_setRotation(l_getRotation()+((notRotation*(567/240))*-1))
+		l_setRotation(l_getRotation()+((notRotation*(600/240))*-1))
 	end
 	ibeatCount = ibeatCount + 1
 end
