@@ -1,0 +1,19 @@
+{
+    // Music data id
+    "id": "darkleaves",
+
+    // Music file
+    "file_name": "darkleaves.ogg",
+
+    // Music information
+    "name": "dark leaves",
+    "album": "",
+    "author": "Eusebeia",
+
+    // Segments
+    "segments":
+    [
+        { "time": 197.4 },
+        { "time": 279.168 }
+    ]
+}
