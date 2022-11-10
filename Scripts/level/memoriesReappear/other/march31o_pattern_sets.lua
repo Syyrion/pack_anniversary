@@ -1,9 +1,9 @@
-u_execScript("level/memoriesreappear/utils/march31o_common.lua")
-u_execScript("level/memoriesreappear/utils/march31o_utils.lua")
-u_execScript("level/memoriesreappear/utils/march31o_utility_classes.lua")
-u_execScript("level/memoriesreappear/patterns/march31o_patterns_common.lua")
-u_execScript("level/memoriesreappear/patterns/march31o_patterns_additional.lua")
-u_execScript("level/memoriesreappear/patterns/march31o_patterns_additional_tunnel.lua")
+u_execScript("level/memoriesReappear/utils/march31o_common.lua")
+u_execScript("level/memoriesReappear/utils/march31o_utils.lua")
+u_execScript("level/memoriesReappear/utils/march31o_utility_classes.lua")
+u_execScript("level/memoriesReappear/patterns/march31o_patterns_common.lua")
+u_execScript("level/memoriesReappear/patterns/march31o_patterns_additional.lua")
+u_execScript("level/memoriesReappear/patterns/march31o_patterns_additional_tunnel.lua")
 
 function spawnMainPattern(mNumbSpawn)
     local _side = getRandomSide();
@@ -52,7 +52,6 @@ function spawnMainPattern(mNumbSpawn)
     end
 end
 
--- Normal pattern keys in order.
 function getMainKey()
     getKeys = { 0, 0, 1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 9, 10, 10, 10, 11, 12, 13, 14, 15, 15, 16, 16, 16, 16, 17, 18, 19, 20, 20, 21, 21, 21, 22, 22, 23, 23, 24, 24, 25, 26, 26, 27, 28, 28, 29, 30, 31, 32, 32 }
     shuffle(getKeys)
