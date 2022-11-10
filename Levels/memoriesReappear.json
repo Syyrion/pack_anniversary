@@ -7,6 +7,6 @@
     "selectable": true,
     "styleId": "memoriesreappear_intro",
     "musicId": "memoriesreappear",
-    "luaFile": "Scripts/level/memoriesrReappear/main.lua",
+    "luaFile": "Scripts/level/memoriesReappear/main.lua",
     "difficultyMults": [0.999999, 1.00001]
 }
