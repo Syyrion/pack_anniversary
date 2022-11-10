@@ -1,9 +1,9 @@
-u_execScript("level/memoriesreappear/utils/march31o_common.lua")
-u_execScript("level/memoriesreappear/utils/march31o_utils.lua")
-u_execScript("level/memoriesreappear/utils/march31o_utility_classes.lua")
-u_execScript("level/memoriesreappear/patterns/march31o_patterns_common.lua")
-u_execScript("level/memoriesreappear/patterns/march31o_patterns_additional.lua")
-u_execScript("level/memoriesreappear/patterns/march31o_patterns_additional_tunnel.lua")
+u_execScript("level/memoriesReappear/utils/march31o_common.lua")
+u_execScript("level/memoriesReappear/utils/march31o_utils.lua")
+u_execScript("level/memoriesReappear/utils/march31o_utility_classes.lua")
+u_execScript("level/memoriesReappear/patterns/march31o_patterns_common.lua")
+u_execScript("level/memoriesReappear/patterns/march31o_patterns_additional.lua")
+u_execScript("level/memoriesReappear/patterns/march31o_patterns_additional_tunnel.lua")
 
 function spawnMainPattern(mNumbSpawn)
     local _side = getRandomSide();
