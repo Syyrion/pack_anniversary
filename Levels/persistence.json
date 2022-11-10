@@ -5,7 +5,7 @@
     "author": "Nesa",
     "menuPriority": 3,
     "selectable": true,
-    "styleId": "bc_kesd2",
+    "styleId": "bc_menu",
     "musicId": "feral",
     "luaFile": "Scripts/level/mpp/persistence.lua",
     "difficultyMults": [0.999, 1.001]

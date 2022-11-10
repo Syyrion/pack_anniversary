@@ -241,8 +241,8 @@ function cwspawn()
 	cwspin(cw35, (math.pi/3)*4)
 	cwspin(cw36, (math.pi/3)*5)
 end
-pulsDist = 0.1
-pulsMin = 0.1
+pulsDist = 1
+pulsMin = 1
 function hardPulse()
     --the fast beat pulse
     l_setManualPulseControl(true)
@@ -293,10 +293,12 @@ end
 killed = 0
 blackflash = shdr_getShaderId("bc_blackflash.frag")
 spinscan = shdr_getShaderId("bc_spinscan.frag")
+arrow = shdr_getShaderId("bc_arrow.frag")
 
 function seeCheck()
 	if roundThousand(u_getDifficultyMult()) < 1000 then
 		s_setStyle("bc_grey")
+		shdr_setActiveFragmentShader(RenderStage.PLAYERTRIS, arrow)
 		difficultyName = "high vis"
 	end
 	if roundThousand(u_getDifficultyMult()) > 1000 then
@@ -310,6 +312,7 @@ end
 
 function onLoad()
 	killed = 0
+    e_eval([[s_setStyle("bc_kesd2")]])
 	e_eval([[seeCheck()]])
 	e_eval([[cwspawn()]])
     e_eval([[shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, blackflash)]])
@@ -542,5 +545,8 @@ function onRenderStage(rs) --cringe
 	shdr_setUniformF(blackflash, "u_skew", s_get3dSkew())
 	shdr_setUniformF(blackflash, "u_rotation", math.rad(l_getRotation()))
 	shdr_setUniformI(blackflash, "u_dead", killed)
+
+	shdr_setUniformF(arrow, "u_skew", notSkew)
+	shdr_setUniformI(arrow, "u_dead", killed)
 end
 
