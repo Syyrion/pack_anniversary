@@ -1,0 +1,17 @@
+{
+	"id": "AcidicEye_Vizunave",
+
+	"file_name": "AcidicEye_Vizunave.ogg",
+
+	"name": "Acidic Eye",
+	"album": "",
+	"author": "Vizunave",
+	
+	"segments":
+	[
+		{ "time": 54.265 },
+		{ "time": 77.179 },
+		{ "time": 200.803 },
+		{ "time": 224.084 }
+	]
+}

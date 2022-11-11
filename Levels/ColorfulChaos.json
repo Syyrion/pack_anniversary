@@ -1,0 +1,12 @@
+{
+	"id": "KaylaxieAnnivLvl_ColorfulChaos",
+	"name": "Colorful Chaos",
+	"description": "",
+	"author": "Kaylaxie",
+	"menuPriority": 9,
+	"selectable": true,
+	"styleId": "KaylaxieAnnivLvlStyle",
+	"musicId": "AcidicEye_Vizunave",
+	"luaFile": "Scripts/level/colorfulchaos/main.lua",
+	"difficultyMults": [1.0001, 1.0002]
+}

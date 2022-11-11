@@ -1,0 +1,34 @@
+{
+	"id": "KaylaxieAnnivLvlStyle",
+
+	"hue_min": 160,
+	"hue_max": 360,
+	"hue_ping_pong": true,
+	"hue_increment": 2.6,
+	"max_swap_time": 87.21,
+	
+	"pulse_min": 0.0,
+	"pulse_max": 1.0,
+	"pulse_increment": 0.125,
+
+	"3D_depth": 6,
+	"3D_skew": 0.15,
+	"3D_spacing": 10.0,
+	"3D_alpha_multiplier": 2,
+	"3D_alpha_falloff": 14,
+
+	"3D_pulse_min": 0.45,
+	"3D_pulse_max": 3.75,
+	
+	"main": { "main": true, "dynamic": true, "value": [0, 0, 0, 255], "pulse": [255, 255, 255, 0] },
+
+	"colors":
+	[	
+		{ "dynamic": true, "dynamic_darkness": 2.2, "value": [0, 0, 0, 255], "pulse": [50, 0, -10, 255], "hue_shift": 10.0},
+		{ "dynamic": true, "dynamic_darkness": 6.0, "value": [0, 0, 0, 255], "pulse": [50, 0, -10, 255], "hue_shift": 10.0},
+		{ "dynamic": true, "dynamic_darkness": 2.2, "value": [0, 0, 0, 255], "pulse": [0, 50, -10, 255], "hue_shift": 20.0},
+		{ "dynamic": true, "dynamic_darkness": 6.0, "value": [0, 0, 0, 255], "pulse": [0, 50, -10, 255], "hue_shift": 20.0},
+		{ "dynamic": true, "dynamic_darkness": 2.2, "value": [0, 0, 0, 255], "pulse": [-10, 0, 50, 255], "hue_shift": 30.0},
+		{ "dynamic": true, "dynamic_darkness": 6.0, "value": [0, 0, 0, 255], "pulse": [-10, 0, 50, 255], "hue_shift": 30.0}
+	]
+}
