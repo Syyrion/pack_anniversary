@@ -147,8 +147,8 @@ cw35 = cw_createNoCollision()
 cw36 = cw_createNoCollision()
 
 function cwspawnwalllayer1(cw)
-	local length = 100
-	local width = 5
+	local length = 5
+	local width = 100
 	local displacement = 700
 	local alpha = 200
 	local conical = 0
@@ -160,9 +160,9 @@ function cwspawnwalllayer1(cw)
 end
 
 function cwspawnwalllayer1a(cw)
-local length = 50
-local width = 3
-local displacement = 500
+local length = 3
+local width = 50
+local displacement = 450
 local alpha = 200
 local conical = 0
 cw_setVertexPos(cw, 0, displacement+width, length+conical)
@@ -173,8 +173,8 @@ cw_setVertexColor4Same(cw, alpha, alpha, alpha, 255)
 end
 
 function cwspawnwalllayer2(cw)
-	local length = 20
-	local width = 2
+	local length = 2
+	local width = 20
 	local displacement = 350
 	local alpha = 255
 	local conical = 0
@@ -464,7 +464,7 @@ function onUpdate(mFrameTime)
 
 	if l_getLevelTime() > nextLoop then -- clock
         loopcount = loopcount + 1
-        nextLoop = loopcount * (60/BPM) -- bpm = 234
+        nextLoop = loopcount * (60/BPM) -- bpm = 160
         --on beat events
 		u_setFlashEffect(10)
 		hardPulse()
