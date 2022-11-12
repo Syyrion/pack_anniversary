@@ -44,6 +44,9 @@ notSkew = 2
 notRotation = 0.0
 rinc = 0
 pshift = 0
+dec1 = -1
+dec2 = -1
+dec3 = -1
 difficultyName = "not loaded"
 function roundThousand(mFloat)
 	return math.floor(mFloat * 1000 + 0.1)
@@ -403,24 +406,61 @@ ibeatCount = 0
 
 function onUpdate(mFrameTime)
 
-	cwspin(cw11, (math.pi/3)/42)
-	cwspin(cw12, (math.pi/3)/42)
-	cwspin(cw13, (math.pi/3)/42)
-	cwspin(cw14, (math.pi/3)/42)
-	cwspin(cw15, (math.pi/3)/42)
-	cwspin(cw16, (math.pi/3)/42)
-	cwspin(cw17, -(math.pi/3)/45)
-	cwspin(cw18, -(math.pi/3)/45)
-	cwspin(cw19, -(math.pi/3)/45)
-	cwspin(cw10, -(math.pi/3)/45)
-	cwspin(cw1a, -(math.pi/3)/45)
-	cwspin(cw1b, -(math.pi/3)/45)
-	cwspin(cw21, (math.pi/3)/80)
-	cwspin(cw22, (math.pi/3)/80)
-	cwspin(cw23, (math.pi/3)/80)
-	cwspin(cw24, (math.pi/3)/80)
-	cwspin(cw25, (math.pi/3)/80)
-	cwspin(cw26, (math.pi/3)/80)
+	if FFrames%90 == 0 then
+		local gen = (math.random()*8)
+		gen = roundThousand(gen/1000)
+		if gen == 0 then
+			dec1 = 1
+			dec2 = 1
+			dec3 = 1
+		elseif gen == 1 then
+			dec1 = -1
+			dec2 = 1
+			dec3 = 1
+		elseif gen == 2 then
+			dec1 = 1
+			dec2 = -1
+			dec3 = 1
+		elseif gen == 3 then
+			dec1 = -1
+			dec2 = -1
+			dec3 = 1
+		elseif gen == 4 then
+			dec1 = 1
+			dec2 = 1
+			dec3 = -1
+		elseif gen == 5 then
+			dec1 = -1
+			dec2 = 1
+			dec3 = -1
+		elseif gen == 6 then
+			dec1 = 1
+			dec2 = -1
+			dec3 = -1
+		else 
+			dec1 = -1
+			dec2 = -1
+			dec3 = -1
+		end
+	end
+	cwspin(cw11, dec1*(math.pi/3)/42)
+	cwspin(cw12, dec1*(math.pi/3)/42)
+	cwspin(cw13, dec1*(math.pi/3)/42)
+	cwspin(cw14, dec1*(math.pi/3)/42)
+	cwspin(cw15, dec1*(math.pi/3)/42)
+	cwspin(cw16, dec1*(math.pi/3)/42)
+	cwspin(cw17, dec2*(math.pi/3)/45)
+	cwspin(cw18, dec2*(math.pi/3)/45)
+	cwspin(cw19, dec2*(math.pi/3)/45)
+	cwspin(cw10, dec2*(math.pi/3)/45)
+	cwspin(cw1a, dec2*(math.pi/3)/45)
+	cwspin(cw1b, dec2*(math.pi/3)/45)
+	cwspin(cw21, dec3*(math.pi/3)/80)
+	cwspin(cw22, dec3*(math.pi/3)/80)
+	cwspin(cw23, dec3*(math.pi/3)/80)
+	cwspin(cw24, dec3*(math.pi/3)/80)
+	cwspin(cw25, dec3*(math.pi/3)/80)
+	cwspin(cw26, dec3*(math.pi/3)/80)
 
 	if l_getLevelTime() > nextLoop then -- clock
         loopcount = loopcount + 1
