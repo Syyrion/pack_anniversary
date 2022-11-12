@@ -300,13 +300,18 @@ function seeCheck()
 		s_setStyle("bc_grey")
 		shdr_setActiveFragmentShader(RenderStage.PLAYERTRIS, arrow)
 		difficultyName = "high vis"
+		speedd = roundThousand(l_getSpeedMult())/1000
 	end
 	if roundThousand(u_getDifficultyMult()) > 1000 then
-		l_setDelayMult(0.7)
+		l_setDelayMult(0.85)
+		l_setSpeedMult(2.0)
+		l_setSpeedMax(4.0)
 		difficultyName = "hard"
+		speedd = roundThousand(l_getSpeedMult())/1000
 	end
 	if roundThousand(u_getDifficultyMult()) == 1000 then
 		difficultyName = "normal"
+		speedd = roundThousand(l_getSpeedMult())/1000
 	end
 end
 
@@ -323,7 +328,6 @@ function onLoad()
     e_eval([[l_setBeatPulseSpeedMult(1)]])
     e_eval([[l_setRotationSpeed(0)]])
     e_eval([[t_clear()]])
-	speedd = roundThousand(l_getSpeedMult())/1000
 end
 
 function onDeath()
@@ -379,7 +383,11 @@ end
 -- difficulty is incremented.
 function onIncrement()
 	speedd = roundThousand(l_getSpeedMult())/1000
-	notRotation = notRotation + 0.05
+	if roundThousand(u_getDifficultyMult()) > 1000 then
+		notRotation = notRotation + 0.1
+	else
+		notRotation = notRotation + 0.05
+	end
 	rinc = rinc + 1
 end
 

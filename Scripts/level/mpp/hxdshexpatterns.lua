@@ -268,5 +268,5 @@ function pBat(mDelayMult)
 	t_wait(delay)
 
 	THICKNESS = oldThickness
-	t_wait(delay*1)
+	t_wait(delay*5)
 end
