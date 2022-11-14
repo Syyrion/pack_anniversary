@@ -1,0 +1,12 @@
+{
+	"id": "doubletrouble",
+	"name": "Double Trouble",
+	"description": "Have some trouble, and make it double!\n\nI'd recommend making new keybinds for P2 controls.",
+	"author": "Apeiro331",	
+	"menuPriority": 10,
+	"selectable": true,
+	"styleId": "doubletrouble",
+	"musicId": "pressurecooker",
+	"luaFile": "Scripts/level/doubletrouble/main.lua",
+	"difficultyMults": [1.5]
+}
