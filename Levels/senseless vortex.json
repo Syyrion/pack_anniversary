@@ -3,7 +3,7 @@
     "name": "senseless vortex",
     "description": "call of the void",
     "author": "zXdasfsa",
-    "menuPriority": 1,
+    "menuPriority": 7,
     "selectable": true,
     "styleId": "sense",
     "musicId": "darkleaves",

@@ -3,7 +3,7 @@
     "name": "Memories, reappear",
     "description": "The nostalgia returns, but our memory has just begun.\n(unreleased pack from \"don\")\n(This is my final 2.1.5+ level)\n\n<<Happy 7th anniversary of (Mario) the Music Box!>>",
     "author": "HexagonalSyndrome",
-    "menuPriority": 4,
+    "menuPriority": 3,
     "selectable": true,
     "styleId": "memoriesreappear_intro",
     "musicId": "memoriesreappear",

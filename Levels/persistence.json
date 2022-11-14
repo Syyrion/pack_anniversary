@@ -3,7 +3,7 @@
     "name": "Persistence",
     "description": "of vision\n\n",
     "author": "Nesa",
-    "menuPriority": 3,
+    "menuPriority": 4,
     "selectable": true,
     "styleId": "bc_menu",
     "musicId": "feral",

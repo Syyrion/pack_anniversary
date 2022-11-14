@@ -3,7 +3,7 @@
     "name": "Whirly madness",
     "description": "Ends after 2 minutes\nDifficulty Mult: s.d\ns: segment to start at\nd: difficulty",
     "author": "Baum",
-    "menuPriority": 5,
+    "menuPriority": 6,
     "selectable": true,
     "styleId": "whirly_madness_menu",
     "musicId": "shuffle_heaven",
