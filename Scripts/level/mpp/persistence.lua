@@ -120,33 +120,19 @@ end
 --cw decoration
 
 --layer 1 - rings
-cw11 = cw_createNoCollision()
-cw12 = cw_createNoCollision()
-cw13 = cw_createNoCollision()
-cw14 = cw_createNoCollision()
-cw15 = cw_createNoCollision()
-cw16 = cw_createNoCollision()
+cwring1 = {}
+cwring2 = {}
+cwring3 = {}
 
-cw17 = cw_createNoCollision()
-cw18 = cw_createNoCollision()
-cw19 = cw_createNoCollision()
-cw10 = cw_createNoCollision()
-cw1a = cw_createNoCollision()
-cw1b = cw_createNoCollision()
+--layer 2 - obstruction
+cwborder = {}
 
-cw21 = cw_createNoCollision()
-cw22 = cw_createNoCollision()
-cw23 = cw_createNoCollision()
-cw24 = cw_createNoCollision()
-cw25 = cw_createNoCollision()
-cw26 = cw_createNoCollision()
---layer 3 - cross
-cw31 = cw_createNoCollision()
-cw32 = cw_createNoCollision()
-cw33 = cw_createNoCollision()
-cw34 = cw_createNoCollision()
-cw35 = cw_createNoCollision()
-cw36 = cw_createNoCollision()
+for i = 0, 5 do
+    cwring1[i] = cw_createNoCollision()
+    cwring2[i] = cw_createNoCollision()
+    cwring3[i] = cw_createNoCollision()
+    cwborder[i] = cw_createNoCollision()
+end
 
 function cwspawnwalllayer1(cw)
     local length = 5
@@ -201,50 +187,16 @@ function cwspawnwalllayer3(cw)
 end
 
 function cwspawn()
-    cwspawnwalllayer1(cw11)
-    cwspawnwalllayer1(cw12)
-    cwspawnwalllayer1(cw13)
-    cwspawnwalllayer1(cw14)
-    cwspawnwalllayer1(cw15)
-    cwspawnwalllayer1(cw16)
-    cwspin(cw12, (math.pi / 3))
-    cwspin(cw13, (math.pi / 3) * 2)
-    cwspin(cw14, (math.pi / 3) * 3)
-    cwspin(cw15, (math.pi / 3) * 4)
-    cwspin(cw16, (math.pi / 3) * 5)
-    cwspawnwalllayer1a(cw17)
-    cwspawnwalllayer1a(cw18)
-    cwspawnwalllayer1a(cw19)
-    cwspawnwalllayer1a(cw10)
-    cwspawnwalllayer1a(cw1a)
-    cwspawnwalllayer1a(cw1b)
-    cwspin(cw18, (math.pi / 3))
-    cwspin(cw19, (math.pi / 3) * 2)
-    cwspin(cw10, (math.pi / 3) * 3)
-    cwspin(cw1a, (math.pi / 3) * 4)
-    cwspin(cw1b, (math.pi / 3) * 5)
-    cwspawnwalllayer2(cw21)
-    cwspawnwalllayer2(cw22)
-    cwspawnwalllayer2(cw23)
-    cwspawnwalllayer2(cw24)
-    cwspawnwalllayer2(cw25)
-    cwspawnwalllayer2(cw26)
-    cwspin(cw22, (math.pi / 3))
-    cwspin(cw23, (math.pi / 3) * 2)
-    cwspin(cw24, (math.pi / 3) * 3)
-    cwspin(cw25, (math.pi / 3) * 4)
-    cwspin(cw26, (math.pi / 3) * 5)
-    cwspawnwalllayer3(cw31)
-    cwspawnwalllayer3(cw32)
-    cwspawnwalllayer3(cw33)
-    cwspawnwalllayer3(cw34)
-    cwspawnwalllayer3(cw35)
-    cwspawnwalllayer3(cw36)
-    cwspin(cw32, (math.pi / 3))
-    cwspin(cw33, (math.pi / 3) * 2)
-    cwspin(cw34, (math.pi / 3) * 3)
-    cwspin(cw35, (math.pi / 3) * 4)
-    cwspin(cw36, (math.pi / 3) * 5)
+    for i = 0, 5 do 
+        cwspawnwalllayer1(cwring1[i])
+        cwspin(cwring1[i], (math.pi / 3)*i)
+        cwspawnwalllayer1a(cwring2[i])
+        cwspin(cwring2[i], (math.pi / 3)*i)
+        cwspawnwalllayer2(cwring3[i])
+        cwspin(cwring3[i], (math.pi / 3)*i)
+        cwspawnwalllayer3(cwborder[i])
+        cwspin(cwborder[i], (math.pi / 3)*i)
+    end
 end
 
 pulsDist = 1
@@ -342,34 +294,12 @@ function onDeath()
     shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, blackflash)
     s_setStyle("bc_death")
 
-    cw_setVertexColor4Same(cw31, 0, 0, 0, 100)
-    cw_setVertexColor4Same(cw32, 0, 0, 0, 100)
-    cw_setVertexColor4Same(cw33, 0, 0, 0, 100)
-    cw_setVertexColor4Same(cw34, 0, 0, 0, 100)
-    cw_setVertexColor4Same(cw35, 0, 0, 0, 100)
-    cw_setVertexColor4Same(cw36, 0, 0, 0, 100)
-
-
-    cw_setVertexColor4Same(cw11, 250, 0, 0, 255)
-    cw_setVertexColor4Same(cw12, 250, 0, 0, 255)
-    cw_setVertexColor4Same(cw13, 250, 0, 0, 255)
-    cw_setVertexColor4Same(cw14, 250, 0, 0, 255)
-    cw_setVertexColor4Same(cw15, 250, 0, 0, 255)
-    cw_setVertexColor4Same(cw16, 250, 0, 0, 255)
-
-    cw_setVertexColor4Same(cw21, 250, 0, 0, 255)
-    cw_setVertexColor4Same(cw22, 250, 0, 0, 255)
-    cw_setVertexColor4Same(cw23, 250, 0, 0, 255)
-    cw_setVertexColor4Same(cw24, 250, 0, 0, 255)
-    cw_setVertexColor4Same(cw25, 250, 0, 0, 255)
-    cw_setVertexColor4Same(cw26, 250, 0, 0, 255)
-
-    cw_setVertexColor4Same(cw17, 250, 0, 0, 255)
-    cw_setVertexColor4Same(cw18, 250, 0, 0, 255)
-    cw_setVertexColor4Same(cw19, 250, 0, 0, 255)
-    cw_setVertexColor4Same(cw10, 250, 0, 0, 255)
-    cw_setVertexColor4Same(cw1a, 250, 0, 0, 255)
-    cw_setVertexColor4Same(cw1b, 250, 0, 0, 255)
+    for i = 0,5 do
+        cw_setVertexColor4Same(cwborder[i], 0, 0, 0, 100)
+        cw_setVertexColor4Same(cwring1[i], 250, 0, 0, 255)
+        cw_setVertexColor4Same(cwring2[i], 250, 0, 0, 255)
+        cw_setVertexColor4Same(cwring3[i], 250, 0, 0, 255)
+    end
 
     killed = 1
 end
@@ -448,24 +378,11 @@ function onUpdate(mFrameTime)
             dec3 = -1
         end
     end
-    cwspin(cw11, dec1 * (math.pi / 3) / 45)
-    cwspin(cw12, dec1 * (math.pi / 3) / 45)
-    cwspin(cw13, dec1 * (math.pi / 3) / 45)
-    cwspin(cw14, dec1 * (math.pi / 3) / 45)
-    cwspin(cw15, dec1 * (math.pi / 3) / 45)
-    cwspin(cw16, dec1 * (math.pi / 3) / 45)
-    cwspin(cw17, dec2 * (math.pi / 3) / 45)
-    cwspin(cw18, dec2 * (math.pi / 3) / 45)
-    cwspin(cw19, dec2 * (math.pi / 3) / 45)
-    cwspin(cw10, dec2 * (math.pi / 3) / 45)
-    cwspin(cw1a, dec2 * (math.pi / 3) / 45)
-    cwspin(cw1b, dec2 * (math.pi / 3) / 45)
-    cwspin(cw21, dec3 * (math.pi / 3) / 45)
-    cwspin(cw22, dec3 * (math.pi / 3) / 45)
-    cwspin(cw23, dec3 * (math.pi / 3) / 45)
-    cwspin(cw24, dec3 * (math.pi / 3) / 45)
-    cwspin(cw25, dec3 * (math.pi / 3) / 45)
-    cwspin(cw26, dec3 * (math.pi / 3) / 45)
+    for i = 0,5 do
+        cwspin(cwring1[i], dec1 * (math.pi / 3) / 45)
+        cwspin(cwring2[i], dec2 * (math.pi / 3) / 45)
+        cwspin(cwring3[i], dec3 * (math.pi / 3) / 45)
+    end
 
     if l_getLevelTime() > nextLoop then -- clock
         loopcount = loopcount + 1
@@ -475,12 +392,9 @@ function onUpdate(mFrameTime)
         hardPulse()
         shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, spinscan)
         if notSkew < 0 then
-            cw_setVertexColor4Same(cw31, 0, 0, 0, 100)
-            cw_setVertexColor4Same(cw32, 0, 0, 0, 100)
-            cw_setVertexColor4Same(cw33, 0, 0, 0, 100)
-            cw_setVertexColor4Same(cw34, 0, 0, 0, 100)
-            cw_setVertexColor4Same(cw35, 0, 0, 0, 100)
-            cw_setVertexColor4Same(cw36, 0, 0, 0, 100)
+            for i = 0,5 do
+                cw_setVertexColor4Same(cwborder[i], 0, 0, 0, 100)
+            end
         end
         if dys then dys = false else dys = true end
         pshift = roundThousand((math.random() * 6) / 1000)
@@ -494,84 +408,45 @@ function onUpdate(mFrameTime)
     if ibeatCount == ((60 / BPM) * 240) / 2 then
         shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, blackflash)
         if roundThousand(u_getDifficultyMult()) > 999 then
-            cw_setVertexColor4Same(cw31, 0, 0, 0, 255)
-            cw_setVertexColor4Same(cw32, 0, 0, 0, 255)
-            cw_setVertexColor4Same(cw33, 0, 0, 0, 255)
-            cw_setVertexColor4Same(cw34, 0, 0, 0, 255)
-            cw_setVertexColor4Same(cw35, 0, 0, 0, 255)
-            cw_setVertexColor4Same(cw36, 0, 0, 0, 255)
+            for i = 0,5 do
+                cw_setVertexColor4Same(cwborder[i], 0, 0, 0, 255)
+            end
         end
     end
 
     FFrames = FFrames + 1
     --ring colors
     if FFrames % 10 == 0 then
-        cw_setVertexColor4Same(cw11, 250, 250, 250, 255)
-        cw_setVertexColor4Same(cw12, 250, 250, 250, 255)
-        cw_setVertexColor4Same(cw13, 250, 250, 250, 255)
-        cw_setVertexColor4Same(cw14, 250, 250, 250, 255)
-        cw_setVertexColor4Same(cw15, 250, 250, 250, 255)
-        cw_setVertexColor4Same(cw16, 250, 250, 250, 255)
-
-        cw_setVertexColor4Same(cw21, 250, 250, 250, 255)
-        cw_setVertexColor4Same(cw22, 250, 250, 250, 255)
-        cw_setVertexColor4Same(cw23, 250, 250, 250, 255)
-        cw_setVertexColor4Same(cw24, 250, 250, 250, 255)
-        cw_setVertexColor4Same(cw25, 250, 250, 250, 255)
-        cw_setVertexColor4Same(cw26, 250, 250, 250, 255)
+        for i = 0,5 do
+            cw_setVertexColor4Same(cwring1[i], 250, 250, 250, 255)
+            cw_setVertexColor4Same(cwring3[i], 250, 250, 250, 255)
+        end
 
         if notSkew > -1 then
-            cw_setVertexColor4Same(cw17, 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
-            cw_setVertexColor4Same(cw18, 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
-            cw_setVertexColor4Same(cw19, 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
-            cw_setVertexColor4Same(cw10, 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
-            cw_setVertexColor4Same(cw1a, 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
-            cw_setVertexColor4Same(cw1b, 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
+            for i = 0,5 do
+                cw_setVertexColor4Same(cwring2[i], 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
+            end
         else
-            cw_setVertexColor4Same(cw17, 0, 250, 250, 255)
-            cw_setVertexColor4Same(cw18, 0, 250, 250, 255)
-            cw_setVertexColor4Same(cw19, 0, 250, 250, 255)
-            cw_setVertexColor4Same(cw10, 0, 250, 250, 255)
-            cw_setVertexColor4Same(cw1a, 0, 250, 250, 255)
-            cw_setVertexColor4Same(cw1b, 0, 250, 250, 255)
+            for i = 0,5 do
+                cw_setVertexColor4Same(cwring2[i], 0, 250, 250, 255)
+            end
         end
     end
     if FFrames % 10 == 7 then
         if notSkew > -1 then
-            cw_setVertexColor4Same(cw11, 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
-            cw_setVertexColor4Same(cw12, 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
-            cw_setVertexColor4Same(cw13, 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
-            cw_setVertexColor4Same(cw14, 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
-            cw_setVertexColor4Same(cw15, 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
-            cw_setVertexColor4Same(cw16, 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
-
-            cw_setVertexColor4Same(cw21, 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
-            cw_setVertexColor4Same(cw22, 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
-            cw_setVertexColor4Same(cw23, 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
-            cw_setVertexColor4Same(cw24, 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
-            cw_setVertexColor4Same(cw25, 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
-            cw_setVertexColor4Same(cw26, 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
+            for i = 0,5 do
+                cw_setVertexColor4Same(cwring1[i], 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
+                cw_setVertexColor4Same(cwring3[i], 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
+            end
         else
-            cw_setVertexColor4Same(cw11, 0, 250, 250, 255)
-            cw_setVertexColor4Same(cw12, 0, 250, 250, 255)
-            cw_setVertexColor4Same(cw13, 0, 250, 250, 255)
-            cw_setVertexColor4Same(cw14, 0, 250, 250, 255)
-            cw_setVertexColor4Same(cw15, 0, 250, 250, 255)
-            cw_setVertexColor4Same(cw16, 0, 250, 250, 255)
-
-            cw_setVertexColor4Same(cw21, 0, 250, 250, 255)
-            cw_setVertexColor4Same(cw22, 0, 250, 250, 255)
-            cw_setVertexColor4Same(cw23, 0, 250, 250, 255)
-            cw_setVertexColor4Same(cw24, 0, 250, 250, 255)
-            cw_setVertexColor4Same(cw25, 0, 250, 250, 255)
-            cw_setVertexColor4Same(cw26, 0, 250, 250, 255)
+            for i = 0,5 do
+                cw_setVertexColor4Same(cwring1[i], 0, 250, 250, 255)
+                cw_setVertexColor4Same(cwring3[i], 0, 250, 250, 255)
+            end
         end
-        cw_setVertexColor4Same(cw17, 250, 250, 250, 255)
-        cw_setVertexColor4Same(cw18, 250, 250, 250, 255)
-        cw_setVertexColor4Same(cw19, 250, 250, 250, 255)
-        cw_setVertexColor4Same(cw10, 250, 250, 250, 255)
-        cw_setVertexColor4Same(cw1a, 250, 250, 250, 255)
-        cw_setVertexColor4Same(cw1b, 250, 250, 250, 255)
+        for i = 0,5 do
+            cw_setVertexColor4Same(cwring2[i], 250, 250, 250, 255)
+        end
     end
     if dys then
         notSkew = 2
