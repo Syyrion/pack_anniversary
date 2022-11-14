@@ -6,17 +6,17 @@ local speedInc
 
 function onInit()
     speedInc = Incrementer:new(1, 4, 24)
-	l_setSpeedMult(speedInc:get())
-	l_setSpeedMax(math.huge)
+    l_setSpeedMult(speedInc:get())
+    l_setSpeedMax(math.huge)
 
-	l_setDelayMult(1)
-	l_setSides(SIDES)
+    l_setDelayMult(1)
+    l_setSides(SIDES)
     l_setIncTime(15)
 
-	l_setManualPulseControl(true)
+    l_setManualPulseControl(true)
     l_setPulse(50)
-	l_setManualBeatPulseControl(true)
-	l_setBeatPulse(0)
+    l_setManualBeatPulseControl(true)
+    l_setBeatPulse(0)
 
     l_setShowPlayerTrail(false)
 
@@ -196,7 +196,7 @@ function onLoad()
     pattern = Patternizer:new(unpack(PATTERNS))
 
 
-    ticker = TimerRate:new(60, function (mFrameTime)
+    ticker = TimerRate:new(60, function(mFrameTime)
         TorusAngle:step(mFrameTime)
         MINOR_RADIUS:step(mFrameTime)
 
@@ -222,7 +222,7 @@ end
 function onIncrement()
     TorusAngle:increment()
     l_setSpeedMult(speedInc:increment())
-	isIncrementing = true
+    isIncrementing = true
     pattern:pause()
 end
 

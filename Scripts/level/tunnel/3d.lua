@@ -50,8 +50,7 @@ local function brighnessToColor(x)
     local xx = x * x
     local xxx = x * x * x
     local xxxx = x * x * x * x
-    return
-        -620.371075881 * xxx + 834.985674352 * xx + 34.0619887022 * x,
+    return -620.371075881 * xxx + 834.985674352 * xx + 34.0619887022 * x,
         -996.417831034 * xxxx + 1951.46886177 * xxx - 863.482003891 * xx + 124.918415674 * x,
         2936.31315588 * xxxx - 4794.63594112 * xxx + 1544.55658236 * xx + 401.812305939 * x,
         255
@@ -64,7 +63,7 @@ Quad.__index = Quad
 
 function Quad:new(a, b, c, d, i)
     local newInst = setmetatable({
-        key = {K = cw_createNoCollision()},
+        key = { K = cw_createNoCollision() },
         a = a, b = b, c = c, d = d,
         x = 0, y = 0, z = 0,
         i = i or 0
@@ -142,10 +141,10 @@ function Quad.sort()
         table.insert(keys, obj.key.K)
         table.insert(quads, obj)
     end
-    table.sort(quads, function (a, b)
+    table.sort(quads, function(a, b)
         return a.dist < b.dist
     end)
-    table.sort(keys, function (a, b)
+    table.sort(keys, function(a, b)
         return a > b
     end)
     for i, obj in pairs(quads) do

@@ -72,7 +72,9 @@ function wallHMCurveAcc(mSide, mCurve, mCurveAcc, mCurveMin, mCurveMax, mCurvePi
         mCurve = l_getRotationSpeed() * (10.0 / syncCurveToSideDistance())
         mCurve = mCurve + (math.random(syncRndMin, syncRndMax) / 100.0)
     end
-    w_wallHModCurveData(globalHueModifier, mSide, mThickness, mCurve * (u_getDifficultyMult() ^ 0.25) * curveMult * syncCurveToSideDistance(), mCurveAcc, mCurveMin, mCurveMax, mCurvePingPong)
+    w_wallHModCurveData(globalHueModifier, mSide, mThickness,
+        mCurve * (u_getDifficultyMult() ^ 0.25) * curveMult * syncCurveToSideDistance(), mCurveAcc, mCurveMin, mCurveMax
+        , mCurvePingPong)
 end
 
 -- A simplification of wallHMCurve, only allowing customization of the curve speed
@@ -271,7 +273,7 @@ function hmcSimpleBarrageSpiral(mTimes, mDelayMult, mStep, mCurve, mNeighbors)
         hmcSimpleBarrageSNeigh(startSide + j, mCurve, mNeighbors)
         j = j + loopDir
         t_wait(delay)
-        if(l_getSides() < 6) then t_wait(delay * 0.7) end
+        if (l_getSides() < 6) then t_wait(delay * 0.7) end
     end
 
     t_wait(getPerfectDelay(THICKNESS) * 6.1)
@@ -407,7 +409,7 @@ function hmpBarrageSpiralStop(mTimes, mMinCurve, mMaxCurve)
     for i = 0, mTimes do
         hmcBarrageStop(side + i * loopDir, math.random(mMinCurve, mMaxCurve) * getRandomDir());
         t_wait(delay)
-        if(l_getSides() < 6) then t_wait(delay * 0.7) end
+        if (l_getSides() < 6) then t_wait(delay * 0.7) end
     end
 
     t_wait(getPerfectDelay(THICKNESS) * 6.1)
@@ -438,11 +440,11 @@ function hmpTunnelDynamic(mTimes, mLower, mUpper)
     local barrageSide, prevSide, tunnelSide;
     for i = 1, mTimes + 1 do
         if (prevSide ~= nil) then
-            repeat barrageSide = getRandomSide() until barrageSide ~= prevSide;
+            repeat barrageSide = getRandomSide() until barrageSide ~= prevSide
         else
             barrageSide = getRandomSide();
         end
-        repeat tunnelSide = getRandomSide() until tunnelSide ~= barrageSide;
+        repeat tunnelSide = getRandomSide() until tunnelSide ~= barrageSide
         if (i < mTimes + 1) then
             hmcTunnelDynamic(barrageSide, tunnelSide, math.random(mLower, mUpper) * getRandomDir());
         else
@@ -540,7 +542,8 @@ function hmpChaserAltBarrage(mTimes, mStep, mSpeed, mTail)
     -- Create the tunnel wall (chaser)
     -- For the side, we want to make sure that the chaser is on one of the first alt barrage walls (which is odd numbers)
     -- This makes the pattern slightly easier to predict and doesn't close out one of the openings.
-    wallHMCurveAcc((getRandomSide() * 2 + 1 - mSpeed), mSpeed * getRandomDir(), 0, 0, 0, false, (THICKNESS * (mTimes - 1 + mTail)) + delay * 12.5 * (u_getDifficultyMult() ^ .65) * (mTimes - 1 + mTail));
+    wallHMCurveAcc((getRandomSide() * 2 + 1 - mSpeed), mSpeed * getRandomDir(), 0, 0, 0, false,
+        (THICKNESS * (mTimes - 1 + mTail)) + delay * 12.5 * (u_getDifficultyMult() ^ .65) * (mTimes - 1 + mTail));
     for i = 1, mTimes do
         cAltBarrage(i, mStep)
         t_wait(delay)

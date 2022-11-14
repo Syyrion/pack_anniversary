@@ -12,14 +12,14 @@ u_execScript("level/tunnel/3d.lua")
 TorusAngle = {
     inc = Incrementer:new(1, 13, 24),
     angle = SliderSawtooth:new(7, math.pi),
-    increment = function (self)
+    increment = function(self)
         self.angle:setTimescale(self.inc:increment())
     end,
-    getValue = function (self)
+    getValue = function(self)
         return self.angle:getValue()
     end,
 
-    step = function (self, mFrameTime)
+    step = function(self, mFrameTime)
         self.angle:step(mFrameTime)
     end
 }
@@ -61,7 +61,6 @@ function Torus:create()
     end
     self:update()
 end
-
 
 function Torus:update()
     local ta = TorusAngle:getValue()
@@ -108,7 +107,6 @@ function Player:create()
 
     self:update()
 end
-
 
 function Player:update()
     local theta = u_getPlayerAngle() + TorusAngle:getValue()
@@ -177,14 +175,14 @@ function Wall:new(side, thickness)
     }
 
     local a, b, c, d = Point:new(), Point:new(), Point:new(), Point:new()
-    newInst.points[0] = {a = a, b = b, c = c, d = d}
+    newInst.points[0] = { a = a, b = b, c = c, d = d }
     table.insert(newInst.quads, Quad:new(a, b, c, d))
 
     local whole, partial = math.modf(sections)
 
     for i = 1, whole do
         local na, nb, nc, nd = Point:new(), Point:new(), Point:new(), Point:new()
-        newInst.points[i] = {a = na, b = nb, c = nc, d = nd}
+        newInst.points[i] = { a = na, b = nb, c = nc, d = nd }
         table.insert(newInst.quads, Quad:new(a, b, nb, na, 0.25))
         table.insert(newInst.quads, Quad:new(b, c, nc, nb, 0.25))
         table.insert(newInst.quads, Quad:new(c, d, nd, nc, 0.25))
@@ -193,7 +191,7 @@ function Wall:new(side, thickness)
 
     if partial > 0 then
         local na, nb, nc, nd = Point:new(), Point:new(), Point:new(), Point:new()
-        newInst.points[sections] = {a = na, b = nb, c = nc, d = nd}
+        newInst.points[sections] = { a = na, b = nb, c = nc, d = nd }
         table.insert(newInst.quads, Quad:new(a, b, nb, na, 0.25))
         table.insert(newInst.quads, Quad:new(b, c, nc, nb, 0.25))
         table.insert(newInst.quads, Quad:new(c, d, nd, nc, 0.25))

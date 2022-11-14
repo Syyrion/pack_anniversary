@@ -20,9 +20,9 @@ u_execScript("level/memoriesReappear/other/WallAccHelper1.1.lua")
 ---- override common wall code
 function cWallBasePrimary(_side, _thickness, ...)
     if curStyle == "HXDS4pieChartV2" then
-            if _side % 6 == 5 then for ex = 0, 2 do w_wall(35 + ex, _thickness or THICKNESS) end
-        elseif _side % 6 == 0 then for ex = 0, 3 do w_wall(2  + ex, _thickness or THICKNESS) end
-        elseif _side % 6 == 1 then for ex = 0, 4 do w_wall(6  + ex, _thickness or THICKNESS) end
+        if _side % 6 == 5 then for ex = 0, 2 do w_wall(35 + ex, _thickness or THICKNESS) end
+        elseif _side % 6 == 0 then for ex = 0, 3 do w_wall(2 + ex, _thickness or THICKNESS) end
+        elseif _side % 6 == 1 then for ex = 0, 4 do w_wall(6 + ex, _thickness or THICKNESS) end
         elseif _side % 6 == 2 then for ex = 0, 6 do w_wall(11 + ex, _thickness or THICKNESS) end
         elseif _side % 6 == 3 then for ex = 0, 7 do w_wall(18 + ex, _thickness or THICKNESS) end
         elseif _side % 6 == 4 then for ex = 0, 8 do w_wall(26 + ex, _thickness or THICKNESS) end
@@ -30,6 +30,7 @@ function cWallBasePrimary(_side, _thickness, ...)
     else w_wall(_side, _thickness or THICKNESS)
     end
 end
+
 ----
 
 ---- custom function code
@@ -48,6 +49,7 @@ function cVortaAccurate(mSide)
         cBarrageVorta(mSide)
     end
 end
+
 ----
 
 -- inspired taken from modern year pack from The Sun XIX
@@ -68,7 +70,7 @@ rotdir = 1
 rotmult = 1
 levSync = 50
 -- delay config
-    march31oPatDel_SDMult = 0; --delay-speed multiplier (FOR PATTERNS ONLY)
+march31oPatDel_SDMult = 0; --delay-speed multiplier (FOR PATTERNS ONLY)
 
 zoomFactor = 40
 isNostalgiaStarts = false
@@ -86,7 +88,8 @@ function onInit()
     l_setSides(300)
     l_setSidesMin(36)
     l_setSidesMax(36)
-    l_setIncEnabled(false) l_setIncTime(math.huge)
+    l_setIncEnabled(false)
+    l_setIncTime(math.huge)
 
     l_setPulseMin(zoomFactor)
     l_setRadiusMin(zoomFactor)
@@ -158,27 +161,34 @@ function onStep()
                 else
                     local sh_patType = (sh_level < 4 and 0) or (sh_level >= 4 and sh_level < 7 and 1) or 2
                     local sh_hyperMode = (sh_level == 3 and true) or (sh_level == 6 and true) or false
-                        if curStyle == "SHhexagon" then spawnSHPattern(getKeys[pat_index], sh_patType, sh_hyperMode, sh_level > 9)
+                    if curStyle == "SHhexagon" then spawnSHPattern(getKeys[pat_index], sh_patType, sh_hyperMode,
+                            sh_level > 9)
 
                     elseif curStyle == "EXSCH1ftl" or
-                           curStyle == "EXSCH1glitched" or
-                           curStyle == "EXSCHLmalfunction" or
-                           curStyle == "EXSCHLsesism" or
-                           curStyle == "EXSCH2space" or
-                           curStyle == "EXSCH2invert_blackwhite" or
-                           curStyle == "EXSCH3reversal" or
-                           curStyle == "EXSCH3stutter" or
-                           curStyle == "EXSCH4radar1" or
-                           curStyle == "EXSCH4asymptote" then spawnExschPattern(getKeys[pat_index])
+                        curStyle == "EXSCH1glitched" or
+                        curStyle == "EXSCHLmalfunction" or
+                        curStyle == "EXSCHLsesism" or
+                        curStyle == "EXSCH2space" or
+                        curStyle == "EXSCH2invert_blackwhite" or
+                        curStyle == "EXSCH3reversal" or
+                        curStyle == "EXSCH3stutter" or
+                        curStyle == "EXSCH4radar1" or
+                        curStyle == "EXSCH4asymptote" then spawnExschPattern(getKeys[pat_index])
 
-                    elseif curStyle == "HXDS1cPentagon"  then l_setSides(5) spawnHxdsCrazyPentPattern(getKeys[pat_index])
-                    elseif curStyle == "HXDS1rubberer"   then l_setSides(4) spawnHxdsHexV1Pattern(getKeys[pat_index])
-                    elseif curStyle == "HXDS2solaris1"   then p_setOverrideShape(2, 6) l_setSides(30) spawnHxdsV2Pattern(getKeys[pat_index], true)
+                    elseif curStyle == "HXDS1cPentagon" then l_setSides(5) spawnHxdsCrazyPentPattern(getKeys[pat_index])
+                    elseif curStyle == "HXDS1rubberer" then l_setSides(4) spawnHxdsHexV1Pattern(getKeys[pat_index])
+                    elseif curStyle == "HXDS2solaris1" then p_setOverrideShape(2, 6)
+                        l_setSides(30)
+                        spawnHxdsV2Pattern(getKeys
+                            [pat_index], true)
                     elseif curStyle == "HXDS2r7bberBlue" then l_setSides(7) spawnHxdsV2Pattern(getKeys[pat_index], false)
-                    elseif curStyle == "HXDS3shadB"      then spawnHxdsV2Pattern(getKeys[pat_index], true)
-                    elseif curStyle == "HXDS3sinkhole"   then spawnHxdsV2Pattern(getKeys[pat_index], false)
-                    elseif curStyle == "HXDS4pieChartV2" then l_setSides(36) p_setOverrideShape(1, 6) spawnHxdsV2Pattern(getKeys[pat_index], false)
-                    else                                      spawnMainPattern(getKeys[pat_index])
+                    elseif curStyle == "HXDS3shadB" then spawnHxdsV2Pattern(getKeys[pat_index], true)
+                    elseif curStyle == "HXDS3sinkhole" then spawnHxdsV2Pattern(getKeys[pat_index], false)
+                    elseif curStyle == "HXDS4pieChartV2" then l_setSides(36)
+                        p_setOverrideShape(1, 6)
+                        spawnHxdsV2Pattern(getKeys
+                            [pat_index], false)
+                    else spawnMainPattern(getKeys[pat_index])
                     end
                 end
                 pat_index = pat_index + 1
@@ -189,14 +199,14 @@ function onStep()
                     shuffle(getKeys)
                 end
             else
-                    if u_getManualIncrementTimes() == 0 then cWall(getRandomSide()) t_wait(getPerfectDelay(THICKNESS) * 11)
+                if u_getManualIncrementTimes() == 0 then cWall(getRandomSide()) t_wait(getPerfectDelay(THICKNESS) * 11)
                 elseif u_getManualIncrementTimes() == 1 then
-                        if u_rndIntUpper(6) == 1 then rWall(getRandomSide())
+                    if u_rndIntUpper(6) == 1 then rWall(getRandomSide())
                     elseif u_rndIntUpper(6) == 2 then cAltBarrage(getRandomSide(), 2)
                     elseif u_rndIntUpper(6) == 3 then cBarrageHalf(getRandomSide())
                     elseif u_rndIntUpper(6) == 4 then cVortaAccurate(getRandomSide())
                     elseif u_rndIntUpper(6) == 5 then cBarrageDoubleHoled(getRandomSide(), 0, 0)
-                    else                              cBarrage(getRandomSide())
+                    else cBarrage(getRandomSide())
                     end
                     t_wait(getPerfectDelay(THICKNESS) * 11)
                 else
@@ -229,7 +239,7 @@ function onStep()
                         local t, d = getRandomSide(), getRandomDir()
                         for a = 0, u_rndIntUpper(4) do
                             if d > 0 then cWallEx(t, math.ceil(getProtocolSides() / 2) - 1)
-                            else          oWallEx(t, math.floor(getProtocolSides() / 2) - 1)
+                            else oWallEx(t, math.floor(getProtocolSides() / 2) - 1)
                             end
                             d = d * -1
                             t_wait(getPerfectDelay(THICKNESS) * 4)
@@ -305,8 +315,10 @@ styles = {
 
 sh_isFinalEngage = false
 sh_levelName = "wait for it"
-sh_style = { "hexagon", "hhexagon", "mhexagon", "hexagoner", "hhexagoner", "mhexagoner", "hexagonest", "hhexagonest", "mhexagonest", "fhexagonest" }
-sh_levelNames = { "Hexagon", "Hyper Hexagon", "Mega Hexagon", "Hexagoner", "Hyper Hexagoner", "Mega Hexagoner", "Hexagonest", "Hyper Hexagonest", "Mega Hexagonest", "Final" }
+sh_style = { "hexagon", "hhexagon", "mhexagon", "hexagoner", "hhexagoner", "mhexagoner", "hexagonest", "hhexagonest",
+    "mhexagonest", "fhexagonest" }
+sh_levelNames = { "Hexagon", "Hyper Hexagon", "Mega Hexagon", "Hexagoner", "Hyper Hexagoner", "Mega Hexagoner",
+    "Hexagonest", "Hyper Hexagonest", "Mega Hexagonest", "Final" }
 sh_levelNumbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }
 r7bber_styleCol = { "Red", "Green", "Blue", "Purple" }
 shadows_styleCol = { "B", "G", "G2", "G3", "M", "O", "P", "Pp", "R", "W", "Y" }
@@ -350,6 +362,7 @@ function spawnSolarisCover()
     for j = 0, 29 do v192WallAcc(j * 1, THICKNESS * 7.5, 3.2, -0.125, 0, 3.2, 30, 2.2) end
     for j = 0, 14 do v192WallAcc(j * 2, THICKNESS * 25, 3.2, -0.125, 0, 3.2, 30, 2.2) end
 end
+
 ----
 
 -- onUpdate is an hardcoded function that is called every frame
@@ -361,7 +374,7 @@ function onUpdate(mFrameTime)
         if etEvent:detect(0, 0, false) then
             hexest_oldHue = hexest_targetHue
             repeat hexest_targetHue = hexest_hues[u_rndIntUpper(#hexest_hues)]
-            until  hexest_targetHue ~= hexest_oldHue
+            until hexest_targetHue ~= hexest_oldHue
         elseif etEvent:detect(getBPM(levSync, 1, 2), 1, false) then etEvent:resetEvents(true)
         end
         if hexest_targetHue < s_getHueMin() then forceSetHue((s_getHueMin() - 1))
@@ -369,19 +382,19 @@ function onUpdate(mFrameTime)
         end
     elseif curStyle == "SHfhexagonest" then l_setRotation(0)
     elseif curStyle == "EXSCH1ftl" then
-            if etEvent:detect(0,                     0, false) then ftl_pulse = 45;
+        if etEvent:detect(0, 0, false) then ftl_pulse = 45;
         elseif etEvent:detect(getBPM(levSync, 1, 1), 1, false) then etEvent:resetEvents(true)
         end
         ftl_pulse = ftl_pulse + 0.25 * mFrameTime
         l_setPulseMin(closeValue(ftl_pulse, 45, 70))
         l_setRotationSpeed(rotation * rotdir * rotmult)
     elseif curStyle == "EXSCHLmalfunction" then
-            if etEvent:detect(0,                     0, false) then malfRot()
-        elseif etEvent:detect(0.05,                  1, false) then rotation = 0
+        if etEvent:detect(0, 0, false) then malfRot()
+        elseif etEvent:detect(0.05, 1, false) then rotation = 0
         elseif etEvent:detect(getBPM(levSync, 1, 1), 2, false) then etEvent:resetEvents(true)
         end
     elseif curStyle == "EXSCH1glitched" then
-            if etEvent:detect(0,                     0, false) then initGlotch()
+        if etEvent:detect(0, 0, false) then initGlotch()
         elseif etEvent:detect(getBPM(levSync, 1, 2), 1, false) then etEvent:resetEvents(true)
         end
     elseif curStyle == "EXSCHLsesism" then
@@ -390,33 +403,35 @@ function onUpdate(mFrameTime)
         s_set3dPulseSpeed(u_rndReal() * 5 + 0.05)
         s_set3dPulseMax(u_rndInt(5, 15))
     elseif curStyle == "EXSCH2space" then
-        rgb_color = (rgb_color + 120)%360
+        rgb_color = (rgb_color + 120) % 360
         forceSetHue(rgb_color)
         l_setRotationSpeed(rotation * rotdir * rotmult)
     elseif curStyle == "EXSCH2invert_blackwhite" then
-            if etEvent:detect(0,                     0, false) then s_setStyle("memoriesreappear_EXSCH2invert_blackwhite") invRot()
+        if etEvent:detect(0, 0, false) then s_setStyle("memoriesreappear_EXSCH2invert_blackwhite") invRot()
         elseif etEvent:detect(getBPM(levSync, 1, 1), 1, false) then s_setStyle("memoriesreappear_EXSCH2invert_whiteblack") invRot()
         elseif etEvent:detect(getBPM(levSync, 1, 2), 2, false) then etEvent:resetEvents(true)
         end
         l_setRotationSpeed(rotation * rotdir * rotmult)
     elseif curStyle == "EXSCH3stutter" then
-            if etEvent:detect(0,                     0, false) then l_setRotationSpeed(3.5 * rotdir) s_setStyle("memoriesreappear_EXSCH3stutter")
-        elseif etEvent:detect(0.05,                  1, false) then l_setRotationSpeed(0) s_setStyle("memoriesreappear_EXSCH3stutter_main")
+        if etEvent:detect(0, 0, false) then l_setRotationSpeed(3.5 * rotdir) s_setStyle("memoriesreappear_EXSCH3stutter")
+        elseif etEvent:detect(0.05, 1, false) then l_setRotationSpeed(0) s_setStyle("memoriesreappear_EXSCH3stutter_main")
         elseif etEvent:detect(getBPM(levSync, 2, 1), 2, false) then etEvent:resetEvents(true)
         end
     elseif curStyle == "EXSCH4radar1" then
-            if etEvent:detect(0,   0, false) then s_setStyle("memoriesreappear_EXSCH4radar" .. ((curStyleRadar % 12) + 1)) curStyleRadar = curStyleRadar + 1
+        if etEvent:detect(0, 0, false) then s_setStyle("memoriesreappear_EXSCH4radar" .. ((curStyleRadar % 12) + 1))
+            curStyleRadar = curStyleRadar
+                + 1
         elseif etEvent:detect(0.1, 1, false) then etEvent:resetEvents(true)
         end
         l_setRotationSpeed(rotation * rotdir * rotmult)
     elseif curStyle == "EXSCH4asymptote" then
-            if etEvent:detect(0,   0, false) then init3dSpacingShake()
+        if etEvent:detect(0, 0, false) then init3dSpacingShake()
         elseif etEvent:detect(0.1, 1, false) then etEvent:resetEvents(true)
         end
         l_setRotationSpeed(rotation * rotdir * rotmult)
     elseif curStyle == "HXDS3shadB" then
-        if s_get3dSpacing() > 80 then shadows_spacingMult = -shadows_spacingMult; s_set3dSpacing(20)        
-        elseif s_get3dSpacing() < -80 then shadows_spacingMult = -shadows_spacingMult s_set3dSpacing(-20)    
+        if s_get3dSpacing() > 80 then shadows_spacingMult = -shadows_spacingMult; s_set3dSpacing(20)
+        elseif s_get3dSpacing() < -80 then shadows_spacingMult = -shadows_spacingMult s_set3dSpacing(-20)
         else s_set3dSpacing(s_get3dSpacing() + shadows_spacingMult * mFrameTime * 5)
         end
         l_setRotationSpeed(rotation * rotdir * rotmult)
@@ -429,7 +444,7 @@ function onUpdate(mFrameTime)
         l_setRotationSpeed(rotation * rotdir * rotmult)
     else
         if (sh_isFinalEngage) or curStyle == "SHfhexagonest" then l_setRotationSpeed(0) l_setRotation(45)
-        else                                                      l_setRotationSpeed(rotation * rotdir * rotmult)
+        else l_setRotationSpeed(rotation * rotdir * rotmult)
         end
     end
 
@@ -468,29 +483,37 @@ function onUpdate(mFrameTime)
                         e_messageAddImportant("You've been reached after mega hexagonest.\nGreatestest job.", 120)
                         e_messageAddImportant("You can now beat the high scores\nif you completed this level.", 120)
                     end
-                        if sh_level < 4  then getKeySHHexagon()
+                    if sh_level < 4 then getKeySHHexagon()
                     elseif sh_level >= 4 then getKeySHAfterHexagon()
                     end
                 else
                     oldCurStyle = curStyle
                     repeat curStyle = styles[u_rndIntUpper(#styles)]
-                    until  curStyle ~= oldCurStyle
+                    until curStyle ~= oldCurStyle
                     sh_level = sh_levelNumbers[closeValue(u_rndIntUpper(#styles), 1, 10)]
                     s_setStyle("memoriesreappear_" .. curStyle)
                 end
                 etEvent:resetEvents(true)
-                    if curStyle == "SHhexagon"    or curStyle == "SHhhexagon"    or curStyle == "SHmhexagon" then getKeySHHexagon()
-                elseif curStyle == "SHhexagoner"  or curStyle == "SHhhexagoner"  or curStyle == "SHmhexagoner" or
-                       curStyle == "SHhexagonest" or curStyle == "SHhhexagonest" or curStyle == "SHmhexagonest" or curStyle == "SHfhexagonest" then getKeySHAfterHexagon()
+                if curStyle == "SHhexagon" or curStyle == "SHhhexagon" or curStyle == "SHmhexagon" then getKeySHHexagon()
+                elseif curStyle == "SHhexagoner" or curStyle == "SHhhexagoner" or curStyle == "SHmhexagoner" or
+                    curStyle == "SHhexagonest" or curStyle == "SHhhexagonest" or curStyle == "SHmhexagonest" or
+                    curStyle == "SHfhexagonest" then getKeySHAfterHexagon()
                 end
-                    if curStyle == "HXDS1cPentagon"  then getKeyHxdsCrazyPent()
-                elseif curStyle == "HXDS1rubberer"   then getKeyHxdsHexV1()
-                elseif curStyle == "HXDS2r7bberBlue" then getKeyHxdsV2() s_setStyle("memoriesreappear_HXDS2r7bber" .. r7bber_styleCol[u_rndIntUpper(#r7bber_styleCol)])
-                elseif curStyle == "HXDS2solaris1"   then getKeyHxdsV2() spawnSolarisCover() s_setStyle("memoriesreappear_HXDS2solaris" .. u_rndIntUpper(3))
-                elseif curStyle == "HXDS3shadB"      then getKeyHxdsV2() s_setStyle("memoriesreappear_HXDS3shad" .. shadows_styleCol[u_rndIntUpper(#shadows_styleCol)])
-                elseif curStyle == "HXDS3sinkhole"   then getKeyHxdsV2()
+                if curStyle == "HXDS1cPentagon" then getKeyHxdsCrazyPent()
+                elseif curStyle == "HXDS1rubberer" then getKeyHxdsHexV1()
+                elseif curStyle == "HXDS2r7bberBlue" then getKeyHxdsV2()
+                    s_setStyle("memoriesreappear_HXDS2r7bber" ..
+                        r7bber_styleCol[u_rndIntUpper(#r7bber_styleCol)])
+                elseif curStyle == "HXDS2solaris1" then getKeyHxdsV2()
+                    spawnSolarisCover()
+                    s_setStyle("memoriesreappear_HXDS2solaris"
+                        .. u_rndIntUpper(3))
+                elseif curStyle == "HXDS3shadB" then getKeyHxdsV2()
+                    s_setStyle("memoriesreappear_HXDS3shad" ..
+                        shadows_styleCol[u_rndIntUpper(#shadows_styleCol)])
+                elseif curStyle == "HXDS3sinkhole" then getKeyHxdsV2()
                 elseif curStyle == "HXDS4pieChartV2" then getKeyHxdsV2()
-                else                                      getMainKey()
+                else getMainKey()
                 end
             end
         end
@@ -500,20 +523,20 @@ function onUpdate(mFrameTime)
         if etEvent:detect(0, 0, false) then
             hexest_oldHue = hexest_targetHue
             repeat hexest_targetHue = hexest_hues[u_rndIntUpper(#hexest_hues)]
-            until  hexest_targetHue ~= hexest_oldHue
+            until hexest_targetHue ~= hexest_oldHue
         elseif etEvent:detect(getBPM(levSync, 1, 2), 1, false) then etEvent:resetEvents(true)
         end
         if hexest_targetHue < s_getHueMin() then forceSetHue((s_getHueMin() - 1))
         elseif hexest_targetHue > s_getHueMin() then forceSetHue((s_getHueMin() + 1))
         end
     end
-    
+
     if u_getManualIncrementTimes() <= 2 then
         s_set3dSkew(style3dSkew)
     end
     stylePulse = stylePulse + stylePulseCur * mFrameTime
 
-    if u_getManualIncrementTimes() == 0     then forceSetPulse(stylePulse * 0.0015)
+    if u_getManualIncrementTimes() == 0 then forceSetPulse(stylePulse * 0.0015)
         style3dSkew = convValue(mFrameTime, style3dSkew, 0, 0.05)
     elseif u_getManualIncrementTimes() == 1 then forceSetPulse(stylePulse * 0.00375)
         style3dSkew = convValue(mFrameTime, style3dSkew, 0.15, 0.05)

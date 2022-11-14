@@ -1,110 +1,5 @@
 u_execScript("level/memoriesReappear/utils/march31o_utils.lua")
 
---[[
-    var: number globalWallType
-    local var: number curHueMod
-    local var: number curAdj
-    local var: number curAcc
-    local var: number curMinSpd
-    local var: number curMaxSpd
-    local var: number curCurve
-    local var: number curCurveAcc
-    local var: number curCurveMin
-    local var: number curCurveMax
-    local var: bool curPingPong
-
-    void enableSwapIfDMGreaterThan(_DM)
-    void enableSwapIfSpeedGEThan(_speed)
-    void disableIncIfDMGreaterThan(_DM)
-    void disableSpeedIncIfDMGreaterThan(_DM)
-
-    void cWallBasePrimary(_side, _thickness, ...)
-    local void cWallBaseSecondary(_side, _thickness, ...)
-
-    void cu_setWallBaseSettingsOfWallAdj(_adj)
-    void cu_setWallBaseSettingsOfWallAcc(_adj, _acc, _minSpd, _maxSpd)
-    void cu_setWallBaseSettingsOfWallHModSpeed(_hueMod, _adj, _acc, _minSpd, _maxSpd, _isPingPong)
-    void cu_setWallBaseSettingsOfWallHModCurve(_hueMod, _curve, _curveAcc, _curveMin, _curveMax, _isPingPong)
-    void cu_resetWallBaseSettings()
-
-    void cWall(_side, _thickness, ...)
-    void oWall(_side, _thickness, ...)
-    void rWall(_side, _thickness, ...)
-
-    void cWallEx(_side, _extra, _thickness, ...)
-    void oWallEx(_side, _extra, _thickness, ...)
-    void rWallEx(_side, _extra, _thickness, ...)
-    void rWallExFlip(_side, _extra, _thickness, ...)
-
-    void cWallExM(_side, _extra, _extraMult, _thickness, ...)
-    void oWallExM(_side, _extra, _extraMult, _thickness, ...)
-    void rWallExM(_side, _extra, _extraMult, _thickness, ...)
-    void rWallExMFlip(_side, _extra, _extraMult, _thickness, ...)
-
-    void cBarrageN(_side, _neighbors, _thickness, ...)
-    void cBarrageNGap(_side, _neighbors, _thickness, ...) --on one side now!, negtive to switch neighbor placement
-    void cBarrageNBlock(_side, _neighbors, _blocksTable, _thickness, ...)
-    void cBarrage(_side, _thickness, ...)
-    void cBarrageGap(_side, _gap, _thickness, ...)
-
-    void cBarrageAlt(_side, _step, _thickness, ...)
-    void cBarrageAltEx(_side, _step, _extra, _thickness, ...)
-
-    void cWallTkns(_side, _thick_mult_step, _thick_mult_step_limit, _extra, _step_dir, _thick_mult, _thickness, ...)
-    void cWallGrow(_side, _extend, _thickness, ...)
-    void cWallGrowEx(_side, _extend, _extra, _thickness, ...)
-    void cWallMirror(_side, _mirror_step, _thickness, ...)
-    void cWallMirrorEx(_side, _mirror_step, _extra, _thickness, ...)
-
-    void cWallDraw(_side, _wallMin, _wallMax, _thickness, ...)
-
-    void cBarrageTkns(_side, _thick_mult_step, _thick_mult_step_limit, _gap, _step_dir, _thick_mult, _thickness, ...)
-    void cBarrageVorta(_side, _free, _thickness, ...)
-    void cBarrageHalf(_side, _thickness, ...)
-    void cBarrageDoubleHoled(_side, _extra_large_walls, _free, _thickness, ...)
-    void cBarrageExHoles(_side, _extra_holes, _thickness, ...)
-
-    void cSwapBarrageN(_side, _neighbors, _delMult, _isSpdMode, _thickness, ...)
-    void cSwapBarrage(_side, _delMult, _isSpdMode, _thickness, ...)
-    void cSwapCorridor(_side, _isEnding, _delMult, _isSpdMode, _thickness, ...)
-
-    int randomArray(_number, _lower, _upper)
-    int cycleSide(_sides, _sidePosInput)
-
-    int getPerfectAccelDM()
-    local var: number wallAccelType
-    local void wallAccBase(_hueMod, _side, _adj, _acc, _minSpd, _maxSpd, _isPingPong, _thickness, ...)
-    void wallSAdj(_side, _adj, _thickness, ...)
-    void wallSAcc(_side, _adj, _acc, _minSpd, _maxSpd, _thickness, ...)
-    void wallSHAcc(_hueMod, _side, _adj, _acc, _minSpd, _maxSpd, _isPingPong, _thickness, ...)
-
-    var: number globalHueModifier
-    var: bool rotSpdSync
-    var: number spdSyncRndMin
-    var: number spdSyncRndMax
-    var: number normalCurveMult
-
-    int syncCurveToSideDistance()
-    int getPerfectCurveDecel()
-    void syncCurveWithRotationSpeed(_rnd_min, _rnd_max)
-    void revertSyncCurveWithRotationSpeed()
-    void setCurveMult(_normal_curve_mult)
-
-    local void wallHMCurveBase(_hueMod, _side, _curve, _curveAcc, _curveMin, _curveMax, _curvePingPong, _thickness, ...)
-    void wallHMCurveAcc(_side, _curve, _curveAcc, _curveMin, _curveMax, _curvePingPong, _thickness, ...)
-    void wallHMCurve(_side, _curve, _thickness, ...)
-    void wallHMStop(_side, _offset, _thickness, ...)
-
-    void hmcBarrageN(_side, _neighbors, _curve, _curveAcc, _curveMin, _curveMax, _curvePingPong, _thickness, ...)
-    void hmcBarrageS(_side, _curve, _curveAcc, _curveMin, _curveMax, _curvePingPong, _thickness, ...)
-    void hmcBarrage(_curve, _curveAcc, _curveMin, _curveMax, _curvePingPong, _thickness, ...)
-    void hmcBarrageStop(_side, _offset, _neighbors, _thickness, ...)
-    void hmcSimpleBarrage(_side, _curve, _neighbors, _thickness, ...)
-
-    impl: void hmcSimpleBarrageS = hmcSimpleBarrage
-    impl: void hmcSimpleBarrageSNeigh = hmcSimpleBarrage
-]]
-
 globalWallType = 0
 local curHueMod = 0
 local curAdj = 0
@@ -128,7 +23,7 @@ end
 -- enableSwapIfSpeedGEThan: If the player reaches a given speed on a level, turn on swap.
 function enableSwapIfSpeedGEThan(_speed)
     if (u_getSpeedMultDM() >= _speed and not l_getSwapEnabled()) then
-        e_messageAddImportant("Speed >= ".. _speed .."\nswap enabled!", 120)
+        e_messageAddImportant("Speed >= " .. _speed .. "\nswap enabled!", 120)
         l_setSwapEnabled(true)
     end
 end
@@ -153,8 +48,10 @@ end
 function cWallBasePrimary(_side, _thickness, ...)
     if (globalWallType == 1) then w_wallAdj(_side, _thickness or THICKNESS, curAdj)
     elseif (globalWallType == 2) then w_wallAcc(_side, _thickness or THICKNESS, curAdj, curAcc, curMinSpd, curMaxSpd)
-    elseif (globalWallType == 3) then w_wallHModSpeedData(curHueMod, _side, _thickness or THICKNESS, curAdj, curAcc, curMinSpd, curMaxSpd, curPingPong)
-    elseif (globalWallType == 4) then w_wallHModCurveData(curHueMod, _side, _thickness or THICKNESS, curCurve, curCurveAcc, curCurveMin, curCurveMax, curPingPong)
+    elseif (globalWallType == 3) then w_wallHModSpeedData(curHueMod, _side, _thickness or THICKNESS, curAdj, curAcc,
+        curMinSpd, curMaxSpd, curPingPong)
+    elseif (globalWallType == 4) then w_wallHModCurveData(curHueMod, _side, _thickness or THICKNESS, curCurve,
+        curCurveAcc, curCurveMin, curCurveMax, curPingPong)
     else w_wall(_side, _thickness or THICKNESS)
     end
 end
@@ -170,22 +67,39 @@ end
 
 -- cu_setWallBaseSettingsOfWallAdj: replaces an original wall to adjusted wall
 function cu_setWallBaseSettingsOfWallAdj(_adj)
-    globalWallType = 1; curAdj = _adj or 0;
+    globalWallType = 1;
+    curAdj = _adj or 0;
 end
 
 -- cu_setWallBaseSettingsOfWallAcc: replaces an original wall to acceleration wall
 function cu_setWallBaseSettingsOfWallAcc(_adj, _acc, _minSpd, _maxSpd)
-    globalWallType = 2; curAdj = _adj or 0; curAcc = _acc or 0; curMinSpd = _minSpd or 0; curMaxSpd = _maxSpd or 0;
+    globalWallType = 2;
+    curAdj = _adj or 0;
+    curAcc = _acc or 0;
+    curMinSpd = _minSpd or 0;
+    curMaxSpd = _maxSpd or 0;
 end
 
 -- cu_setWallBaseSettingsOfWallAcc: replaces an original wall to speed wall
 function cu_setWallBaseSettingsOfWallHModSpeed(_hueMod, _adj, _acc, _minSpd, _maxSpd, _isPingPong)
-    globalWallType = 3; curHueMod = _hueMod or 0; curAdj = _adj or 0; curAcc = _acc or 0; curMinSpd = _minSpd or 0; curMaxSpd = _maxSpd or 0; curPingPong = getBooleanNumber(_isPingPong)
+    globalWallType = 3;
+    curHueMod = _hueMod or 0;
+    curAdj = _adj or 0;
+    curAcc = _acc or 0;
+    curMinSpd = _minSpd or 0;
+    curMaxSpd = _maxSpd or 0;
+    curPingPong = getBooleanNumber(_isPingPong)
 end
 
 -- cu_setWallBaseSettingsOfWallAcc: replaces an original wall to curve wall
 function cu_setWallBaseSettingsOfWallHModCurve(_hueMod, _curve, _curveAcc, _curveMin, _curveMax, _isPingPong)
-    globalWallType = 4; curHueMod = _hueMod or 0; curCurve = _curve or 0; curCurveAcc = _curveAcc or 0; curCurveMin = _curveMin or 0; curCurveMax = _curveMax or 0; curPingPong = getBooleanNumber(_isPingPong)
+    globalWallType = 4;
+    curHueMod = _hueMod or 0;
+    curCurve = _curve or 0;
+    curCurveAcc = _curveAcc or 0;
+    curCurveMin = _curveMin or 0;
+    curCurveMax = _curveMax or 0;
+    curPingPong = getBooleanNumber(_isPingPong)
 end
 
 -- cu_resetWallBaseSettings: reset the current wall overriden into an original wall
@@ -318,7 +232,8 @@ end
 -- cWallTkns: spawns a several thickness wall attached to it.
 function cWallTkns(_side, _thick_mult_step, _thick_mult_step_limit, _extra, _step_dir, _thick_mult, _thickness, ...)
     _thick_mult = _thick_mult or THICKNESS * (6 / getProtocolSides());
-    _thick_mult_step = _thick_mult_step or 1; _step_dir = _step_dir or 1;
+    _thick_mult_step = _thick_mult_step or 1;
+    _step_dir = _step_dir or 1;
     if _extra == nil or _extra < 0 then _extra = 0; end
     if _thick_mult_step_limit == nil or _thick_mult_step_limit < 0 then _thick_mult_step_limit = 0; end
 
@@ -329,13 +244,20 @@ function cWallTkns(_side, _thick_mult_step, _thick_mult_step_limit, _extra, _ste
     if _step_dir > 0 then
         for amount = 0, _extra, 1 do cWall(_side + amount, (_thickness + curThickInc), ...);
             if amount < _extra - _thick_mult_step_limit then thickStep = thickStep + 1;
-                if thickStep >= _thick_mult_step then curThickInc = (thickAmount * _thick_mult); thickStep = 0; thickAmount = thickAmount + 1; end
+                if thickStep >= _thick_mult_step then curThickInc = (thickAmount * _thick_mult);
+                thickStep = 0;
+                thickAmount = thickAmount + 1;
+                end
             end
         end
     else
-        for amount = 0, _extra, 1 do cWall(_side - amount + (getProtocolSides() + _extra), (_thickness + curThickInc), ...);
+        for amount = 0, _extra, 1 do cWall(_side - amount + (getProtocolSides() + _extra), (_thickness + curThickInc),
+                ...);
             if amount < _extra - _thick_mult_step_limit then thickStep = thickStep + 1;
-                if thickStep >= _thick_mult_step then curThickInc = (thickAmount * _thick_mult); thickStep = 0; thickAmount = thickAmount + 1; end
+                if thickStep >= _thick_mult_step then curThickInc = (thickAmount * _thick_mult);
+                thickStep = 0;
+                thickAmount = thickAmount + 1;
+                end
             end
         end
     end
@@ -355,12 +277,14 @@ end
 
 -- cWallMirror: spawns a mirror wall with specified mirror offsets.
 function cWallMirror(_side, _mirror_step, _thickness, ...)
-    for spacingWalls = 0, _mirror_step - 1, 1 do cWall(_side + math.floor(spacingWalls * (getProtocolSides() / _mirror_step)), _thickness, ...); end
+    for spacingWalls = 0, _mirror_step - 1, 1 do cWall(_side +
+        math.floor(spacingWalls * (getProtocolSides() / _mirror_step)), _thickness, ...); end
 end
 
 -- cWallMirrorEx: spawns a mirror wall with specified mirror offsets with _extra walls attached to it.
 function cWallMirrorEx(_side, _mirror_step, _extra, _thickness, ...)
-    for spacingWalls = 0, _mirror_step - 1, 1 do cWallEx(_side + math.floor(spacingWalls * (getProtocolSides() / _mirror_step)), _extra, _thickness, ...); end
+    for spacingWalls = 0, _mirror_step - 1, 1 do cWallEx(_side +
+        math.floor(spacingWalls * (getProtocolSides() / _mirror_step)), _extra, _thickness, ...); end
 end
 
 -- cWallDraw: spawns a wall, but you can draw everything
@@ -371,7 +295,8 @@ end
 -- cBarrageTkns: same as 'cWallTkns' function + barrage logic
 function cBarrageTkns(_side, _thick_mult_step, _thick_mult_step_limit, _gap, _step_dir, _thick_mult, _thickness, ...)
     _thick_mult = _thick_mult or THICKNESS * (6 / getProtocolSides());
-    _thick_mult_step = _thick_mult_step or 1; _step_dir = _step_dir or 1;
+    _thick_mult_step = _thick_mult_step or 1;
+    _step_dir = _step_dir or 1;
     if _gap == nil or _gap < 1 then _gap = 1; end
     if _thick_mult_step_limit == nil or _thick_mult_step_limit < 0 then _thick_mult_step_limit = 0; end
 
@@ -382,13 +307,20 @@ function cBarrageTkns(_side, _thick_mult_step, _thick_mult_step_limit, _gap, _st
     if _step_dir > 0 then
         for amount = 1, getProtocolSides() - _gap, 1 do cWall(_side + amount, (_thickness + curThickInc), ...);
             if amount < (getProtocolSides() - _gap) - _thick_mult_step_limit then thickStep = thickStep + 1;
-                if thickStep >= _thick_mult_step then curThickInc = (thickAmount * _thick_mult); thickStep = 0; thickAmount = thickAmount + 1; end
+                if thickStep >= _thick_mult_step then curThickInc = (thickAmount * _thick_mult);
+                thickStep = 0;
+                thickAmount = thickAmount + 1;
+                end
             end
         end
     else
-        for amount = 1, getProtocolSides() - _gap, 1 do cWall(_side - amount + ((getProtocolSides() - _gap) + 1), (_thickness + curThickInc), ...);
+        for amount = 1, getProtocolSides() - _gap, 1 do cWall(_side - amount + ((getProtocolSides() - _gap) + 1),
+                (_thickness + curThickInc), ...);
             if amount < (getProtocolSides() - _gap) - _thick_mult_step_limit then thickStep = thickStep + 1;
-                if thickStep >= _thick_mult_step then curThickInc = (thickAmount * _thick_mult); thickStep = 0; thickAmount = thickAmount + 1; end
+                if thickStep >= _thick_mult_step then curThickInc = (thickAmount * _thick_mult);
+                thickStep = 0;
+                thickAmount = thickAmount + 1;
+                end
             end
         end
     end
@@ -397,8 +329,10 @@ end
 -- cBarrageVorta: spawns a vorta/vortex wall that every sides will work properly.
 function cBarrageVorta(_side, _free, _thickness, ...)
     _free = _free or 0;
-    for largeWallsWidth_001 = 0, math.ceil(getProtocolSides() * 0.5 - 2) - _free, 1 do cWall(_side + largeWallsWidth_001, _thickness, ...); end
-    for largeWallsWidth_002 = 0, math.floor(getProtocolSides() * 0.5 - 2) - _free, 1 do cWall(_side + getPolySides(2) + largeWallsWidth_002, _thickness, ...); end
+    for largeWallsWidth_001 = 0, math.ceil(getProtocolSides() * 0.5 - 2) - _free, 1 do cWall(_side + largeWallsWidth_001
+        , _thickness, ...); end
+    for largeWallsWidth_002 = 0, math.floor(getProtocolSides() * 0.5 - 2) - _free, 1 do cWall(_side + getPolySides(2) +
+        largeWallsWidth_002, _thickness, ...); end
 end
 
 -- cBarrageHalf: spawns a half-barrage wall.
@@ -408,8 +342,10 @@ end
 
 -- cBarrageDoubleHoled: spawns a double-holed barrage wall that every sides will work properly.
 function cBarrageDoubleHoled(_side, _2nd_hole_offset, _hole_free, _thickness, ...)
-    _2nd_hole_offset = _2nd_hole_offset or 0; _hole_free = _hole_free or 0;
-    for largeWallsWidth_001 = _2nd_hole_offset + 2 + _hole_free, getProtocolSides() - 2 - _hole_free, 1 do cWall(_side + largeWallsWidth_001, _thickness, ...); end
+    _2nd_hole_offset = _2nd_hole_offset or 0;
+    _hole_free = _hole_free or 0;
+    for largeWallsWidth_001 = _2nd_hole_offset + 2 + _hole_free, getProtocolSides() - 2 - _hole_free, 1 do cWall(_side +
+        largeWallsWidth_001, _thickness, ...); end
     for largeWallsWidth_002 = 0, _2nd_hole_offset, 1 do cWall(_side + largeWallsWidth_002, _thickness, ...); end
 end
 
@@ -483,7 +419,8 @@ function getPerfectAccelDM()
     local diffAdjust = (u_getDifficultyMult() ^ 0.65);
     if (u_getDifficultyMult() < 1) then
         if (u_getDifficultyMult() < 0.5) then
-            diffAdjust = 1.2 * (0.256289 * math.sin(u_getDifficultyMult()) - 36.5669 * math.cos(u_getDifficultyMult()) + 36.5674);
+            diffAdjust = 1.2 *
+                (0.256289 * math.sin(u_getDifficultyMult()) - 36.5669 * math.cos(u_getDifficultyMult()) + 36.5674);
         else
             diffAdjust = 1 - (-2 * u_getDifficultyMult() + 2) ^ 2 / 2.7;
         end
@@ -498,14 +435,17 @@ local function wallAccBase(_hueMod, _side, _adj, _acc, _minSpd, _maxSpd, _isPing
     if (SHAPE_TYPE == 2) then
         local _sideLength = getFakeSideLength(EMULATED_SIDES_AMOUNT);
         for i = 0, _sideLength - 1 do
-            if (wallAccelType == 1) then w_wallAcc(i + _side * _sideLength, _thickness or THICKNESS, _adj, _acc, _minSpd, _maxSpd)
-            elseif (wallAccelType == 2) then w_wallHModSpeedData(_hueMod, i + _side * _sideLength, _thickness or THICKNESS, _adj, _acc, _minSpd, _maxSpd, _isPingPong)
+            if (wallAccelType == 1) then w_wallAcc(i + _side * _sideLength, _thickness or THICKNESS, _adj, _acc, _minSpd
+                , _maxSpd)
+            elseif (wallAccelType == 2) then w_wallHModSpeedData(_hueMod, i + _side * _sideLength,
+                _thickness or THICKNESS, _adj, _acc, _minSpd, _maxSpd, _isPingPong)
             else w_wallAdj(i + _side * _sideLength, _thickness or THICKNESS, _adj)
             end
         end
     else
         if (wallAccelType == 1) then w_wallAcc(_side, _thickness or THICKNESS, _adj, _acc, _minSpd, _maxSpd)
-        elseif (wallAccelType == 2) then w_wallHModSpeedData(_hueMod, _side, _thickness or THICKNESS, _adj, _acc, _minSpd, _maxSpd, _isPingPong)
+        elseif (wallAccelType == 2) then w_wallHModSpeedData(_hueMod, _side, _thickness or THICKNESS, _adj, _acc, _minSpd
+            , _maxSpd, _isPingPong)
         else w_wallAdj(_side, _thickness or THICKNESS, _adj)
         end
     end
@@ -526,7 +466,7 @@ function wallSAcc(_side, _adj, _acc, _minSpd, _maxSpd, _thickness, ...)
 end
 
 -- wallSHAcc: Creates a wallHModSpeedData adjusted the perfect acceleration adjustment (for OH v2+ only)
-function wallSHAcc(_hueMod, _side, _adj, _acc, _minSpd, _maxSpd, _isPingPong, _thickness, ...) 
+function wallSHAcc(_hueMod, _side, _adj, _acc, _minSpd, _maxSpd, _isPingPong, _thickness, ...)
     wallAccelType = 2;
     local speedMult, adjust = u_getSpeedMultDM(), getPerfectAccelDM()
     wallAccBase(_hueMod, _side, _adj * speedMult, _acc * adjust, _minSpd, _maxSpd, _isPingPong, _thickness, ...)
@@ -550,7 +490,8 @@ end
 
 -- syncCurveToSideDistance: Returns an appropriate constant that, if applied to a curving wall travelling at constant speed, will cause it go one full side.
 function syncCurveToSideDistance()
-    return (0.2 * u_getSpeedMultDM() + 0.005) * (6 / getProtocolSides()) * wallSpawnDistanceFix() * (u_getDifficultyMult() ^ -0.25); 
+    return (0.2 * u_getSpeedMultDM() + 0.005) * (6 / getProtocolSides()) * wallSpawnDistanceFix() *
+        (u_getDifficultyMult() ^ -0.25);
 end
 
 -- getPerfectCurveDecel: Returns a constant that, if applied to a curving wall, will make the wall stop accelerating on a side panel.
@@ -558,7 +499,8 @@ function getPerfectCurveDecel()
     -- Coordinates tested: (0, 0), (1, .134), (1.5, .295), (2, .52), (2.5, .81), (3, 1.162), (3.5, 1.579), (4, 2.06)
     -- Cubic Formula (full accuracy): 0.000233918 x^3 + 0.125985 x^2 + 0.00730493 x + 0.0000701754
     -- Current formula has ~100% accuracy
-    return (0.127378 * u_getSpeedMultDM() ^ 2 + 0.00526331 * u_getSpeedMultDM() + 0.000431373) * (6 / getProtocolSides()) * wallSpawnDistanceFix();
+    return (0.127378 * u_getSpeedMultDM() ^ 2 + 0.00526331 * u_getSpeedMultDM() + 0.000431373) * (6 / getProtocolSides()
+        ) * wallSpawnDistanceFix();
 end
 
 -- syncCurveWithRotationSpeed: the function to call when wanting to sync curving walls with the rotation speed
@@ -586,7 +528,8 @@ end
 local function wallHMCurveBase(_hueMod, _side, _adj, _acc, _minSpd, _maxSpd, _isPingPong, _thickness, ...)
     if (SHAPE_TYPE == 2) then
         local _sideLength = getFakeSideLength(EMULATED_SIDES_AMOUNT);
-        for i = 0, _sideLength - 1 do w_wallHModCurveData(_hueMod, i + _side * _sideLength, _thickness or THICKNESS, _adj, _acc, _minSpd, _maxSpd, _isPingPong) end
+        for i = 0, _sideLength - 1 do w_wallHModCurveData(_hueMod, i + _side * _sideLength, _thickness or THICKNESS, _adj
+            , _acc, _minSpd, _maxSpd, _isPingPong) end
     else w_wallHModCurveData(_hueMod, _side, _thickness or THICKNESS, _adj, _acc, _minSpd, _maxSpd, _isPingPong)
     end
 end
@@ -605,7 +548,9 @@ function wallHMCurveAcc(_side, _curve, _curveAcc, _curveMin, _curveMax, _curvePi
         _curve = l_getRotationSpeed() * (10.0 / syncCurveToSideDistance())
         _curve = _curve + (u_rndInt(syncRndMin, syncRndMax) / 100.0)
     end
-    wallHMCurveBase(globalHueModifier, _side, _curve * (u_getDifficultyMult() ^ 0.25) * normalCurveMult * syncCurveToSideDistance(), _curveAcc, _curveMin, _curveMax, _curvePingPong, _thickness, ...)
+    wallHMCurveBase(globalHueModifier, _side,
+        _curve * (u_getDifficultyMult() ^ 0.25) * normalCurveMult * syncCurveToSideDistance(), _curveAcc, _curveMin,
+        _curveMax, _curvePingPong, _thickness, ...)
 end
 
 -- wallHMCurve: a simplication of wallHMCurve, only allowing customization of the curve speed
@@ -632,7 +577,7 @@ function wallHMStop(_side, _offset, _thickness, ...)
 end
 
 -- ▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼
---                                 BEGINNING OF HMC FUNCTIONS (Hue Modified Common)                                
+--                                 BEGINNING OF HMC FUNCTIONS (Hue Modified Common)
 -- ▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼▲▼
 
 -- hmcBarrageN: a barrage with additional adjacent _neighbors that composed of curving walls
@@ -665,9 +610,11 @@ function hmcBarrageStop(_side, _offset, _neighbors, _thickness, ...)
     _neighbors = _neighbors or 0
     local curveAcc = getPerfectCurveDecel() * wallSpawnDistanceFix();
     if (getNeg(_offset) < 0) then
-        hmcBarrageN(_side + _offset, _neighbors, 2 * -_offset, curveAcc * _offset / 100, 0, 2 * -_offset, false, _thickness, ...); 
+        hmcBarrageN(_side + _offset, _neighbors, 2 * -_offset, curveAcc * _offset / 100, 0, 2 * -_offset, false,
+            _thickness, ...);
     else
-        hmcBarrageN(_side + _offset, _neighbors, -2 * _offset, curveAcc * _offset / 100, -2 * _offset, 0, false, _thickness, ...); 
+        hmcBarrageN(_side + _offset, _neighbors, -2 * _offset, curveAcc * _offset / 100, -2 * _offset, 0, false,
+            _thickness, ...);
     end
 end
 

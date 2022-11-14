@@ -25,17 +25,18 @@ udelay = 1.15
 
 -- this function adds a pattern to the timeline based on a key
 function addPattern(mKey)
-	if mKey == 0 then pAltBarrageS(5, 2, udelay)
-	elseif mKey == 3 then pWallExVortexS(0, 1, 1, udelay)
-	elseif mKey == 4 then pSBarrageSpiralLR(2, udelay)
-	elseif mKey == 5 then pcBarrageWallLRS(math.random(1, 2), udelay)
-	elseif mKey == 7 then pBarrageSpiralRandomS(math.random(4, 6), udelay)
-	elseif mKey == 8 then pBackAndForth2S(math.random(2, 3), udelay)
-	elseif mKey == 9 then pOddAltBarrageS(math.random(5, 7), udelay)
-    elseif mKey ==  10 then pDoubleBarrageLeftRightS(math.random(3, 4), udelay)
+    if mKey == 0 then pAltBarrageS(5, 2, udelay)
+    elseif mKey == 3 then pWallExVortexS(0, 1, 1, udelay)
+    elseif mKey == 4 then pSBarrageSpiralLR(2, udelay)
+    elseif mKey == 5 then pcBarrageWallLRS(math.random(1, 2), udelay)
+    elseif mKey == 7 then pBarrageSpiralRandomS(math.random(4, 6), udelay)
+    elseif mKey == 8 then pBackAndForth2S(math.random(2, 3), udelay)
+    elseif mKey == 9 then pOddAltBarrageS(math.random(5, 7), udelay)
+    elseif mKey == 10 then pDoubleBarrageLeftRightS(math.random(3, 4), udelay)
     elseif mKey == 12 then pWallExVortexS(math.random(0, 1), 0, 1, udelay)
-	end
+    end
 end
+
 keys = { 0, 0, 3, 3, 4, 4, 5, 5, 9, 9, 10, 10, 12, 12 }
 shuffle(keys)
 index = 0
@@ -45,7 +46,7 @@ hardAchievementUnlocked = false
 
 -- onInit is an hardcoded function that is called when the level is first loaded
 function onInit()
-    
+
     if u_getDifficultyMult() == 1 then
         thespeed = 2.4
         l_setSpeedMult(2.4)
@@ -59,10 +60,10 @@ function onInit()
     l_setSpeedMax(100)
     l_setRotationSpeed(-0.02)
     l_setRotationSpeedMax(1000)
-   
+
 
     l_setRotationSpeedInc(0)
-    
+
     l_setDelayInc(0.01)
     l_setFastSpin(5)
     l_setSides(6)
@@ -70,10 +71,10 @@ function onInit()
     l_setSidesMax(6)
 
     l_setIncTime(1100)
-	l_setRadiusMin(40)
-	--l_setWallAngleLeft(-0.2)
-	--l_setWallSkewLeft(0.2)
-	l_setPulseMin(55)
+    l_setRadiusMin(40)
+    --l_setWallAngleLeft(-0.2)
+    --l_setWallSkewLeft(0.2)
+    l_setPulseMin(55)
 
 
 end
@@ -102,7 +103,6 @@ function makedeco()
     fractalCurve(180, 2, 0.02, 0.58, 11, 130, 9, 255, 255, 255, 0, 1, 2, 3, -0.2)
 end
 
-
 -- onLoad is an hardcoded function that is called when the level is started/restarted
 function onLoad()
     makedeco()
@@ -122,7 +122,7 @@ function onStep()
         shuffle(keys)
     end
 
-	
+
 end
 
 -- onIncrement is an hardcoded function that is called when the level difficulty is incremented

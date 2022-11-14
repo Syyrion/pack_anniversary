@@ -1,14 +1,14 @@
 function randomWeighted(min, max, exponent)
-	min = min or 0
-	max = max or 1
-	exponent = exponent or 0.5
-	return min + (max - min) * (math.random()^exponent)
+    min = min or 0
+    max = max or 1
+    exponent = exponent or 0.5
+    return min + (max - min) * (math.random() ^ exponent)
 end
 
 function ArrayRemove(t, fnRemove)
     local j, n = 1, #t;
 
-    for i=1,n do
+    for i = 1, n do
         if (not fnRemove(t, i, j)) then
             -- Move i's kept value to j's position, if it's not already there.
             if (i ~= j) then
@@ -25,32 +25,30 @@ function ArrayRemove(t, fnRemove)
 end
 
 function runCWs()
-	wallArrays(mFrameTime)
+    wallArrays(mFrameTime)
 
-	ArrayRemove(imposterWalls, function(t, i, j)
-		local v = t[i]
-		if v.dead then
-			cw_destroy(v.cwHandle)
-			return true
-		else
-			return false
-		end
-	end);
-	
-	ArrayRemove(bgWalls, function(t, i, j)
-		local v = t[i]
-		if v.dead then
-			cw_destroy(v.cwHandle)
-			return true
-		else
-			return false
-		end
-	end);
-	
-	-- Loop through all imposter walls to handle their movement
-	for _, iw in ipairs(imposterWalls) do
-		iw:move(mFrameTime)
-	end
+    ArrayRemove(imposterWalls, function(t, i, j)
+        local v = t[i]
+        if v.dead then
+            cw_destroy(v.cwHandle)
+            return true
+        else
+            return false
+        end
+    end);
+
+    ArrayRemove(bgWalls, function(t, i, j)
+        local v = t[i]
+        if v.dead then
+            cw_destroy(v.cwHandle)
+            return true
+        else
+            return false
+        end
+    end);
+
+    -- Loop through all imposter walls to handle their movement
+    for _, iw in ipairs(imposterWalls) do
+        iw:move(mFrameTime)
+    end
 end
-
-
