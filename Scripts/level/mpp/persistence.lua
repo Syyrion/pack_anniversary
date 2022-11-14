@@ -283,7 +283,7 @@ function onInit()
 	l_setPulseSpeedR(2)
 	l_setPulseDelayMax(18)
 
-	
+	l_setWallSpawnDistance(1400)
 
 	l_setDarkenUnevenBackgroundChunk(false)
 	l_setBeatPulseMax(17)
