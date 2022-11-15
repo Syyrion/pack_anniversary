@@ -8,7 +8,7 @@ void main() {
     st.y -= 0.5;
     float ratio = u_resolution.x/u_resolution.y;
     st.x -= 0.5*ratio;
-    float skewmult = (1.0 / (u_skew + 1.0));
+    float skewmult = 1.0;
     vec3 prim = vec3(0.0, 0.0, 0.0);
     vec3 seco = vec3(1.0, 1.0, 1.0);
     if(u_dead == 1) {

@@ -38,7 +38,7 @@ beatCount = 0
 keys = { 0, 0, 1, 2, 3, 3, 4, 5, 5, 6, 7, 8, 8, 11, 12, 12, 13, 14 }
 shuffle(keys)
 index = 0
-dys = false
+dys = true
 FFrames = 0
 BPM = 160
 notSkew = 2
@@ -117,84 +117,55 @@ function cwspin(cw, theta)
     )
 end
 
---cw decoration
+--cw decoration--
 
---layer 1 - rings
+-- radials
+cwrad1 = {}
+cwrad2 = {}
+cwrad3 = {}
+
+-- rings
 cwring1 = {}
 cwring2 = {}
-cwring3 = {}
 
---layer 2 - obstruction
+-- obstruction
 cwborder = {}
 
 for i = 0, 5 do
+    cwrad1[i] = cw_createNoCollision()
+    cwrad2[i] = cw_createNoCollision()
+    cwrad3[i] = cw_createNoCollision()
+
     cwring1[i] = cw_createNoCollision()
     cwring2[i] = cw_createNoCollision()
-    cwring3[i] = cw_createNoCollision()
+
     cwborder[i] = cw_createNoCollision()
 end
 
-function cwspawnwalllayer1(cw)
-    local length = 5
-    local width = 100
-    local displacement = 700
-    local alpha = 200
-    local conical = 0
-    cw_setVertexPos(cw, 0, displacement + width, length + conical)
-    cw_setVertexPos(cw, 1, displacement + width, 0 - length - conical)
-    cw_setVertexPos(cw, 2, displacement - width, 0 - length)
-    cw_setVertexPos(cw, 3, displacement - width, length)
-    cw_setVertexColor4Same(cw, alpha, alpha, alpha, 255)
-end
-
-function cwspawnwalllayer1a(cw)
-    local length = 3
-    local width = 50
-    local displacement = 450
-    local alpha = 200
-    local conical = 0
-    cw_setVertexPos(cw, 0, displacement + width, length + conical)
-    cw_setVertexPos(cw, 1, displacement + width, 0 - length - conical)
-    cw_setVertexPos(cw, 2, displacement - width, 0 - length)
-    cw_setVertexPos(cw, 3, displacement - width, length)
-    cw_setVertexColor4Same(cw, alpha, alpha, alpha, 255)
-end
-
-function cwspawnwalllayer2(cw)
-    local length = 2
-    local width = 20
-    local displacement = 350
-    local alpha = 255
-    local conical = 0
-    cw_setVertexPos(cw, 0, displacement + width, length + conical)
-    cw_setVertexPos(cw, 1, displacement + width, 0 - length - conical)
-    cw_setVertexPos(cw, 2, displacement - width, 0 - length)
-    cw_setVertexPos(cw, 3, displacement - width, length)
-    cw_setVertexColor4Same(cw, alpha, alpha, alpha, 255)
-end
-
-function cwspawnwalllayer3(cw)
-    local length = 1000
-    local width = 1000
-    local displacement = 1550
-    local alpha = 0
-    local conical = 30
-    cw_setVertexPos(cw, 0, displacement + width, length + conical)
-    cw_setVertexPos(cw, 1, displacement + width, 0 - length - conical)
-    cw_setVertexPos(cw, 2, displacement - width, 0 - length)
-    cw_setVertexPos(cw, 3, displacement - width, length)
-    cw_setVertexColor4Same(cw, alpha, alpha, alpha, 100)
+function cwspawnwalllayer(cw, width, length, displacement, shade, conical, alpha)
+    cw_setVertexPos(cw, 0, displacement + length, width + conical)
+    cw_setVertexPos(cw, 1, displacement + length, 0 - width - conical)
+    cw_setVertexPos(cw, 2, displacement - length, 0 - width)
+    cw_setVertexPos(cw, 3, displacement - length, width)
+    cw_setVertexColor4Same(cw, shade, shade, shade, alpha)
 end
 
 function cwspawn()
     for i = 0, 5 do 
-        cwspawnwalllayer1(cwring1[i])
+        cwspawnwalllayer(cwrad1[i], 5, 100, 800, 255, 0, 255)
+        cwspin(cwrad1[i], (math.pi / 3)*i)
+        cwspawnwalllayer(cwrad2[i], 3, 60, 500, 255, 0, 255)
+        cwspin(cwrad2[i], (math.pi / 3)*i)
+        cwspawnwalllayer(cwrad3[i], 2, 30, 300, 255, 0, 255)
+        cwspin(cwrad3[i], (math.pi / 3)*i)
+
+
+        cwspawnwalllayer(cwring1[i], 600/math.sqrt(3), 5, 595, 255, 0, 255)
         cwspin(cwring1[i], (math.pi / 3)*i)
-        cwspawnwalllayer1a(cwring2[i])
+        cwspawnwalllayer(cwring2[i], 370/math.sqrt(3), 3, 367, 255, 0, 255)
         cwspin(cwring2[i], (math.pi / 3)*i)
-        cwspawnwalllayer2(cwring3[i])
-        cwspin(cwring3[i], (math.pi / 3)*i)
-        cwspawnwalllayer3(cwborder[i])
+
+        cwspawnwalllayer(cwborder[i], 10000, 1000, 1600, 0, 30, 100)
         cwspin(cwborder[i], (math.pi / 3)*i)
     end
 end
@@ -296,9 +267,11 @@ function onDeath()
 
     for i = 0,5 do
         cw_setVertexColor4Same(cwborder[i], 0, 0, 0, 100)
-        cw_setVertexColor4Same(cwring1[i], 250, 0, 0, 255)
-        cw_setVertexColor4Same(cwring2[i], 250, 0, 0, 255)
-        cw_setVertexColor4Same(cwring3[i], 250, 0, 0, 255)
+        cw_setVertexColor4Same(cwrad1[i], 250, 0, 0, 255)
+        cw_setVertexColor4Same(cwrad2[i], 250, 0, 0, 255)
+        cw_setVertexColor4Same(cwrad3[i], 250, 0, 0, 255)
+        cw_setVertexColor4Same(cwring1[i], 250, 250, 250, 255)
+        cw_setVertexColor4Same(cwring2[i], 250, 250, 250, 255)
     end
 
     killed = 1
@@ -341,6 +314,89 @@ ibeatCount = 0
 
 function onUpdate(mFrameTime)
 
+    if l_getLevelTime() > nextLoop then -- clock
+        loopcount = loopcount + 1
+        nextLoop = loopcount * (60 / BPM) -- bpm = 160
+        --on beat events
+        u_setFlashEffect(10)
+        hardPulse()
+        shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, spinscan)
+        if notSkew < 0 then
+            for i = 0,5 do
+                cw_setVertexColor4Same(cwborder[i], 0, 0, 0, 100)
+            end
+        end
+        if dys then dys = false else dys = true end
+        pshift = roundThousand((math.random() * 6) / 1000)
+        l_setRotation(l_getRotation() + pshift * 60)
+
+        if dys then
+            for i = 0,5 do
+                cw_setVertexColor4Same(cwring1[i], 250, 250, 250, 255)
+                cw_setVertexColor4Same(cwring2[i], 250, 250, 250, 255)
+            end
+        else
+            for i = 0,5 do
+                cw_setVertexColor4Same(cwring1[i], 0, 250, 250, 255)
+                cw_setVertexColor4Same(cwring2[i], 0, 250, 250, 255)
+            end
+        end
+        beatCount = beatCount + 1
+        ibeatCount = 0
+    end
+
+    if ibeatCount == ((60 / BPM) * 240) / 2 then
+        shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, blackflash)
+        if roundThousand(u_getDifficultyMult()) > 999 then
+            for i = 0,5 do
+                cw_setVertexColor4Same(cwborder[i], 0, 0, 0, 255)
+            end
+        end
+    end
+
+    --ring colors
+    if FFrames % 10 == 0 then
+        for i = 0,5 do
+            cw_setVertexColor4Same(cwrad1[i], 250, 250, 250, 255)
+            cw_setVertexColor4Same(cwrad3[i], 250, 250, 250, 255)
+        end
+
+        if notSkew > -1 then
+            for i = 0,5 do
+                cw_setVertexColor4Same(cwrad2[i], 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
+            end
+        else
+            for i = 0,5 do
+                cw_setVertexColor4Same(cwrad2[i], 0, 250, 250, 255)
+            end
+        end
+    end
+    if FFrames % 10 == 7 then
+        if notSkew > -1 then
+            for i = 0,5 do
+                cw_setVertexColor4Same(cwrad1[i], 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
+                cw_setVertexColor4Same(cwrad3[i], 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
+            end
+        else
+            for i = 0,5 do
+                cw_setVertexColor4Same(cwrad1[i], 0, 250, 250, 255)
+                cw_setVertexColor4Same(cwrad3[i], 0, 250, 250, 255)
+            end
+        end
+        for i = 0,5 do
+            cw_setVertexColor4Same(cwrad2[i], 250, 250, 250, 255)
+        end
+    end
+    if dys then
+        notSkew = 2
+    else
+        notSkew = -2
+    end
+    if rinc % 2 == 0 then
+        l_setRotation(l_getRotation() + (notRotation * (600 / 240)))
+    else
+        l_setRotation(l_getRotation() + ((notRotation * (600 / 240)) * -1))
+    end
     if FFrames % 90 == 0 then
         local gen = (math.random() * 8)
         gen = roundThousand(gen / 1000)
@@ -379,88 +435,12 @@ function onUpdate(mFrameTime)
         end
     end
     for i = 0,5 do
-        cwspin(cwring1[i], dec1 * (math.pi / 3) / 45)
-        cwspin(cwring2[i], dec2 * (math.pi / 3) / 45)
-        cwspin(cwring3[i], dec3 * (math.pi / 3) / 45)
-    end
-
-    if l_getLevelTime() > nextLoop then -- clock
-        loopcount = loopcount + 1
-        nextLoop = loopcount * (60 / BPM) -- bpm = 160
-        --on beat events
-        u_setFlashEffect(10)
-        hardPulse()
-        shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, spinscan)
-        if notSkew < 0 then
-            for i = 0,5 do
-                cw_setVertexColor4Same(cwborder[i], 0, 0, 0, 100)
-            end
-        end
-        if dys then dys = false else dys = true end
-        pshift = roundThousand((math.random() * 6) / 1000)
-        l_setRotation(l_getRotation() + pshift * 60)
-
-
-        beatCount = beatCount + 1
-        ibeatCount = 0
-    end
-
-    if ibeatCount == ((60 / BPM) * 240) / 2 then
-        shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, blackflash)
-        if roundThousand(u_getDifficultyMult()) > 999 then
-            for i = 0,5 do
-                cw_setVertexColor4Same(cwborder[i], 0, 0, 0, 255)
-            end
-        end
-    end
-
-    FFrames = FFrames + 1
-    --ring colors
-    if FFrames % 10 == 0 then
-        for i = 0,5 do
-            cw_setVertexColor4Same(cwring1[i], 250, 250, 250, 255)
-            cw_setVertexColor4Same(cwring3[i], 250, 250, 250, 255)
-        end
-
-        if notSkew > -1 then
-            for i = 0,5 do
-                cw_setVertexColor4Same(cwring2[i], 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
-            end
-        else
-            for i = 0,5 do
-                cw_setVertexColor4Same(cwring2[i], 0, 250, 250, 255)
-            end
-        end
-    end
-    if FFrames % 10 == 7 then
-        if notSkew > -1 then
-            for i = 0,5 do
-                cw_setVertexColor4Same(cwring1[i], 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
-                cw_setVertexColor4Same(cwring3[i], 250 * math.sin(FFrames / 360), 250 * math.cos(FFrames / 360), 250, 255)
-            end
-        else
-            for i = 0,5 do
-                cw_setVertexColor4Same(cwring1[i], 0, 250, 250, 255)
-                cw_setVertexColor4Same(cwring3[i], 0, 250, 250, 255)
-            end
-        end
-        for i = 0,5 do
-            cw_setVertexColor4Same(cwring2[i], 250, 250, 250, 255)
-        end
-    end
-    if dys then
-        notSkew = 2
-        s_set3dSkew(0)
-        s_set3dDepth(0)
-    else
-        notSkew = -2
-    end
-    if rinc % 2 == 0 then
-        l_setRotation(l_getRotation() + (notRotation * (600 / 240)))
-    else
-        l_setRotation(l_getRotation() + ((notRotation * (600 / 240)) * -1))
+        cwspin(cwrad1[i], dec1 * (math.pi / 3) / 45)
+        cwspin(cwrad2[i], dec2 * (math.pi / 3) / 45)
+        cwspin(cwrad3[i], dec3 * (math.pi / 3) / 45)
     end
     ibeatCount = ibeatCount + 1
+    FFrames = FFrames + 1
 end
 
 function onRenderStage(rs) --cringe
@@ -471,7 +451,7 @@ function onRenderStage(rs) --cringe
     shdr_setUniformF(spinscan, "u_rotation", math.rad(l_getRotation()))
 
     shdr_setUniformFVec2(blackflash, "u_resolution", u_getWidth(), u_getHeight())
-    shdr_setUniformF(blackflash, "u_skew", s_get3dSkew())
+    shdr_setUniformF(blackflash, "u_skew", notSkew)
     shdr_setUniformF(blackflash, "u_rotation", math.rad(l_getRotation()))
     shdr_setUniformI(blackflash, "u_dead", killed)
 
