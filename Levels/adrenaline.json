@@ -1,0 +1,12 @@
+{
+	"id": "adrenaline",
+	"name": "Adrenaline",
+	"description": "Way too timed",
+	"author": "fentras",
+	"menuPriority": 0,
+	"selectable": true,
+	"styleId": "adrenaline",
+	"musicId": "astra",
+	"luaFile": "Scripts/level/adrenaline/main.lua",
+	"difficultyMults": []
+}
