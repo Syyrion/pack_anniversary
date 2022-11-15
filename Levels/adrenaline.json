@@ -3,7 +3,7 @@
 	"name": "Adrenaline",
 	"description": "Way too timed",
 	"author": "fentras",
-	"menuPriority": 0,
+	"menuPriority": 10,
 	"selectable": true,
 	"styleId": "adrenaline",
 	"musicId": "astra",

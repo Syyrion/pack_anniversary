@@ -3,7 +3,7 @@
 	"name": "run",
 	"description": "",
 	"author": "ndagger",
-	"menuPriority": 8,
+	"menuPriority": 7,
 	"selectable": true,
 	"styleId": "run",
 	"musicId": "rocketRace",

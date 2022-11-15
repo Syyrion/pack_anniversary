@@ -3,7 +3,7 @@
 	"name": "FSoR", // sometimes an acronym unknown to anyone has as much sense as its real meaning
 	"description": "Generical generic, pretty much",
 	"author": "The Sun XIX",
-	"menuPriority": 5,
+	"menuPriority": 6,
 	"selectable": true,
 	"styleId": "FSoRmenu",
 	"musicId": "[FSoR] Paralitic Twins - Three Levels",
