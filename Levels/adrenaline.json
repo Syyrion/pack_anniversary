@@ -8,5 +8,5 @@
 	"styleId": "adrenaline",
 	"musicId": "astra",
 	"luaFile": "Scripts/level/adrenaline/main.lua",
-	"difficultyMults": []
+	"difficultyMults": [ 1.5, 2, 3 ]
 }
