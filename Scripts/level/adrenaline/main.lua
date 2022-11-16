@@ -24,6 +24,7 @@ u_execDependencyScript("library_polywall", "polywall", "syyrion", "master.lua")
 u_execDependencyScript("library_patternizer", "patternizer", "syyrion", "master.lua")
 
 score = 0
+multiplier = 1
 
 Music = {
     LENGTH = 51.194,
@@ -127,14 +128,17 @@ function calculateWallOffset()
 end
 
 function onInit()
-    l_setSpeedMult(2.5)
+    if u_getDifficultyMult() == 3 then
+        s_setStyle("adrenalineDark")
+    end
+
+    l_setRotationSpeedMax(2)
+    l_setSpeedMax(5)
+
     l_setRotationSpeed(0.025)
-    l_setPlayerSpeedMult(1.05)
     l_setSides(6)
     l_setDelayMult(0)
     
-    l_setPulseMin(10)
-    l_setPulseMax(14)
     l_setPulseSpeed(0)
     l_setPulseSpeedR(0)
     l_setPulseDelayMax(0)
@@ -154,10 +158,13 @@ function onInit()
 
     s_set3dSkew(0.5)
 
+    a_syncMusicToDM(false)
     a_overrideDeathSound("hit.ogg")
     a_overrideSwapSound("clap.ogg")
 
     l_overrideScore("score")
+
+    setMultiplier()
 end
 
 function cWall(side, thickness)
@@ -180,6 +187,24 @@ function dWall(side, thickness)
     fragment = PW[2][side]:nWall()
     fragment.thickness:set(thickness)
     fragment.vertex:chset(255, 0, 0, 255)
+end
+
+function setMultiplier()
+    local rotMult = 1
+    local multMult = 1
+
+    if u_getDifficultyMult() > 1 then
+        rotMult = 1 + (u_getDifficultyMult() * 0.05)
+    end
+
+    if multiplier > 1 then
+        multMult = 1 + (multiplier * 0.00125)
+    end
+
+    l_setSpeedMult(2.5 * multiplier)
+    l_setPlayerSpeedMult(1.05 * multMult * rotMult)
+    l_setPulseMin(10 * multiplier)
+    l_setPulseMax(14 * multiplier)
 end
 
 function onLoad()
@@ -210,7 +235,7 @@ function onLoad()
     
     polyWallSort()
 
-    ST = TimerPeriodic:new(Note.EIGHTH, function ()
+    ST = TimerPeriodic:new(Note.THIRTYSECOND, function ()
 		polyWallSort()
 	end)
 
@@ -256,6 +281,10 @@ function onUpdate(mFrameTime)
             idMusic = "astraHigh"
         end
 
+        multiplier = multiplier + 0.125
+        setMultiplier()
+        
+        a_playSound("levelUp.ogg")
         a_setMusicSeconds(idMusic, Music.OFFSET)
         u_haltTime(Music.COMPENSATION)
     end
@@ -308,9 +337,9 @@ function onUpdate(mFrameTime)
         pulse_multiplier = lerp(l_getPulse(), l_getPulseMin(), 0.0125)
     end
     if rotation_switch then
-        rotation_mult = lerp(l_getRotationSpeed(), 2, 0.001333)
+        rotation_mult = lerp(l_getRotationSpeed(), 2 * multiplier * (u_getDifficultyMult() * 0.5), 0.001333)
     else
-        rotation_mult = lerp(l_getRotationSpeed(), -2, 0.001333)
+        rotation_mult = lerp(l_getRotationSpeed(), -2 * multiplier * (u_getDifficultyMult() * 0.5), 0.001333)
     end
 
     l_setBeatPulse(beat_multiplier[1])
