@@ -1,4 +1,4 @@
---[========[   ---   ACCELERATING WALLS - HELPER SCRIPT   ---   ]========]--
+--[========[   ---   ACCELERATING WALLS - HELPER SCRIPT   ---   ]========] --
 --                      ----[[  VERSION: 1.1  ]]----                      --
 -- A few functions to help you place your wallAcc exactly where you want. --
 --	                                                                      --
@@ -23,7 +23,6 @@ u_execScript('reader.lua')
 --[[
 wallDist: main function, allows you to place a wall at a certain distance
     from the center of the center of the level.
-
 side: side of the wall to spawn.
 thickness: thickness of the wall to spawn.
 speedmult: starting speed of the wall, working like regular wallAcc.
@@ -39,7 +38,6 @@ end
 --[[
 wallFromPCoord: from a table of polar coordinates, allows you to place walls
     to form a shape stopping at a certain distance form the center
-
 tablecoords: a table of tables containing the polar coordinates of the
     walls: tablecoords = {{distance, angle}, {distance2, angle2}, ...}
 thickness, speedmult, minspeed: same as above.
@@ -84,56 +82,49 @@ loadBMPPicture: loads a 24 bits per pixel bitmap file and returns a table
     containing a list of X/Y coordinates for every black pixel in the
     picture. Note that any other color than black will be ignored.
     NB: 24 bits per pixel ONLY, or else you'll get... weird results, if any.
-
 path: path of the image to load, from the Open Hexagon folder.
 xos, yos: the X/Y offset of the center of the resulting pattern, 1 being
     half the width (xos) or the height (yos) of the picture.
 ]]
 function loadBMPPicture(path, xos, yos)
-    local input, reason = Reader:open(path)
-    if not input then
-        print("can't open BMP picture:\n" .. (reason or ""))
-        return {} -- return a empty table if the level files couldn't be found
-    else
-        -- helper function to read a byte as number and not as ASCII
-        local function readHex(bytes)
-            local result = 0
-            for i = 0, bytes - 1 do
-                result = result + (256 ^ i) * string.byte(input:read(1))
-            end
-            return result
+    local input = Reader:open(path)
+    -- helper function to read a byte as number and not as ASCII
+    local function readHex(bytes)
+        local result = 0
+        for i = 0, bytes - 1 do
+            result = result + (256 ^ i) * string.byte(input:read(1))
         end
+        return result
+    end
 
-        input:seek("set", 0x0A)
-        -- get where the image starts
-        local offset = readHex(2)
-        local width, height
-        input:seek("set", 0x12)
-        width = readHex(4)
-        height = readHex(4)
-        --u_log("offset: "..offset)
-        --u_log("size: "..width.."x"..height)
+    input:seek("set", 0x0A)
+    -- get where the image starts
+    local offset = readHex(2)
+    local width, height
+    input:seek("set", 0x12)
+    width = readHex(4)
+    height = readHex(4)
+    --l_log("offset: "..offset)
+    --l_log("size: "..width.."x"..height)
 
-        -- decode the pixel grid
-        input:seek("set", offset)
-        local grid = {}
-        local rowsize = math.floor((24 * width + 31) / 32) * 4
-        for y = 0, height - 1 do
-            for x = 0, width - 1 do
-                pixel = readHex(3)
-                if pixel == 0 then
-                    table.insert(grid, { (x - width / 2) * width / height + xos * width / 2, y - height / 2 + yos * height / 2 })
-                elseif pixel <= 0xff then
-                    for i = 1, pixel do
-                        table.insert(grid, { (x - width / 2) * width / height + xos * width / 2, y - height / 2 + yos * height / 2 })
-                    end
+    -- decode the pixel grid
+    input:seek("set", offset)
+    local grid = {}
+    local rowsize = math.floor((24 * width + 31) / 32) * 4
+    for y = 0, height - 1 do
+        for x = 0, width - 1 do
+            pixel = readHex(3)
+            if pixel == 0 then table.insert(grid, { (x - width / 2) * width / height + xos * width / 2, y - height / 2 +
+                    yos * height / 2 })
+            elseif pixel <= 0xff then for i = 1, pixel do table.insert(grid,
+                        { (x - width / 2) * width / height + xos * width / 2, y - height / 2 + yos * height / 2 })
                 end
             end
-            if width % 4 ~= 0 then readHex(width % 4) end
         end
-        input:close()
-        return grid
+        if width % 4 ~= 0 then readHex(width % 4) end
     end
+    input:close()
+    return grid
 end
 
 --[[
@@ -142,7 +133,6 @@ wallFromPicture: draw your pattern, export it as 24bpp bitmap, and you get
     NB: Loading an entire picture may take some time, so storing the
     coordinates of the points to reuse them later may avoid a freeze every
     time the function is called.
-
 picpath, Xoffset, Yoffset: see path, xos, yos in loadBMPPicture above.
 thickness, speedmult, minspeed, offset, scale, origin: see in wallFromPCoord
 ]]
