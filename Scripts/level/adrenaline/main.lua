@@ -1,7 +1,7 @@
 --[[
     
 # Adrenaline
-Made by fentras https://fentras.me
+Made by fentras https://fentras.me https://gitlab.com/fentras
 
 ### Special thanks
 - Vee and the contributors for this awesome game https://openhexagon.org
@@ -9,11 +9,15 @@ Made by fentras https://fentras.me
 - Discord community for helping throughout the level creation
 
 ### Disclaimer
-Currently the code structure is a mess and the library that is being
+The code structure is a mess and the library that is being
 utilised is not documented at all because everything was quite rushed
-at the end. The level will receive updates to improve code quality and
-the whole experience at a later point (e.g. maybe less harsh patterns
-or better timings). Thank you for your patience and have fun.
+at the end. It could be done way better but I didn't have enough time
+and strength to make it the best level so far. For now, enjoy this
+small creation. I hope I can make something better in the future.
+
+The code is undocumented but the library might end up as a separate
+project on my GitLab page, so feel free to check it out if I will
+ever make it into an actual project (at least in proof-of-concept state).
 
 ]]--
 
@@ -23,7 +27,11 @@ u_execDependencyScript("library_slider", "slider", "syyrion", "master.lua")
 u_execDependencyScript("library_polywall", "polywall", "syyrion", "master.lua")
 u_execDependencyScript("library_patternizer", "patternizer", "syyrion", "master.lua")
 
-score = 0
+difficulty = u_getDifficultyMult()
+deathMode = false
+
+multiplier = 1
+timeOffset = 0
 
 Music = {
     LENGTH = 51.194,
@@ -66,8 +74,8 @@ rotation_mult = 0.1
 rotation_switch = u_rndInt(0, 1) == 0
 
 local Timer = {
-    main = function() return l_getLevelTime() + Music.OFFSET end,
-    offset = function() return l_getLevelTime() + Music.OFFSET + calculateWallOffset() end
+    main = function() return l_getLevelTime() + Music.OFFSET - timeOffset end,
+    offset = function() return l_getLevelTime() + Music.OFFSET - timeOffset + calculateWallOffset() end
 }
 
 local function polyWallSort()
@@ -92,7 +100,12 @@ local function configureSides(sides)
     PW[2]:regularize(0, sides)
 
     PW[0].vertex:chset(Colors.TRANSPARENT())
-    PW[2].vertex:chset(Colors.WHITE())
+
+    if not deathMode then
+        PW[2].vertex:chset(Colors.WHITE())
+    else
+        PW[2].vertex:chset(Colors.RED())
+    end
 
     PW[1].limit.extent:set(0)
 
@@ -127,14 +140,22 @@ function calculateWallOffset()
 end
 
 function onInit()
-    l_setSpeedMult(2.5)
+    if difficulty == -1 then
+        difficulty = 3
+        deathMode = true
+    end
+
+    if difficulty == 3 then
+        s_setStyle("adrenalineDark")
+    end
+
+    l_setRotationSpeedMax(2)
+    l_setSpeedMax(5)
+
     l_setRotationSpeed(0.025)
-    l_setPlayerSpeedMult(1.05)
     l_setSides(6)
     l_setDelayMult(0)
     
-    l_setPulseMin(10)
-    l_setPulseMax(14)
     l_setPulseSpeed(0)
     l_setPulseSpeedR(0)
     l_setPulseDelayMax(0)
@@ -154,17 +175,24 @@ function onInit()
 
     s_set3dSkew(0.5)
 
+    a_syncMusicToDM(false)
     a_overrideDeathSound("hit.ogg")
     a_overrideSwapSound("clap.ogg")
 
-    l_overrideScore("score")
+    setMultiplier()
 end
 
 function cWall(side, thickness)
     side = side % l_getSides()
     thickness = thickness or THICKNESS
 
-    collider = PW[0][side]:sWall()
+    collider = nil
+
+    if not deathMode then
+        collider = PW[0][side]:sWall()
+    else
+        collider = PW[0][side]:dWall()
+    end
     collider.thickness:set(thickness)
 
     fragment = PW[2][side]:nWall()
@@ -180,6 +208,24 @@ function dWall(side, thickness)
     fragment = PW[2][side]:nWall()
     fragment.thickness:set(thickness)
     fragment.vertex:chset(255, 0, 0, 255)
+end
+
+function setMultiplier()
+    local rotMult = 1
+    local multMult = 1
+
+    if difficulty > 1 then
+        rotMult = 1 + (difficulty * 0.05)
+    end
+
+    if multiplier > 1 then
+        multMult = 1 + (multiplier * 0.00125)
+    end
+
+    l_setSpeedMult(2.5 * multiplier)
+    l_setPlayerSpeedMult(1.05 * multMult * rotMult)
+    l_setPulseMin(10 * multiplier)
+    l_setPulseMax(14 * multiplier)
 end
 
 function onLoad()
@@ -210,7 +256,7 @@ function onLoad()
     
     polyWallSort()
 
-    ST = TimerPeriodic:new(Note.EIGHTH, function ()
+    ST = TimerPeriodic:new(Note.THIRTYSECOND, function ()
 		polyWallSort()
 	end)
 
@@ -220,6 +266,9 @@ function onLoad()
         u_haltTime(Music.COMPENSATION)
         shdr_setActiveFragmentShader(RenderStage.WALLQUADS, shader)
         shdr_setActiveFragmentShader(RenderStage.WALLQUADS3D, shader)
+        if difficulty == 3 then
+            shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, shader)
+        end
     end
 end
 
@@ -236,7 +285,7 @@ end
 
 function onUpdate(mFrameTime)
     shdr_setUniformFVec2(shader, "u_resolution", u_getWidth(), u_getHeight())
-    shdr_setUniformF(shader, "u_rotation", math.rad(l_getRotation() / 10))
+    shdr_setUniformF(shader, "u_rotation", math.rad(-l_getRotation()))
     shdr_setUniformF(shader, "u_time", l_getLevelTime())
     shdr_setUniformF(shader, "u_skew", s_get3dSkew())
 
@@ -246,7 +295,7 @@ function onUpdate(mFrameTime)
         TLE1:reset()
         TLE2:reset()
 
-        l_resetTime()
+        timeOffset = timeOffset + Music.LENGTH
 
         local idMusic = "astra"
         local rndMusic = u_rndInt(1, 3)
@@ -256,6 +305,10 @@ function onUpdate(mFrameTime)
             idMusic = "astraHigh"
         end
 
+        multiplier = multiplier + 0.125
+        setMultiplier()
+        
+        a_playSound("levelUp.ogg")
         a_setMusicSeconds(idMusic, Music.OFFSET)
         u_haltTime(Music.COMPENSATION)
     end
@@ -289,7 +342,6 @@ function onUpdate(mFrameTime)
         
         if TLE1:advance(Timer.main()) then
             beat_multiplier[1] = 25
-            score = score + 1
             a_playPackSound("clack.ogg")
         end
 
@@ -308,9 +360,9 @@ function onUpdate(mFrameTime)
         pulse_multiplier = lerp(l_getPulse(), l_getPulseMin(), 0.0125)
     end
     if rotation_switch then
-        rotation_mult = lerp(l_getRotationSpeed(), 2, 0.001333)
+        rotation_mult = lerp(l_getRotationSpeed(), 2 * multiplier * (difficulty * 0.5), 0.001333)
     else
-        rotation_mult = lerp(l_getRotationSpeed(), -2, 0.001333)
+        rotation_mult = lerp(l_getRotationSpeed(), -2 * multiplier * (difficulty * 0.5), 0.001333)
     end
 
     l_setBeatPulse(beat_multiplier[1])

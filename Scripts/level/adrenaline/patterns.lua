@@ -390,8 +390,6 @@ PATTERNS = {
             $th th2s sleep
             dup
             $th th2s - s2th r swap t:|d_
-            $th th2s 2 / - sleep
-            r $th t:|c_
         ]],
     ["Swap Barrage"] =
         [[

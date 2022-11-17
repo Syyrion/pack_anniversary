@@ -1,0 +1,16 @@
+{
+	"id": "adrenalineDark",
+	"max_swap_time": 0,
+	"3D_depth": 0,
+	"3D_skew": 0,
+	"3D_pulse_speed": 0,
+	"main": { "value": [255, 255, 255, 0] },
+	"player_color": { "value": [0, 255, 0, 255] },
+	"cap_color": { "legacy": false, "value": [255, 255, 255, 200] },
+	"text_color": { "value": [255, 255, 255, 255] },
+	"colors":
+	[
+		{ "value": [0, 15, 20, 255]},
+		{ "value": [0, 11, 15, 255]}
+	]
+}
