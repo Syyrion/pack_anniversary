@@ -29,6 +29,7 @@ u_execDependencyScript("library_patternizer", "patternizer", "syyrion", "master.
 
 difficulty = u_getDifficultyMult()
 deathMode = false
+deathAlpha = 255
 
 multiplier = 1
 timeOffset = 0
@@ -58,7 +59,12 @@ Note = {
 Colors = {
     TRANSPARENT = function () return unpack({ 0, 0, 0, 0 }) end,
     WHITE = function() return unpack({ 255, 255, 255, 255 }) end,
-    RED = function () return unpack({ 255, 0, 0, 255 }) end
+    RED = function () return unpack({ 255, 0, 0, 255 }) end,
+    GREEN = function () return unpack({ 0, 0, 255, 255 }) end,
+    BLUE = function () return unpack({ 0, 255, 0, 255 }) end,
+    CYAN = function () return unpack({ 0, 255, 255, 255 }) end,
+    MAGENTA = function () return unpack({ 255, 0, 255, 255 }) end,
+    YELLOW = function () return unpack({ 255, 255, 0, 255 }) end
 }
 
 -- Executing scripts after constants to include them
@@ -72,6 +78,13 @@ pulse_multiplier = 10
 pulse_switch = u_rndInt(0, 1) == 0
 rotation_mult = 0.1
 rotation_switch = u_rndInt(0, 1) == 0
+
+local curColor = 1
+local setColor = {
+    [1] = Colors.CYAN,
+    [2] = Colors.MAGENTA,
+    [3] = Colors.YELLOW
+}
 
 local Timer = {
     main = function() return l_getLevelTime() + Music.OFFSET - timeOffset end,
@@ -100,12 +113,7 @@ local function configureSides(sides)
     PW[2]:regularize(0, sides)
 
     PW[0].vertex:chset(Colors.TRANSPARENT())
-
-    if not deathMode then
-        PW[2].vertex:chset(Colors.WHITE())
-    else
-        PW[2].vertex:chset(Colors.RED())
-    end
+    PW[2].vertex:chset(Colors.WHITE())
 
     PW[1].limit.extent:set(0)
 
@@ -141,8 +149,8 @@ end
 
 function onInit()
     if difficulty == -1 then
-        difficulty = 3
         deathMode = true
+        difficulty = 3
     end
 
     if difficulty == 3 then
@@ -186,13 +194,7 @@ function cWall(side, thickness)
     side = side % l_getSides()
     thickness = thickness or THICKNESS
 
-    collider = nil
-
-    if not deathMode then
-        collider = PW[0][side]:sWall()
-    else
-        collider = PW[0][side]:dWall()
-    end
+    collider = PW[0][side]:sWall()
     collider.thickness:set(thickness)
 
     fragment = PW[2][side]:nWall()
@@ -207,7 +209,7 @@ function dWall(side, thickness)
 
     fragment = PW[2][side]:nWall()
     fragment.thickness:set(thickness)
-    fragment.vertex:chset(255, 0, 0, 255)
+    fragment.vertex:chsetcolor(255, 0, 0)
 end
 
 function setMultiplier()
@@ -262,6 +264,9 @@ function onLoad()
 
     if not u_inMenu() then
         e_messageAdd("Swap Enabled", 100)
+        -- Loading music before seems to remove potential lag when switching it later
+        a_setMusicSeconds("astraLow", 0)
+        a_setMusicSeconds("astraHigh", 0)
         a_setMusicSeconds("astra", Music.OFFSET)
         u_haltTime(Music.COMPENSATION)
         shdr_setActiveFragmentShader(RenderStage.WALLQUADS, shader)
@@ -305,7 +310,7 @@ function onUpdate(mFrameTime)
             idMusic = "astraHigh"
         end
 
-        multiplier = multiplier + 0.125
+        multiplier = multiplier + 0.25
         setMultiplier()
         
         a_playSound("levelUp.ogg")
@@ -342,6 +347,14 @@ function onUpdate(mFrameTime)
         
         if TLE1:advance(Timer.main()) then
             beat_multiplier[1] = 25
+            if deathMode then
+                deathAlpha = 255
+                PW[2].vertex:chsetcolor(setColor[curColor]())
+                curColor = curColor + 1
+                if curColor > #setColor then
+                    curColor = 1
+                end
+            end
             a_playPackSound("clack.ogg")
         end
 
@@ -354,6 +367,11 @@ function onUpdate(mFrameTime)
     end
     
     beat_multiplier[1] = lerp(0, beat_multiplier[1], 0.925)
+    
+    if deathMode then
+        deathAlpha = lerp(deathAlpha, 10, 0.025)
+        PW[2].vertex:chsetalpha(deathAlpha)
+    end
     if pulse_switch then
         pulse_multiplier = lerp(l_getPulse(), l_getPulseMax(), 0.0125)
     else
