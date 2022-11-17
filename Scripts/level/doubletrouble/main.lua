@@ -189,12 +189,12 @@ function onRenderStage(stage)
 		(LVI[1].shader.revLoop and 4 or 0)+
 		(LVI[2].shader.uses3C  and 2 or 0)+
 		(LVI[2].shader.revLoop and 1 or 0))
-	shdr_setUniformFVec3(shader,"u_s1_col1",unpack(graybg == 2 and LVI[1].shader.colors[1] or grayscale(LVI[1].shader.colors[1])))
-	shdr_setUniformFVec3(shader,"u_s1_col2",unpack(graybg == 2 and LVI[1].shader.colors[2] or grayscale(LVI[1].shader.colors[2])))
-	shdr_setUniformFVec3(shader,"u_s1_col3",unpack(graybg == 2 and LVI[1].shader.colors[3] or grayscale(LVI[1].shader.colors[3])))
-	shdr_setUniformFVec3(shader,"u_s2_col1",unpack(graybg == 1 and LVI[2].shader.colors[1] or grayscale(LVI[2].shader.colors[1])))
-	shdr_setUniformFVec3(shader,"u_s2_col2",unpack(graybg == 1 and LVI[2].shader.colors[2] or grayscale(LVI[2].shader.colors[2])))
-	shdr_setUniformFVec3(shader,"u_s2_col3",unpack(graybg == 1 and LVI[2].shader.colors[3] or grayscale(LVI[2].shader.colors[3])))
+	shdr_setUniformFVec3(shader,"u_s1_col1",unpack(graybg ~= 1 and LVI[1].shader.colors[1] or grayscale(LVI[1].shader.colors[1])))
+	shdr_setUniformFVec3(shader,"u_s1_col2",unpack(graybg ~= 1 and LVI[1].shader.colors[2] or grayscale(LVI[1].shader.colors[2])))
+	shdr_setUniformFVec3(shader,"u_s1_col3",unpack(graybg ~= 1 and LVI[1].shader.colors[3] or grayscale(LVI[1].shader.colors[3])))
+	shdr_setUniformFVec3(shader,"u_s2_col1",unpack(graybg ~= 2 and LVI[2].shader.colors[1] or grayscale(LVI[2].shader.colors[1])))
+	shdr_setUniformFVec3(shader,"u_s2_col2",unpack(graybg ~= 2 and LVI[2].shader.colors[2] or grayscale(LVI[2].shader.colors[2])))
+	shdr_setUniformFVec3(shader,"u_s2_col3",unpack(graybg ~= 2 and LVI[2].shader.colors[3] or grayscale(LVI[2].shader.colors[3])))
 	-- Transformations
 	shdr_setUniformF(shader,"u_s1_sides",LVI[1].sides)
 	shdr_setUniformF(shader,"u_s1_angle",-LVI[1].rotation)
