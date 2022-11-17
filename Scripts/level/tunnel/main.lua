@@ -9,6 +9,8 @@ function onInit()
     l_setSpeedMult(speedInc:get())
     l_setSpeedMax(math.huge)
 
+    l_setRotationSpeed(0.1)
+
     l_setDelayMult(1)
     l_setSides(SIDES)
     l_setIncTime(15)
