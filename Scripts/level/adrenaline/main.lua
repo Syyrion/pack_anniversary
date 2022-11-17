@@ -23,8 +23,8 @@ u_execDependencyScript("library_slider", "slider", "syyrion", "master.lua")
 u_execDependencyScript("library_polywall", "polywall", "syyrion", "master.lua")
 u_execDependencyScript("library_patternizer", "patternizer", "syyrion", "master.lua")
 
-score = 0
 multiplier = 1
+timeOffset = 0
 
 Music = {
     LENGTH = 51.194,
@@ -67,8 +67,8 @@ rotation_mult = 0.1
 rotation_switch = u_rndInt(0, 1) == 0
 
 local Timer = {
-    main = function() return l_getLevelTime() + Music.OFFSET end,
-    offset = function() return l_getLevelTime() + Music.OFFSET + calculateWallOffset() end
+    main = function() return l_getLevelTime() + Music.OFFSET - timeOffset end,
+    offset = function() return l_getLevelTime() + Music.OFFSET - timeOffset + calculateWallOffset() end
 }
 
 local function polyWallSort()
@@ -161,8 +161,6 @@ function onInit()
     a_syncMusicToDM(false)
     a_overrideDeathSound("hit.ogg")
     a_overrideSwapSound("clap.ogg")
-
-    l_overrideScore("score")
 
     setMultiplier()
 end
@@ -271,7 +269,7 @@ function onUpdate(mFrameTime)
         TLE1:reset()
         TLE2:reset()
 
-        l_resetTime()
+        timeOffset = timeOffset + Music.LENGTH
 
         local idMusic = "astra"
         local rndMusic = u_rndInt(1, 3)
@@ -318,7 +316,6 @@ function onUpdate(mFrameTime)
         
         if TLE1:advance(Timer.main()) then
             beat_multiplier[1] = 25
-            score = score + 1
             a_playPackSound("clack.ogg")
         end
 
