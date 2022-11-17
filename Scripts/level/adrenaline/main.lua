@@ -1,7 +1,7 @@
 --[[
     
 # Adrenaline
-Made by fentras https://fentras.me
+Made by fentras https://fentras.me https://gitlab.com/fentras
 
 ### Special thanks
 - Vee and the contributors for this awesome game https://openhexagon.org
@@ -9,11 +9,15 @@ Made by fentras https://fentras.me
 - Discord community for helping throughout the level creation
 
 ### Disclaimer
-Currently the code structure is a mess and the library that is being
+The code structure is a mess and the library that is being
 utilised is not documented at all because everything was quite rushed
-at the end. The level will receive updates to improve code quality and
-the whole experience at a later point (e.g. maybe less harsh patterns
-or better timings). Thank you for your patience and have fun.
+at the end. It could be done way better but I didn't have enough time
+and strength to make it the best level so far. For now, enjoy this
+small creation. I hope I can make something better in the future.
+
+The code is undocumented but the library might end up as a separate
+project on my GitLab page, so feel free to check it out if I will
+ever make it into an actual project (at least in proof-of-concept state).
 
 ]]--
 
