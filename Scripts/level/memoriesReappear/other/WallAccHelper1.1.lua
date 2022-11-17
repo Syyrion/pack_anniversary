@@ -87,44 +87,50 @@ xos, yos: the X/Y offset of the center of the resulting pattern, 1 being
     half the width (xos) or the height (yos) of the picture.
 ]]
 function loadBMPPicture(path, xos, yos)
-    local input = Reader:open(path)
-    -- helper function to read a byte as number and not as ASCII
-    local function readHex(bytes)
-        local result = 0
-        for i = 0, bytes - 1 do
-            result = result + (256 ^ i) * string.byte(input:read(1))
+    local input, reason = Reader:open(path)
+    if not input then
+        print("can't open BMP picture:\n" .. (reason or ""))
+        return {} -- return a empty table if the level files couldn't be found
+    else
+        -- helper function to read a byte as number and not as ASCII
+        local function readHex(bytes)
+            local result = 0
+            for i = 0, bytes - 1 do
+                result = result + (256 ^ i) * string.byte(input:read(1))
+            end
+            return result
         end
-        return result
-    end
 
-    input:seek("set", 0x0A)
-    -- get where the image starts
-    local offset = readHex(2)
-    local width, height
-    input:seek("set", 0x12)
-    width = readHex(4)
-    height = readHex(4)
-    --l_log("offset: "..offset)
-    --l_log("size: "..width.."x"..height)
+        input:seek("set", 0x0A)
+        -- get where the image starts
+        local offset = readHex(2)
+        local width, height
+        input:seek("set", 0x12)
+        width = readHex(4)
+        height = readHex(4)
+        --u_log("offset: "..offset)
+        --u_log("size: "..width.."x"..height)
 
-    -- decode the pixel grid
-    input:seek("set", offset)
-    local grid = {}
-    local rowsize = math.floor((24 * width + 31) / 32) * 4
-    for y = 0, height - 1 do
-        for x = 0, width - 1 do
-            pixel = readHex(3)
-            if pixel == 0 then table.insert(grid, { (x - width / 2) * width / height + xos * width / 2, y - height / 2 +
-                    yos * height / 2 })
-            elseif pixel <= 0xff then for i = 1, pixel do table.insert(grid,
-                        { (x - width / 2) * width / height + xos * width / 2, y - height / 2 + yos * height / 2 })
+        -- decode the pixel grid
+        input:seek("set", offset)
+        local grid = {}
+        local rowsize = math.floor((24 * width + 31) / 32) * 4
+        for y = 0, height - 1 do
+            for x = 0, width - 1 do
+                pixel = readHex(3)
+                if pixel == 0 then
+                    table.insert(grid, { (x - width / 2) * width / height + xos * width / 2, y - height / 2 + yos * height / 2 })
+                elseif pixel <= 0xff then
+                    for i = 1, pixel do
+                        table.insert(grid, { (x - width / 2) * width / height + xos * width / 2, y - height / 2 + yos * height / 2 })
+                    end
                 end
             end
+            if width % 4 ~= 0 then readHex(width % 4) end
         end
-        if width % 4 ~= 0 then readHex(width % 4) end
+        input:close()
+        return grid
     end
-    input:close()
-    return grid
 end
 
 --[[
