@@ -53,8 +53,8 @@ float fbm(in vec2 x, float s, in float H) {
 
 void main() {
     vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+    uv.xy -= 0.5;
     uv.y *= u_resolution.y / u_resolution.x;
-    uv += u_time * 0.05;
 
     // Rotation and skew modifier borrowed from "hexagon_tiles.frag"
     float skewmult = (1.0 / (u_skew + 1.0));
