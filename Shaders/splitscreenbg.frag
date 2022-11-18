@@ -1,5 +1,4 @@
 uniform vec2 u_resolution;
-uniform float u_time;
 
 // (a|x|^b+d/c)^(1-2d)
 uniform vec4 u_s1_fnarg;
@@ -7,6 +6,8 @@ uniform vec4 u_s2_fnarg;
 // Scroll Speed, Pattern Size, Dark%, DarkMult
 uniform vec4 u_s1_scarg;
 uniform vec4 u_s2_scarg;
+uniform float u_s1_time;
+uniform float u_s2_time;
 
 // 2^3: S1 3 Sided, 2^2: S1 Rev Loop, 2^1: S2 3 Sided, 2^0: S2 Rev Loop
 uniform int u_colconf;
@@ -47,6 +48,7 @@ void main() {
     // Coord & Var Setup
     vec2 grid = gl_FragCoord.xy/u_resolution.xy * vec2(2.) - vec2(1.);
     bool scr = grid.y > 0.;
+	float time  = scr ? u_s1_time  : u_s2_time;
     float sides = scr ? u_s1_sides : u_s2_sides;
     float angle = scr ? u_s1_angle : u_s2_angle;
     float skew  = scr ? u_s1_skew  : u_s2_skew;
@@ -68,6 +70,6 @@ void main() {
     
     // Color Calculation
     vec3 color = getSegColor(colors,seg,HASBIT(u_colconf,scr?3.:1.),HASBIT(u_colconf,scr?2.:0.));
-    color = mix(vec3(0.),color,mod(fn(grid.x,fnarg)+grid.y+u_time*scarg.x,scarg.y)>scarg.y*scarg.z?1.:scarg.w);
+    color = mix(vec3(0.),color,mod(fn(grid.x,fnarg)+grid.y+time*scarg.x,scarg.y)>scarg.y*scarg.z?1.:scarg.w);
     gl_FragColor = vec4(color,1.);
 }
