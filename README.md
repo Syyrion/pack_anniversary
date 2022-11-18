@@ -1,4 +1,2 @@
-# pack_anniversary
+# Anniversary X
 10 year anniversary Open Hexagon pack
-
-Can someone suggest a good name?
