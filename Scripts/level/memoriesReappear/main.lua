@@ -161,8 +161,10 @@ function onStep()
                 else
                     local sh_patType = (sh_level < 4 and 0) or (sh_level >= 4 and sh_level < 7 and 1) or 2
                     local sh_hyperMode = (sh_level == 3 and true) or (sh_level == 6 and true) or false
-                    if curStyle == "SHhexagon" then spawnSHPattern(getKeys[pat_index], sh_patType, sh_hyperMode,
-                            sh_level > 9)
+                    if curStyle == "SHhexagon" or curStyle == "SHhhexagon" or curStyle == "SHmhexagon" or
+                    curStyle == "SHhexagoner" or curStyle == "SHhhexagoner" or curStyle == "SHmhexagoner" or
+                    curStyle == "SHhexagonest" or curStyle == "SHhhexagonest" or curStyle == "SHmhexagonest" or
+                    curStyle == "SHfhexagonest" then spawnSHPattern(getKeys[pat_index], sh_patType, sh_hyperMode, false)
 
                     elseif curStyle == "EXSCH1ftl" or
                         curStyle == "EXSCH1glitched" or
@@ -186,8 +188,7 @@ function onStep()
                     elseif curStyle == "HXDS3sinkhole" then spawnHxdsV2Pattern(getKeys[pat_index], false)
                     elseif curStyle == "HXDS4pieChartV2" then l_setSides(36)
                         p_setOverrideShape(1, 6)
-                        spawnHxdsV2Pattern(getKeys
-                            [pat_index], false)
+                        spawnHxdsV2Pattern(getKeys[pat_index], false)
                     else spawnMainPattern(getKeys[pat_index])
                     end
                 end
@@ -297,7 +298,8 @@ styles = {
     "SHhexagonest", "SHhhexagonest", "SHmhexagonest",
 
     --vee
-    "CUBEpointless", "CUBEflatteringshape", "CUBEseconddimension", "CUBEapeirogon",
+    "CUBEpointless", "CUBEflatteringshape",
+    "CUBEseconddimension", "CUBEapeirogon",
 
     --exschwaison
     "EXSCH1ftl", "EXSCH1glitched",
@@ -315,10 +317,18 @@ styles = {
 
 sh_isFinalEngage = false
 sh_levelName = "wait for it"
-sh_style = { "hexagon", "hhexagon", "mhexagon", "hexagoner", "hhexagoner", "mhexagoner", "hexagonest", "hhexagonest",
-    "mhexagonest", "fhexagonest" }
-sh_levelNames = { "Hexagon", "Hyper Hexagon", "Mega Hexagon", "Hexagoner", "Hyper Hexagoner", "Mega Hexagoner",
-    "Hexagonest", "Hyper Hexagonest", "Mega Hexagonest", "Final" }
+sh_style = {
+    "hexagon", "hhexagon", "mhexagon",
+    "hexagoner", "hhexagoner", "mhexagoner",
+    "hexagonest", "hhexagonest", "mhexagonest",
+    "fhexagonest"
+}
+sh_levelNames = {
+    "Hexagon", "Hyper Hexagon", "Mega Hexagon",
+    "Hexagoner", "Hyper Hexagoner", "Mega Hexagoner",
+    "Hexagonest", "Hyper Hexagonest", "Mega Hexagonest",
+    "Final"
+}
 sh_levelNumbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }
 r7bber_styleCol = { "Red", "Green", "Blue", "Purple" }
 shadows_styleCol = { "B", "G", "G2", "G3", "M", "O", "P", "Pp", "R", "W", "Y" }
@@ -419,8 +429,7 @@ function onUpdate(mFrameTime)
         end
     elseif curStyle == "EXSCH4radar1" then
         if etEvent:detect(0, 0, false) then s_setStyle("memoriesreappear_EXSCH4radar" .. ((curStyleRadar % 12) + 1))
-            curStyleRadar = curStyleRadar
-                + 1
+            curStyleRadar = curStyleRadar + 1
         elseif etEvent:detect(0.1, 1, false) then etEvent:resetEvents(true)
         end
         l_setRotationSpeed(rotation * rotdir * rotmult)
@@ -432,14 +441,14 @@ function onUpdate(mFrameTime)
     elseif curStyle == "HXDS3shadB" then
         if s_get3dSpacing() > 80 then shadows_spacingMult = -shadows_spacingMult; s_set3dSpacing(20)
         elseif s_get3dSpacing() < -80 then shadows_spacingMult = -shadows_spacingMult s_set3dSpacing(-20)
-        else s_set3dSpacing(s_get3dSpacing() + shadows_spacingMult * mFrameTime * 5)
+        else s_set3dSpacing(s_get3dSpacing() + shadows_spacingMult * mFrameTime * 2.5)
         end
         l_setRotationSpeed(rotation * rotdir * rotmult)
     elseif curStyle == "HXDS3sinkhole" then
         local fall = 1.6
         if s_get3dSpacing() < -350 then s_set3dSpacing(350)
         elseif s_get3dSpacing() > 350 then s_set3dSpacing(-350)
-        else s_set3dSpacing(s_get3dSpacing() + fall * mFrameTime * 5)
+        else s_set3dSpacing(s_get3dSpacing() + fall * mFrameTime * 2.5)
         end
         l_setRotationSpeed(rotation * rotdir * rotmult)
     else

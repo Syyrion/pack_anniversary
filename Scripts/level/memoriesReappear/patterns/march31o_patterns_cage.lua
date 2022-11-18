@@ -423,6 +423,10 @@ function pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInvert
         end
     end
     --[ -= End of pattern code =- ]--
+
+    -- And finally, add the pattern of delay 't_applyPatDel' to avoid impossible patterns. Why? Because the pattern code needs to delay after it's ends here!
+    t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) +
+        (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 0 or 8)));
 end
 
 pMarch31osWrapAround = pMarch31osTrapAround
