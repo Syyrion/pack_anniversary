@@ -188,8 +188,7 @@ function onStep()
                     elseif curStyle == "HXDS3sinkhole" then spawnHxdsV2Pattern(getKeys[pat_index], false)
                     elseif curStyle == "HXDS4pieChartV2" then l_setSides(36)
                         p_setOverrideShape(1, 6)
-                        spawnHxdsV2Pattern(getKeys
-                            [pat_index], false)
+                        spawnHxdsV2Pattern(getKeys[pat_index], false)
                     else spawnMainPattern(getKeys[pat_index])
                     end
                 end
@@ -317,10 +316,18 @@ styles = {
 
 sh_isFinalEngage = false
 sh_levelName = "wait for it"
-sh_style = { "hexagon", "hhexagon", "mhexagon", "hexagoner", "hhexagoner", "mhexagoner", "hexagonest", "hhexagonest",
-    "mhexagonest", "fhexagonest" }
-sh_levelNames = { "Hexagon", "Hyper Hexagon", "Mega Hexagon", "Hexagoner", "Hyper Hexagoner", "Mega Hexagoner",
-    "Hexagonest", "Hyper Hexagonest", "Mega Hexagonest", "Final" }
+sh_style = {
+    "hexagon", "hhexagon", "mhexagon",
+    "hexagoner", "hhexagoner", "mhexagoner",
+    "hexagonest", "hhexagonest", "mhexagonest",
+    "fhexagonest"
+}
+sh_levelNames = {
+    "Hexagon", "Hyper Hexagon", "Mega Hexagon",
+    "Hexagoner", "Hyper Hexagoner", "Mega Hexagoner",
+    "Hexagonest", "Hyper Hexagonest", "Mega Hexagonest",
+    "Final"
+}
 sh_levelNumbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }
 r7bber_styleCol = { "Red", "Green", "Blue", "Purple" }
 shadows_styleCol = { "B", "G", "G2", "G3", "M", "O", "P", "Pp", "R", "W", "Y" }
@@ -421,8 +428,7 @@ function onUpdate(mFrameTime)
         end
     elseif curStyle == "EXSCH4radar1" then
         if etEvent:detect(0, 0, false) then s_setStyle("memoriesreappear_EXSCH4radar" .. ((curStyleRadar % 12) + 1))
-            curStyleRadar = curStyleRadar
-                + 1
+            curStyleRadar = curStyleRadar + 1
         elseif etEvent:detect(0.1, 1, false) then etEvent:resetEvents(true)
         end
         l_setRotationSpeed(rotation * rotdir * rotmult)
