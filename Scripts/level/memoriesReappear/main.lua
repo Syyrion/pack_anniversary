@@ -434,14 +434,14 @@ function onUpdate(mFrameTime)
     elseif curStyle == "HXDS3shadB" then
         if s_get3dSpacing() > 80 then shadows_spacingMult = -shadows_spacingMult; s_set3dSpacing(20)
         elseif s_get3dSpacing() < -80 then shadows_spacingMult = -shadows_spacingMult s_set3dSpacing(-20)
-        else s_set3dSpacing(s_get3dSpacing() + shadows_spacingMult * mFrameTime * 5)
+        else s_set3dSpacing(s_get3dSpacing() + shadows_spacingMult * mFrameTime * 2.5)
         end
         l_setRotationSpeed(rotation * rotdir * rotmult)
     elseif curStyle == "HXDS3sinkhole" then
         local fall = 1.6
         if s_get3dSpacing() < -350 then s_set3dSpacing(350)
         elseif s_get3dSpacing() > 350 then s_set3dSpacing(-350)
-        else s_set3dSpacing(s_get3dSpacing() + fall * mFrameTime * 5)
+        else s_set3dSpacing(s_get3dSpacing() + fall * mFrameTime * 2.5)
         end
         l_setRotationSpeed(rotation * rotdir * rotmult)
     else
