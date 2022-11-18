@@ -298,7 +298,8 @@ styles = {
     "SHhexagonest", "SHhhexagonest", "SHmhexagonest",
 
     --vee
-    "CUBEpointless", "CUBEflatteringshape", "CUBEseconddimension", "CUBEapeirogon",
+    "CUBEpointless", "CUBEflatteringshape",
+    "CUBEseconddimension", "CUBEapeirogon",
 
     --exschwaison
     "EXSCH1ftl", "EXSCH1glitched",
