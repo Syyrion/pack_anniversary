@@ -161,8 +161,10 @@ function onStep()
                 else
                     local sh_patType = (sh_level < 4 and 0) or (sh_level >= 4 and sh_level < 7 and 1) or 2
                     local sh_hyperMode = (sh_level == 3 and true) or (sh_level == 6 and true) or false
-                    if curStyle == "SHhexagon" then spawnSHPattern(getKeys[pat_index], sh_patType, sh_hyperMode,
-                            sh_level > 9)
+                    if curStyle == "SHhexagon" or curStyle == "SHhhexagon" or curStyle == "SHmhexagon" or
+                    curStyle == "SHhexagoner" or curStyle == "SHhhexagoner" or curStyle == "SHmhexagoner" or
+                    curStyle == "SHhexagonest" or curStyle == "SHhhexagonest" or curStyle == "SHmhexagonest" or
+                    curStyle == "SHfhexagonest" then spawnSHPattern(getKeys[pat_index], sh_patType, sh_hyperMode, false)
 
                     elseif curStyle == "EXSCH1ftl" or
                         curStyle == "EXSCH1glitched" or

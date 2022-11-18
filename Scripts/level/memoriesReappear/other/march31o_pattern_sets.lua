@@ -315,7 +315,7 @@ function spawnSHPattern(mNumbSpawn, mSpawnType, bIsHyper, bIsFinalEngage)
         elseif mNumbSpawn == 14 and (not bIsHyper) then pMarch31osTunnel(_side, march31oPat_thickness, nil, 2, 1, 1, 1, 0
             , 0, 0, true, true)
         elseif mNumbSpawn == 15 and (bIsHyper) then pMarch31osTunnel(_side, march31oPat_thickness, nil, 3, 2, 1, 1, 1, 0
-            , 0, true, true, 1, 1, 0, 0, 1, nil)
+            , 0, true, true, 1, 1, 0, 0, 1, nil, 1, 1, true)
         elseif mNumbSpawn == 16 and (not bIsHyper) then pMarch31osTunnel(_side, march31oPat_thickness, nil, 5, 1, 1, 1, 0
             , 0, 0, true, true, 2, 2)
         elseif mNumbSpawn == 17 then pMarch31osAlternatingBarrage(_side, march31oPat_thickness, 4, false, false, 0, 0, 2
@@ -338,7 +338,7 @@ function spawnSHPattern(mNumbSpawn, mSpawnType, bIsHyper, bIsFinalEngage)
         elseif mNumbSpawn == 15 and (bIsFinalEngage) then pMarch31osTunnel(_side, march31oPat_thickness, nil, 2, 1, 1, 1
             , 0, 0, 0, true, true);
         elseif mNumbSpawn == 16 then pMarch31osTunnel(_side, march31oPat_thickness, nil, 3, 2, 1, 1, 1, 0, 0, true, true
-            , 1, 1, 0, 0, 1, nil);
+            , 1, 1, 0, 0, 1, nil, 1, 1, true);
         elseif mNumbSpawn == 17 then pMarch31osAlternatingBarrage(_side, march31oPat_thickness, 4, false, false, 0, 0, 2
             , false, 1, 1, getRandomDir());
         end
