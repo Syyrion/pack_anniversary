@@ -1,10 +1,9 @@
 {
 	"disambiguator": "CADA-661D-DAEE",
-	"name": "Anniversary",
-	// Add your name
-	"author": "Syyrion",
+	"name": "Anniversary X",
+	"author": "[various]",
 	"description": "",
-	"version": 1000,
+	"version": 1006,
 	"priority": -100,
 	"dependencies":
 	[
