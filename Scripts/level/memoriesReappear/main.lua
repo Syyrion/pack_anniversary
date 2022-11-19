@@ -543,6 +543,9 @@ function onUpdate(mFrameTime)
                     s_setStyle("memoriesreappear_SH" .. sh_style[closeValue(sh_level_floor, 1, #sh_style)])
                     sh_levelName = sh_levelNames[closeValue(sh_level_floor, 1, 10)]
                     if sh_level == 10 then
+                        for i = 0, 1 do
+                            etSHFLEvent[i]:resetEvents(true)
+                        end
                         sh_isFinalEngage = true
                         a_setMusic("memoriesreappearpaulstretched")
                         e_messageAddImportant("You've been reached after mega hexagonest.\nGreatestest job.", 120)
