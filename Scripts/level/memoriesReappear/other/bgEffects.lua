@@ -130,6 +130,8 @@ end
 
 --[[
 === P A R T I C L E S ===
+
+inspired from theepicosity's black box decoration
 --]]
 
 function bgFireflies(mSpeed)
