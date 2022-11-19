@@ -103,6 +103,10 @@ function onInit()
     s_set3dSkew(0)
 
     etEvent = EventTimer:new(0, -256, 0, true, 1)
+    etSHFLEvent = {
+        [0] = EventTimer:new(0, 0, 0, true, 1),
+        [1] = EventTimer:new(0, 0, 0, true, 1)
+    }
     pdParticles = PulseDetector:new(getBPM(levSync, 1, 16), 0, levSync * 16, true, 0, nil, nil, 0, true, 1)
 end
 
@@ -115,7 +119,7 @@ function onLoad()
     end
     if math.floor(u_getDifficultyMult()) == 0 then
         l_addTracked("sh_levelName", "level name")
-        l_addTracked("sh_level_tracked", "level")
+        l_addTracked("sh_level_floor", "level")
         u_log("note: inspired from Super Hexagon")
         e_messageAdd("difficulty < 1\ncompletable difficulty engaged!", 60)
         e_messageAdd("complete until after mega hexagonest.", 300)
@@ -154,11 +158,11 @@ function onStep()
         else
             if (isNostalgiaStarts) then
                 if math.floor(u_getDifficultyMult()) == 0 then
-                    local sh_patType = (sh_level_tracked < 4 and 0) or (sh_level_tracked >= 4 and sh_level_tracked < 7 and 1) or 2
-                    local sh_hyperMode = (sh_level_tracked >= 2 and sh_level_tracked < 4  and true) or
-                                         (sh_level_tracked >= 5 and sh_level_tracked < 7  and true) or
-                                         (sh_level_tracked >= 8 and sh_level_tracked < 10 and true) or false
-                    spawnSHPattern(getKeys[pat_index], sh_patType, sh_hyperMode, sh_level_tracked > 9)
+                    local sh_patType = (sh_level_floor < 4 and 0) or (sh_level_floor >= 4 and sh_level_floor < 7 and 1) or 2
+                    local sh_hyperMode = (sh_level_floor >= 2 and sh_level_floor < 4  and true) or
+                                         (sh_level_floor >= 5 and sh_level_floor < 7  and true) or
+                                         (sh_level_floor >= 8 and sh_level_floor < 10 and true) or false
+                    spawnSHPattern(getKeys[pat_index], sh_patType, sh_hyperMode, sh_level_floor > 9)
                     pat_index = pat_index + 1
                     march31oPatternSpawnAmount = march31oPatternSpawnAmount + 1
 
@@ -167,10 +171,10 @@ function onStep()
                         shuffle(getKeys)
                     end
                 else
-                    local sh_patType = (sh_level_tracked < 4 and 0) or (sh_level_tracked >= 4 and sh_level_tracked < 7 and 1) or 2
-                    local sh_hyperMode = (sh_level_tracked >= 2 and sh_level_tracked < 4  and true) or
-                                         (sh_level_tracked >= 5 and sh_level_tracked < 7  and true) or
-                                         (sh_level_tracked >= 8 and sh_level_tracked < 10 and true) or false
+                    local sh_patType = (sh_level_floor < 4 and 0) or (sh_level_floor >= 4 and sh_level_floor < 7 and 1) or 2
+                    local sh_hyperMode = (sh_level_floor >= 2 and sh_level_floor < 4  and true) or
+                                         (sh_level_floor >= 5 and sh_level_floor < 7  and true) or
+                                         (sh_level_floor >= 8 and sh_level_floor < 10 and true) or false
                     if curStyle == "SHhexagon" or curStyle == "SHhhexagon" or curStyle == "SHmhexagon" or
                     curStyle == "SHhexagoner" or curStyle == "SHhhexagoner" or curStyle == "SHmhexagoner" or
                     curStyle == "SHhexagonest" or curStyle == "SHhhexagonest" or curStyle == "SHmhexagonest" or
@@ -277,6 +281,8 @@ curStyle = ""
 oldCurStyle = ""
 local stylePulse = 0
 local stylePulseCur = -1
+manual_pulse_min = 45
+manual_pulse_add = 0
 
 -- hues used for color changes
 hexest_hues = { 120, 0, 315, 180, 210, 255 }
@@ -284,7 +290,12 @@ hexest_targetHue = 0
 hexest_oldHue = 0
 
 sh_level = 0.5
-sh_level_tracked = math.floor(sh_level)
+sh_level_floor = math.floor(sh_level)
+sh_level_rotate, sh_level_rotate_target = 90, 0
+sh_level_init = false
+
+sh_level_rotate_time_limit, sh_level_pulse_time_limit = u_rndInt(5, 15), u_rndInt(5, 15)
+
 rgb_color = 0
 rgb_abberation = 0
 
@@ -293,7 +304,6 @@ local curStyleRadar = 1
 local style3dSkew = 0
 oldRot = 0
 
-ftl_pulse = 70
 asymptote_spacing = 0
 asymptote_intensity = 200
 
@@ -388,6 +398,9 @@ end
 -- onUpdate is an hardcoded function that is called every frame
 function onUpdate(mFrameTime)
     etEvent:step()
+    for i = 0, 1 do
+        etSHFLEvent[i]:step()
+    end
     pdParticles:step()
 
     if curStyle == "SHhexagonest" then
@@ -402,11 +415,11 @@ function onUpdate(mFrameTime)
         end
     elseif curStyle == "SHfhexagonest" then l_setRotation(0)
     elseif curStyle == "EXSCH1ftl" then
-        if etEvent:detect(0, 0, false) then ftl_pulse = 45;
+        if etEvent:detect(0, 0, false) then manual_pulse_min = 45;
         elseif etEvent:detect(getBPM(levSync, 1, 1), 1, false) then etEvent:resetEvents(true)
         end
-        ftl_pulse = ftl_pulse + 0.25 * mFrameTime
-        l_setPulseMin(closeValue(ftl_pulse, 45, 70))
+        manual_pulse_min = manual_pulse_min + 0.25 * mFrameTime
+        l_setPulseMin(closeValue(manual_pulse_min, 45, 70))
         l_setRotationSpeed(rotation * rotdir * rotmult)
     elseif curStyle == "EXSCHLmalfunction" then
         if etEvent:detect(0, 0, false) then malfRot()
@@ -462,13 +475,40 @@ function onUpdate(mFrameTime)
         end
         l_setRotationSpeed(rotation * rotdir * rotmult)
     else
-        if (sh_isFinalEngage) or curStyle == "SHfhexagonest" then l_setRotationSpeed(0) l_setRotation(45)
-        else l_setRotationSpeed(rotation * rotdir * rotmult)
-        end
+        l_setRotationSpeed(sh_isFinalEngage and 0 or rotation * rotdir * rotmult)
     end
 
     if pdParticles:isDetectedOnce() then
-        bgFireflies(0.1)
+        if (not sh_isFinalEngage and math.floor(u_getDifficultyMult()) == 0) then
+            bgFireflies(0.1)
+        end
+        if (curStyle == "SHfhexagonest" and u_getDifficultyMult() >= 1) then
+            bgFireflies(0.1)
+        end
+    end
+
+    if (sh_isFinalEngage) then
+        if etSHFLEvent[0]:detect(5, 0, false) then
+            etSHFLEvent[0]:resetEvents(true);
+            sh_level_rotate_time_limit = u_rndInt(5, 15)
+            sh_level_rotate = sh_level_rotate + 180 * getRandomDir()
+        end
+
+        if etSHFLEvent[1]:detect(sh_level_pulse_time_limit, 0, false) then
+            etSHFLEvent[1]:resetEvents(true);
+            sh_level_pulse_time_limit = u_rndInt(5, 15)
+            manual_pulse_add = -0.275
+        end
+
+        sh_level_rotate_target = convValue(mFrameTime, sh_level_rotate_target, sh_level_rotate, 0.75)
+        l_setRotation(sh_level_rotate_target % 360)
+
+        manual_pulse_min = manual_pulse_min + manual_pulse_add * mFrameTime
+        if manual_pulse_min <= 30 and manual_pulse_add < 0 then manual_pulse_add = 0.15;
+        elseif manual_pulse_min >= 45 and manual_pulse_add >= 0 then manual_pulse_add = 0;
+        end
+        l_setPulseMin(closeValue(manual_pulse_min, 30, 45))
+        l_setRadiusMin(l_getPulseMin())
     end
 
     if u_hasIncrementedManually() then
@@ -499,14 +539,15 @@ function onUpdate(mFrameTime)
                 v192ClearWalls()
                 if math.floor(u_getDifficultyMult()) == 0 then
                     sh_level = sh_level + 0.5
-                    sh_level_tracked = math.floor(sh_level)
-                    s_setStyle("memoriesreappear_SH" .. sh_style[closeValue(sh_level_tracked, 1, #sh_style)])
-                    sh_levelName = sh_levelNames[closeValue(sh_level_tracked, 1, 10)]
+                    sh_level_floor = math.floor(sh_level)
+                    s_setStyle("memoriesreappear_SH" .. sh_style[closeValue(sh_level_floor, 1, #sh_style)])
+                    sh_levelName = sh_levelNames[closeValue(sh_level_floor, 1, 10)]
                     if sh_level == 10 then
                         sh_isFinalEngage = true
                         a_setMusic("memoriesreappearpaulstretched")
                         e_messageAddImportant("You've been reached after mega hexagonest.\nGreatestest job.", 120)
                         e_messageAddImportant("You can now beat the high scores\nif you completed this level.", 120)
+                        etSHFLRot:resetEvents(true)
                     end
                     if sh_level < 4 then getKeySHHexagon()
                     elseif sh_level >= 4 then getKeySHAfterHexagon()
