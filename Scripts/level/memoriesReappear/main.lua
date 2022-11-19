@@ -542,7 +542,7 @@ function onUpdate(mFrameTime)
                     sh_level_floor = math.floor(sh_level)
                     s_setStyle("memoriesreappear_SH" .. sh_style[closeValue(sh_level_floor, 1, #sh_style)])
                     sh_levelName = sh_levelNames[closeValue(sh_level_floor, 1, 10)]
-                    if sh_level == 10 then
+                    if sh_level == 10 and not sh_isFinalEngage then
                         for i = 0, 1 do
                             etSHFLEvent[i]:resetEvents(true)
                         end
