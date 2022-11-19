@@ -482,7 +482,7 @@ function onUpdate(mFrameTime)
         if (not sh_isFinalEngage and math.floor(u_getDifficultyMult()) == 0) then
             bgFireflies(0.1)
         end
-        if (curStyle == "SHfhexagonest" and u_getDifficultyMult() >= 1) then
+        if (u_getDifficultyMult() >= 1) then
             bgFireflies(0.1)
         end
     end
