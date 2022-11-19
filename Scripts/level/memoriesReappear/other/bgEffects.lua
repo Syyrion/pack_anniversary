@@ -3,7 +3,7 @@
 --]]
 
 function fwcWall(mSide, mDistanceAdd, mThickness, mShape)
-    wImpWall(mSide, 1 - mDistanceAdd, nil, mThickness, mShape, 0, 255, 255, 255, 50, 125, false)
+    wImpWall(mSide, 1 - mDistanceAdd, u_getSpeedMultDM() * 5, mThickness, mShape, 0, 255, 255, 255, 50, 125, false)
 end
 
 function fwrWall(mSide, mDistanceAdd, mThickness, mShape)

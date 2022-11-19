@@ -1,5 +1,3 @@
---u_execScript("OtherPatterns/babaPatterns/zcustomWallFractalRequirements.lua")
-
 function wImpGenerateFractal(mFreqWalls, mSides, mSidewidth, mSideCurvature, mThickness, mDistanceStart, mDistanceInc, mDistanceBeginAnima, bIsAnimated, mRed, mGreen, mBlue, mAlpha, bIsMainColor, mTimerBeforeDELETE)
 	for a = 0, mFreqWalls - 1, 1 do
 		for i = 1, mSides, 1 do

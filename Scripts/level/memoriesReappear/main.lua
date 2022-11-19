@@ -78,6 +78,7 @@ march31oPatDel_SDMult = 0; --delay-speed multiplier (FOR PATTERNS ONLY)
 zoomFactor = 40
 isNostalgiaStarts = false
 vignetteBrightness = 0
+vignetteBrightnessAlt = 0
 
 -- onInit is an hardcoded function that is called when the level is first loaded
 function onInit()
@@ -114,7 +115,7 @@ function onLoad()
     end
     if math.floor(u_getDifficultyMult()) == 0 then
         l_addTracked("sh_levelName", "level name")
-        l_addTracked("sh_level", "level")
+        l_addTracked("sh_level_tracked", "level")
         u_log("note: inspired from Super Hexagon")
         e_messageAdd("difficulty < 1\ncompletable difficulty engaged!", 60)
         e_messageAdd("complete until after mega hexagonest.", 300)
@@ -122,7 +123,7 @@ function onLoad()
     getMainKey()
     if not u_inMenu() then
         s_setStyle("memoriesreappear_intro")
-        wImpGenerateFractalVertexColor(1, 6, 1, 0, 2500, 250, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 255, nil)
+        wImpGenerateFractalVertexColor(1, 6, 1, 0, 5000, 250, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 255, nil)
         wallFromPicture("level/memoriesReappear/image.bmp", 0, 0, 15, 2.5, 0, getRandomSide(), 0.015, 2.75)
         t_eval([[l_setSides(6) l_setSpeedMult(1)]])
         t_eval([[u_setFlashColor(0, 0, 0) u_setFlashEffect(255)]])
@@ -153,9 +154,11 @@ function onStep()
         else
             if (isNostalgiaStarts) then
                 if math.floor(u_getDifficultyMult()) == 0 then
-                    local sh_patType = (sh_level < 4 and 0) or (sh_level >= 4 and sh_level < 7 and 1) or 2
-                    local sh_hyperMode = (sh_level == 3 and true) or (sh_level == 6 and true) or false
-                    spawnSHPattern(getKeys[pat_index], sh_patType, sh_hyperMode, sh_level > 9)
+                    local sh_patType = (sh_level_tracked < 4 and 0) or (sh_level_tracked >= 4 and sh_level_tracked < 7 and 1) or 2
+                    local sh_hyperMode = (sh_level_tracked >= 2 and sh_level_tracked < 4  and true) or
+                                         (sh_level_tracked >= 5 and sh_level_tracked < 7  and true) or
+                                         (sh_level_tracked >= 8 and sh_level_tracked < 10 and true) or false
+                    spawnSHPattern(getKeys[pat_index], sh_patType, sh_hyperMode, sh_level_tracked > 9)
                     pat_index = pat_index + 1
                     march31oPatternSpawnAmount = march31oPatternSpawnAmount + 1
 
@@ -164,8 +167,10 @@ function onStep()
                         shuffle(getKeys)
                     end
                 else
-                    local sh_patType = (sh_level < 4 and 0) or (sh_level >= 4 and sh_level < 7 and 1) or 2
-                    local sh_hyperMode = (sh_level == 3 and true) or (sh_level == 6 and true) or false
+                    local sh_patType = (sh_level_tracked < 4 and 0) or (sh_level_tracked >= 4 and sh_level_tracked < 7 and 1) or 2
+                    local sh_hyperMode = (sh_level_tracked >= 2 and sh_level_tracked < 4  and true) or
+                                         (sh_level_tracked >= 5 and sh_level_tracked < 7  and true) or
+                                         (sh_level_tracked >= 8 and sh_level_tracked < 10 and true) or false
                     if curStyle == "SHhexagon" or curStyle == "SHhhexagon" or curStyle == "SHmhexagon" or
                     curStyle == "SHhexagoner" or curStyle == "SHhhexagoner" or curStyle == "SHmhexagoner" or
                     curStyle == "SHhexagonest" or curStyle == "SHhhexagonest" or curStyle == "SHmhexagonest" or
@@ -278,7 +283,8 @@ hexest_hues = { 120, 0, 315, 180, 210, 255 }
 hexest_targetHue = 0
 hexest_oldHue = 0
 
-sh_level = 0
+sh_level = 0.5
+sh_level_tracked = math.floor(sh_level)
 rgb_color = 0
 rgb_abberation = 0
 
@@ -492,9 +498,10 @@ function onUpdate(mFrameTime)
                 l_setPulseMax(70)
                 v192ClearWalls()
                 if math.floor(u_getDifficultyMult()) == 0 then
-                    sh_level = sh_level + 1
-                    s_setStyle("memoriesreappear_SH" .. sh_style[closeValue(sh_level, 1, #sh_style)])
-                    sh_levelName = sh_levelNames[closeValue(sh_level, 1, 10)]
+                    sh_level = sh_level + 0.5
+                    sh_level_tracked = math.floor(sh_level)
+                    s_setStyle("memoriesreappear_SH" .. sh_style[closeValue(sh_level_tracked, 1, #sh_style)])
+                    sh_levelName = sh_levelNames[closeValue(sh_level_tracked, 1, 10)]
                     if sh_level == 10 then
                         sh_isFinalEngage = true
                         a_setMusic("memoriesreappearpaulstretched")
@@ -552,7 +559,7 @@ function onUpdate(mFrameTime)
         end
     end
 
-    if sh_level == 7 then
+    if sh_level == 7 and math.floor(u_getDifficultyMult()) == 0 then
         if etEvent:detect(0, 0, false) then
             hexest_oldHue = hexest_targetHue
             repeat hexest_targetHue = hexest_hues[u_rndIntUpper(#hexest_hues)]
@@ -577,7 +584,9 @@ function onUpdate(mFrameTime)
         style3dSkew = convValue(mFrameTime, style3dSkew, 0.3, 0.05)
         if l_getPulseDetectorTimes() == 12 then
             u_setFlashEffect(closeValue(255 - (stylePulse * 5 * mFrameTime), 0, 255))
-            vignetteBrightness = math.floor(closeValue(255 - (stylePulse * 5 * mFrameTime), 0, 255))
+            vignetteBrightnessAlt = math.floor(closeValue(255 - (stylePulse * 5 * mFrameTime), 0, 255))
+        else
+            vignetteBrightness = math.floor(closeValue((stylePulse * mFrameTime) + vignetteBrightnessAlt, 0, 255))
         end
     elseif u_getManualIncrementTimes() > 2 then
         if (not sh_isFinalEngage) then
