@@ -14,6 +14,9 @@ u_execScript("level/memoriesReappear/patterns/march31o_patterns_cage.lua")
 u_execScript("level/memoriesReappear/other/march31o_pattern_sets.lua")
 
 -- others
+u_execScript("level/memoriesReappear/other/customWalls.lua")
+u_execScript("level/memoriesReappear/other/bgEffects.lua")
+u_execScript("level/memoriesReappear/other/zimpostorspecial.lua")
 u_execScript("level/memoriesReappear/other/zcustomWall1.92Utils.lua")
 u_execScript("level/memoriesReappear/other/WallAccHelper1.1.lua")
 
@@ -74,6 +77,7 @@ march31oPatDel_SDMult = 0; --delay-speed multiplier (FOR PATTERNS ONLY)
 
 zoomFactor = 40
 isNostalgiaStarts = false
+vignetteBrightness = 0
 
 -- onInit is an hardcoded function that is called when the level is first loaded
 function onInit()
@@ -97,8 +101,8 @@ function onInit()
     s_set3dPulseSpeed(0)
     s_set3dSkew(0)
 
-    --etMalfEvent = PulseDetector:new(getBPM(levSync, 1, 48), 0, levSync * 2, true, 0, nil, nil, 0, true, 1)
     etEvent = EventTimer:new(0, -256, 0, true, 1)
+    pdParticles = PulseDetector:new(getBPM(levSync, 1, 16), 0, levSync * 16, true, 0, nil, nil, 0, true, 1)
 end
 
 -- onLoad is an hardcoded function that is called when the level is started/restarted
@@ -118,6 +122,7 @@ function onLoad()
     getMainKey()
     if not u_inMenu() then
         s_setStyle("memoriesreappear_intro")
+        wImpGenerateFractalVertexColor(1, 6, 1, 0, 2500, 250, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 255, nil)
         wallFromPicture("level/memoriesReappear/image.bmp", 0, 0, 15, 2.5, 0, getRandomSide(), 0.015, 2.75)
         t_eval([[l_setSides(6) l_setSpeedMult(1)]])
         t_eval([[u_setFlashColor(0, 0, 0) u_setFlashEffect(255)]])
@@ -179,15 +184,12 @@ function onStep()
 
                     elseif curStyle == "HXDS1cPentagon" then l_setSides(5) spawnHxdsCrazyPentPattern(getKeys[pat_index])
                     elseif curStyle == "HXDS1rubberer" then l_setSides(4) spawnHxdsHexV1Pattern(getKeys[pat_index])
-                    elseif curStyle == "HXDS2solaris1" then p_setOverrideShape(2, 6)
-                        l_setSides(30)
-                        spawnHxdsV2Pattern(getKeys
-                            [pat_index], true)
+                    elseif curStyle == "HXDS2solaris1" then p_setOverrideShape(2, 6) l_setSides(30)
+                        spawnHxdsV2Pattern(getKeys[pat_index], true)
                     elseif curStyle == "HXDS2r7bberBlue" then l_setSides(7) spawnHxdsV2Pattern(getKeys[pat_index], false)
                     elseif curStyle == "HXDS3shadB" then spawnHxdsV2Pattern(getKeys[pat_index], true)
                     elseif curStyle == "HXDS3sinkhole" then spawnHxdsV2Pattern(getKeys[pat_index], false)
-                    elseif curStyle == "HXDS4pieChartV2" then l_setSides(36)
-                        p_setOverrideShape(1, 6)
+                    elseif curStyle == "HXDS4pieChartV2" then l_setSides(36) p_setOverrideShape(1, 6)
                         spawnHxdsV2Pattern(getKeys[pat_index], false)
                     else spawnMainPattern(getKeys[pat_index])
                     end
@@ -291,6 +293,8 @@ asymptote_intensity = 200
 
 shadows_spacingMult = 1.3
 
+isFractDel = false
+
 styles = {
     --super hexagon
     "SHhexagon", "SHhhexagon", "SHmhexagon",
@@ -378,7 +382,7 @@ end
 -- onUpdate is an hardcoded function that is called every frame
 function onUpdate(mFrameTime)
     etEvent:step()
-    v192UpdateWalls(mFrameTime)
+    pdParticles:step()
 
     if curStyle == "SHhexagonest" then
         if etEvent:detect(0, 0, false) then
@@ -457,6 +461,10 @@ function onUpdate(mFrameTime)
         end
     end
 
+    if pdParticles:isDetectedOnce() then
+        bgFireflies(0.1)
+    end
+
     if u_hasIncrementedManually() then
         rotation = rotation + 0.025
         rotdir = rotdir * -1
@@ -471,6 +479,7 @@ function onUpdate(mFrameTime)
         if l_getPulseDetectorTimes() == 9 then s_setStyle("memoriesreappear_rainbowmain") forceSetPulse(-1)
         elseif l_getPulseDetectorTimes() > 12 then
             isNostalgiaStarts = true
+            vignetteBrightness = 255
             -- after exschwaison's rgb level load, increment this level
             if curStyle == "EXSCH2space" then
                 rgb_abberation = rgb_abberation + 1
@@ -511,19 +520,34 @@ function onUpdate(mFrameTime)
                 if curStyle == "HXDS1cPentagon" then getKeyHxdsCrazyPent()
                 elseif curStyle == "HXDS1rubberer" then getKeyHxdsHexV1()
                 elseif curStyle == "HXDS2r7bberBlue" then getKeyHxdsV2()
-                    s_setStyle("memoriesreappear_HXDS2r7bber" ..
-                        r7bber_styleCol[u_rndIntUpper(#r7bber_styleCol)])
+                    s_setStyle("memoriesreappear_HXDS2r7bber" .. r7bber_styleCol[u_rndIntUpper(#r7bber_styleCol)])
                 elseif curStyle == "HXDS2solaris1" then getKeyHxdsV2()
                     spawnSolarisCover()
-                    s_setStyle("memoriesreappear_HXDS2solaris"
-                        .. u_rndIntUpper(3))
+                    s_setStyle("memoriesreappear_HXDS2solaris" .. u_rndIntUpper(3))
                 elseif curStyle == "HXDS3shadB" then getKeyHxdsV2()
-                    s_setStyle("memoriesreappear_HXDS3shad" ..
-                        shadows_styleCol[u_rndIntUpper(#shadows_styleCol)])
+                    s_setStyle("memoriesreappear_HXDS3shad" .. shadows_styleCol[u_rndIntUpper(#shadows_styleCol)])
                 elseif curStyle == "HXDS3sinkhole" then getKeyHxdsV2()
                 elseif curStyle == "HXDS4pieChartV2" then getKeyHxdsV2()
                 else getMainKey()
                 end
+            end
+        end
+
+        if curStyle == "EXSCH4asymptote" or curStyle == "HXDS3shadB" or curStyle == "HXDS3sinkhole" and not isFractDel then
+            forceDeleteCWs(1, 1, nil)
+            isFractDel = true
+        else
+            if isFractDel then
+                isFractDel = false
+                wImpGenerateFractalVertexColor(1, 6, 1, 0, 2500, 250, 0, 0, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 255, 255, 255, 255, 255, nil)
+            end
+            local sideFix, bgPatterns = getProtocolSides(), u_rndInt(0, 5)
+                if bgPatterns == 0 then fwpBarrageSpiral(sideFix, levSync * 2, 5) fwpMirrorWallStrip(sideFix, levSync)
+            elseif bgPatterns == 1 then fwpAltBarrage(sideFix, levSync * 2, 5) fwpMirrorWallStrip(sideFix, levSync)
+            elseif bgPatterns == 2 then fWhirlwind(sideFix, levSync * 4, 8) fwpMirrorWallStrip(sideFix, levSync)
+            elseif bgPatterns == 3 then fwpBarrageInverts(sideFix, levSync, 3) fwpMirrorWallStrip(sideFix, levSync)
+            elseif bgPatterns == 4 then fwpVortaRev(sideFix, levSync * 2, 7)
+            elseif bgPatterns == 5 then fwpTunnel(sideFix, levSync, 4)
             end
         end
     end
@@ -553,6 +577,7 @@ function onUpdate(mFrameTime)
         style3dSkew = convValue(mFrameTime, style3dSkew, 0.3, 0.05)
         if l_getPulseDetectorTimes() == 12 then
             u_setFlashEffect(closeValue(255 - (stylePulse * 5 * mFrameTime), 0, 255))
+            vignetteBrightness = math.floor(closeValue(255 - (stylePulse * 5 * mFrameTime), 0, 255))
         end
     elseif u_getManualIncrementTimes() > 2 then
         if (not sh_isFinalEngage) then
@@ -564,6 +589,32 @@ function onUpdate(mFrameTime)
         u_doManualIncrements(getBPM(levSync, 1, 16), 0, 0, 0, 2.15, true);
         l_setPulseDetector(levSync / 4, true, 0, true);
     end
+
+    runAllCWs(mFrameTime, nil, nil, nil)
+
+    for _, iwfr in ipairs(impostorWallFracts) do
+        iwfr:move(mFrameTime)
+        iwfr:recolorVertexes(vignetteBrightness, vignetteBrightness, vignetteBrightness, 0,
+                             vignetteBrightness, vignetteBrightness, vignetteBrightness, 0,
+                             vignetteBrightness, vignetteBrightness, vignetteBrightness, 255,
+                             vignetteBrightness, vignetteBrightness, vignetteBrightness, 255)
+    end
+
+    for _, iw in ipairs(impostorWalls) do
+        local r, g, b, a = s_getMainColor()
+        iw:move(mFrameTime)
+        iw:recolor(r, g, b, math.floor(stylePulse * 1 * mFrameTime), nil)
+    end
+
+    for _, iw in ipairs(bgWalls) do
+        local r, g, b, a = s_getMainColor()
+        iw:eminate(mFrameTime)
+        iw:recolorExpectAlpha(r, g, b)
+        iw:fadeout(0.05)
+        iw:update(mFrameTime)
+    end
+
+    v192UpdateWalls(mFrameTime)
 end
 
 -- onDeath is an hardcoded function that is called when the player is killed
