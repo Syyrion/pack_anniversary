@@ -104,8 +104,8 @@ function onInit()
 
     etEvent = EventTimer:new(0, -256, 0, true, 1)
     etSHFLEvent = {
-        [0] = EventTimer:new(0, 0, 0, true, 1),
-        [1] = EventTimer:new(0, 0, 0, true, 1)
+        [0] = EventTimer:new(0, -256, 0, true, 1),
+        [1] = EventTimer:new(0, -256, 0, true, 1)
     }
     pdParticles = PulseDetector:new(getBPM(levSync, 1, 16), 0, levSync * 16, true, 0, nil, nil, 0, true, 1)
 end
