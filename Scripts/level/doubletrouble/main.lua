@@ -42,7 +42,8 @@ function onInit()
 	l_setManualBeatPulseControl(true)
 	l_setShadersRequired(true)
 	a_syncMusicToDM(false)
-	l_setRotationSpeedMax(math.huge)
+	l_setWallSpawnDistance(1300)
+	l_setRotationSpeedMax(1)
 	l_setRotationSpeed(.075)
 	l_setSpeedMult(1.5)
 	l_setSpeedInc(.2)
@@ -129,8 +130,8 @@ function switchActiveScreen(timeline)
 	local blinks = swapdelay > 1.2 and 2 or 1
 	for i = 1,blinks*2+1 do
 		ct_eval(timeline,"graybg = graybg == 1 and 2 or 1")
-		if i > blinks*2 then break end
 		if i % 2 == 1 then ct_eval(timeline,'a_playSound("beep.ogg")') end
+		if i > blinks*2 then break end
 		ct_waitS(timeline,swapdelay/8/blinks)
 	end
 	ct_eval(timeline,"switchActiveScreen(%i)",timeline)

@@ -31,8 +31,8 @@ end
 -- Also can be used as an all-in-one function for polar math
 function getWallCoords(ang,rad,skw,off,posX,posY)
 	local rad,skw,off,posX,posY = rad or 1, skw or 1, off or 0, posX or 0, posY or 0
-	return posX +  rad * math.cos(ang) + off * math.cos(ang - math.pi/2),
-		   posY + (rad * math.sin(ang) + off * math.sin(ang - math.pi/2)) / skw
+	return {posX +  rad * math.cos(ang) + off * math.cos(ang - math.pi/2),
+		    posY + (rad * math.sin(ang) + off * math.sin(ang - math.pi/2)) / skw}
 end
 
 -- Iterates through a numeric table backwards
