@@ -26,31 +26,36 @@ musiclen = 203.950
 keyframes = {{2,2},{2,4},{4,1},{127,1/14},{1,1/2},{7,1},{164,1/5},{1,1},{64,0}}
 
 function addPattern(key)
-	key = (l_getSides() > 5 or key < 5) and key or u_rndInt(0,4)
+	key = (l_getSides() > 5 or key < 7) and key or u_rndInt(0,6)
 		if key == 0 then pAltBarrage(u_rndInt(3,6),2)
-	elseif key == 1 then pBarrageSpiral(u_rndInt(5,8))
+	elseif key == 1 then pBarrageSpiral(u_rndInt(4,7))
 	elseif key == 2 then pSpiral(l_getSides()*u_rndInt(2,3),0)
-	elseif key == 3 then pAltTunnel(u_rndInt(3,6),1)
+	elseif key == 3 then pAltTunnel(u_rndInt(3,5),1)
 	elseif key == 4 then pInverseBarrage(u_rndInt(1,2))
-	elseif key == 5 then pWallExVortex(0,3,1) end
+	elseif key == 5 then pRandomBarrage(u_rndInt(4,7),2.3)
+	elseif key == 6 then pTunnel(1)
+	elseif key == 7 then pWallExVortex(0,3,1) end
 end
 
 function onInit()
+	a_overrideIncrementSound("silence.ogg")
 	l_setManualBeatPulseControl(true)
 	l_setShadersRequired(true)
 	a_syncMusicToDM(false)
 	l_setRotationSpeedMax(math.huge)
 	l_setRotationSpeed(.075)
 	l_setSpeedMult(1.5)
-	l_setSpeedInc(.3)
+	l_setSpeedInc(.2)
 	l_setSides(6)
 end
 
 function onLoad()
 	multiplayer = u_getDifficultyMult() % .1 > 0
+	difficulty = ({"Normal","Hard","Harder"})[math.floor(u_getDifficultyMult()*2)-1]
 	if u_inMenu() then return end
 	if multiplayer then e_messageAdd("\n\n\n\n\n\nP1: <= LEFT    RIGHT =>\nP2: <= FOCUS    SWAP =>",200)
 	else l_addTracked("tracked","Swap Delay") graybg = 2 end
+	l_addTracked("difficulty","Difficulty")
 	-- Cancels out Config::getZoomFactor() in https://github.com/vittorioromeo/SSVOpenHexagon/blob/master/src/SSVOpenHexagon/Core/HGUpdate.cpp#L776
 	l_setPulse(1) l_setPulseMin(math.max(1024/u_getWidth(),768/u_getHeight()))
 	shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS,shader)
@@ -61,9 +66,9 @@ function onLoad()
 	s_setPulseMax(1)
 	LVI.new(0,-u_getHeight()/4,-1)
 	LVI.new(0,u_getHeight()/4,1)
-	LVI[1].keys = {0,0,1,1,2,2,3,3,4,4,5,5}
+	LVI[1].keys = {0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7}
 	shuffle(LVI[1].keys)
-	LVI[2].keys = {0,0,1,1,2,2,3,3,4,4,5,5}
+	LVI[2].keys = {0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7}
 	shuffle(LVI[2].keys)
 	onIncrement(LVI[1])
 	onIncrement(LVI[2])
@@ -85,7 +90,7 @@ function onIncrement(self)
 	self.skewMin = randomFloat(1,1.5)
 	self.skewMax = self.skewMin + randomFloat(.5,3)
 	self.skewSpeed = randomFloat(.75,2.5)
-	self.rsMin = (self.rsMin or .45) + .15
+	self.rsMin = (self.rsMin or .55) + .15
 	self.rsMax = (self.rsMax or 1.8) + .2
 	self.shader = self.shader or {}
 	local hue,alpha,colornum = randomFloat(0,360),randomFloat(.4,.55),u_rndInt(2,3)
@@ -111,7 +116,7 @@ end
 function randomizeRotation(timeline,id)
 	ct_eval(timeline,[[
 		local self = LVI[%i]
-		self.rotationSpeed = randomFloat(self.rsMin,self.rsMax) * getRandomDir()
+		self.rotationSpeed = randomFloat(self.rsMin,self.rsMax) * getRandomDir() * u_getDifficultyMult()
 	]],id)
 	ct_waitS(timeline,randomFloat(.5,2))
 	ct_eval(timeline,"randomizeRotation(%i,%i)",timeline,id)
@@ -121,10 +126,12 @@ function switchActiveScreen(timeline)
 	if multiplayer then return end
 	ct_eval(timeline,"active = active == 1 and 2 or 1")
 	ct_waitS(timeline,swapdelay*.75)
-	for i = 1,5 do
+	local blinks = swapdelay > 1.2 and 2 or 1
+	for i = 1,blinks*2+1 do
 		ct_eval(timeline,"graybg = graybg == 1 and 2 or 1")
-		if i > 4 then break end
-		ct_waitS(timeline,swapdelay/16)
+		if i > blinks*2 then break end
+		if i % 2 == 1 then ct_eval(timeline,'a_playSound("beep.ogg")') end
+		ct_waitS(timeline,swapdelay/8/blinks)
 	end
 	ct_eval(timeline,"switchActiveScreen(%i)",timeline)
 end

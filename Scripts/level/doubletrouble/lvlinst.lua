@@ -41,7 +41,7 @@ function LVI:increment()
 	self.incrementing = false
 	self.speed = u_getSpeedMultDM()
 	onIncrement(self)
-	a_playSound("beep.ogg")
+	a_playSound("increment.ogg")
 	lt_clear(self.timeline)
 	lt_eval(self.timeline,self.step,self)
 end
@@ -163,9 +163,9 @@ function LVI:update(dt)
 		w_wallAdj(0,100,10)
 		t_eval("l_setWallSpawnDistance("..wsd..")")
 		function onDeath()
+			local plrX,plrY = getWallCoords(self.rotation+self.plrAngle,self.radius+self.plrDistance,self.skew,0,unpack(self.position))
 			for side = 1,self.sides do
 				local polygon = cw_createNoCollision()
-				local plrX,plrY = getWallCoords(self.rotation+self.plrAngle,self.radius+self.plrDistance,self.skew,0,unpack(self.position))
 				cw_setVertexColor4(polygon,unpack(deathColor))
 				cw_setVertexPos4(polygon,reunpack{
 					{getWallCoords(side*math.tau/self.sides,self.radius*.9,self.skew,0,plrX,plrY)},

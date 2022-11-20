@@ -16,8 +16,8 @@ end
 
 -- Creates a color in the HSL format where S is 1
 function fromHL(hue,light,range)
-	alpha,range = clamp(light,0,1),range or 1
-	local r,g,b = fromHSV(hue,math.min(1,2-2*alpha),math.min(1,2*alpha))
+	light,range = clamp(light,0,1),range or 1
+	local r,g,b = fromHSV(hue,math.min(1,2-2*light),math.min(1,2*light))
 	return {r*range/255,g*range/255,b*range/255}
 end
 
