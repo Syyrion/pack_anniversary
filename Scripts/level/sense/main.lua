@@ -37,7 +37,7 @@ function addPattern(mKey)
     end
 end
 
-keys = { 0, 0, 3, 3, 4, 4, 5, 5, 9, 9, 10, 10, 12, 12 }
+keys = { 0, 0, 3, 3, 9, 9, 10, 10, 12, 12 }
 shuffle(keys)
 index = 0
 achievementUnlocked = false
