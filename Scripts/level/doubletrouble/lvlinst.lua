@@ -41,13 +41,16 @@ function LVI:increment()
 	self.incrementing = false
 	self.speed = u_getSpeedMultDM()
 	onIncrement(self)
-	a_playSound("beep.ogg")
+	a_playSound("increment.ogg")
 	lt_clear(self.timeline)
 	lt_eval(self.timeline,self.step,self)
 end
 
 function LVI:update(dt)
 	lt_update(self.timeline,dt)
+	self.rotation = self.rotation + self.rotationSpeed * dt
+	self.skew = clamp(self.skew + self.skewSpeed * dt, self.skewMin, self.skewMax)
+	self.skewSpeed = (self.skew == self.skewMin or self.skew == self.skewMax) and -self.skewSpeed or self.skewSpeed
 	local sliding,dead
 	local color = {reunpack{self.color,255,self.color,255,self.color,255,self.color,255}}
 	local deathColor = {reunpack{self.deathColor,255,self.deathColor,255,self.deathColor,255,self.deathColor,255}}
@@ -63,8 +66,8 @@ function LVI:update(dt)
 				local vertices,slopes,quads,quadindex,intersect,killCollision,slideCollision = {},{},{},1
 				for i,corner in ipairs({{0,1},{1,1},{1,0},{0,0},false}) do
 					vertices[i] = corner and
-						{getWallCoords(self.rotation + (wall.side + corner[1]) * math.tau / self.sides,
-						math.max(0,wall.position+wall.thickness*corner[2]),self.skew,0,unpack(self.position))} or nil
+						getWallCoords(self.rotation + (wall.side + corner[1]) * math.tau / self.sides,
+						math.max(0,wall.position+wall.thickness*corner[2]),self.skew,0,unpack(self.position)) or nil
 					intersect = intersect or (corner and (self.clipDir * vertices[i][2] < 0))
 					if i > 1 then
 						local x1,y1,x2,y2 = reunpack{vertices[i-1],vertices[corner and i or 1]}
@@ -72,8 +75,8 @@ function LVI:update(dt)
 					end
 				end
 				-- Check Collision
-				local plrPos = {getWallCoords(self.rotation+self.plrAngle,self.radius+self.plrDistance,self.skew,0,unpack(self.position))}
-				local movPos = {getWallCoords(self.rotation+self.plrAngle+self.plrSpeed*self.plrDirection*dt,self.radius+self.plrDistance,self.skew,0,unpack(self.position))}
+				local plrPos = getWallCoords(self.rotation+self.plrAngle,self.radius+self.plrDistance,self.skew,0,unpack(self.position))
+				local movPos = getWallCoords(self.rotation+self.plrAngle+self.plrSpeed*self.plrDirection*dt*2,self.radius+self.plrDistance,self.skew,0,unpack(self.position))
 				local j = #vertices for i = 1,#vertices do
 					local ix,iy,jx,jy = reunpack{vertices[i],vertices[j]}
 					if (iy>plrPos[2]) ~= (jy>plrPos[2]) and plrPos[1] < (jx-ix)*(plrPos[2]-iy)/(jy-iy)+ix then killCollision = not killCollision end
@@ -138,23 +141,20 @@ function LVI:update(dt)
 		else
 			cw_setVertexColor4(polygon,unpack(color))
 			cw_setVertexPos4(polygon,reunpack{
-				{getWallCoords(self.rotation+side*math.tau/self.sides,self.radius,self.skew,0,unpack(self.position))},
-				{getWallCoords(self.rotation+(side+1)*math.tau/self.sides,self.radius,self.skew,0,unpack(self.position))},
+				getWallCoords(self.rotation+side*math.tau/self.sides,self.radius,self.skew,0,unpack(self.position)),
+				getWallCoords(self.rotation+(side+1)*math.tau/self.sides,self.radius,self.skew,0,unpack(self.position)),
 				self.position, self.position
 			})
 		end
 	end
 	-- Update Player
 	self.plrAngle = self.plrAngle + (sliding and 0 or (self.plrSpeed * self.plrDirection * dt))
-	self.rotation = self.rotation + self.rotationSpeed * dt
-	self.skew = clamp(self.skew + self.skewSpeed * dt, self.skewMin, self.skewMax)
-	self.skewSpeed = (self.skew == self.skewMin or self.skew == self.skewMax) and -self.skewSpeed or self.skewSpeed
 	cw_setVertexColor4(self.polygons.player,unpack(dead and deathColor or color))
 	cw_setVertexPos4(self.polygons.player,reunpack{
-		{getWallCoords(self.rotation+self.plrAngle,self.radius+self.plrDistance,self.skew,0,unpack(self.position))},
-		{getWallCoords(self.rotation+self.plrAngle,self.radius+self.plrDistance,self.skew,0,unpack(self.position))},
-		{getWallCoords(self.rotation+self.plrAngle,self.radius+self.plrDistance-self.plrSize/1.25,self.skew,-self.plrSize,unpack(self.position))},
-		{getWallCoords(self.rotation+self.plrAngle,self.radius+self.plrDistance-self.plrSize/1.25,self.skew,self.plrSize,unpack(self.position))},
+		getWallCoords(self.rotation+self.plrAngle,self.radius+self.plrDistance,self.skew,0,unpack(self.position)),
+		getWallCoords(self.rotation+self.plrAngle,self.radius+self.plrDistance,self.skew,0,unpack(self.position)),
+		getWallCoords(self.rotation+self.plrAngle,self.radius+self.plrDistance-self.plrSize/1.25,self.skew,-self.plrSize,unpack(self.position)),
+		getWallCoords(self.rotation+self.plrAngle,self.radius+self.plrDistance-self.plrSize/1.25,self.skew,self.plrSize,unpack(self.position)),
 	})
 	-- Kill Player + Death Effect
 	if dead then
@@ -163,15 +163,15 @@ function LVI:update(dt)
 		w_wallAdj(0,100,10)
 		t_eval("l_setWallSpawnDistance("..wsd..")")
 		function onDeath()
+			local plrPos = getWallCoords(self.rotation+self.plrAngle,self.radius+self.plrDistance,self.skew,0,unpack(self.position))
 			for side = 1,self.sides do
 				local polygon = cw_createNoCollision()
-				local plrX,plrY = getWallCoords(self.rotation+self.plrAngle,self.radius+self.plrDistance,self.skew,0,unpack(self.position))
 				cw_setVertexColor4(polygon,unpack(deathColor))
 				cw_setVertexPos4(polygon,reunpack{
-					{getWallCoords(side*math.tau/self.sides,self.radius*.9,self.skew,0,plrX,plrY)},
-					{getWallCoords((side+1)*math.tau/self.sides,self.radius*.9,self.skew,0,plrX,plrY)},
-					{getWallCoords((side+1)*math.tau/self.sides,self.radius*.65,self.skew,0,plrX,plrY)},
-					{getWallCoords(side*math.tau/self.sides,self.radius*.65,self.skew,0,plrX,plrY)},
+					getWallCoords(side*math.tau/self.sides,self.radius*.9,self.skew,0,unpack(plrPos)),
+					getWallCoords((side+1)*math.tau/self.sides,self.radius*.9,self.skew,0,unpack(plrPos)),
+					getWallCoords((side+1)*math.tau/self.sides,self.radius*.65,self.skew,0,unpack(plrPos)),
+					getWallCoords(side*math.tau/self.sides,self.radius*.65,self.skew,0,unpack(plrPos)),
 				})
 			end
 		end

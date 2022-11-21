@@ -8,5 +8,5 @@
 	"styleId": "doubletrouble",
 	"musicId": "pressurecooker",
 	"luaFile": "Scripts/level/doubletrouble/main.lua",
-	"difficultyMults": [1.0001,1.5,1.5001,0.5,0.5001]
+	"difficultyMults": [1.0001,1.5,1.5001,2,2.0001]
 }
