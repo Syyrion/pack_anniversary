@@ -44,7 +44,7 @@ function onLoad()
         -- extract data from dm
         local dm = u_getDifficultyMult()
         segment = math.floor(dm)
-        difficultyMult = math.floor(dm * 10 - segment * 10)
+        difficultyMult = math.floor(dm * 10 - segment * 10 + 0.5)
         l_addTracked("difficultyMult", "difficulty")
         difficultyAdjust = difficultyMult - 1
         pulseIntensity = difficultyMult * 0.05
