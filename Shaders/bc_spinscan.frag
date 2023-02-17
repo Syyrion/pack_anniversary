@@ -2,6 +2,7 @@ uniform vec2 u_resolution;
 uniform float u_time;
 uniform float u_skew;
 uniform float u_rotation;
+uniform int u_scanning;
 //inspired by ufo
 void main() {
     vec2 st = gl_FragCoord.xy/u_resolution.y;
@@ -23,24 +24,25 @@ void main() {
     if(st.x < 0.0) {
         theta += pi;
     }
-    
-    if(u_skew > 0.0) {
-        if(!(floor(mod(floor((theta-(u_time*(pi*3.0)*1.5))/(pi/3.0)), 2.0)) == 0.0)) {
-            
-            theta = mod((theta-(u_time*(pi*3.0)*1.5)), (pi)/3.0);
-            float a = tan(theta);
+    if(u_scanning == 1) {
+        if(u_skew > 0.0) {
+            if(!(floor(mod(floor((theta-(u_time*(pi*3.0)*1.5))/(pi/3.0)), 2.0)) == 0.0)) {
+                
+                theta = mod((theta-(u_time*(pi*3.0)*1.5)), (pi)/3.0);
+                float a = tan(theta);
 
-            color = seco*a;
-            color -= 0.5;
+                color = seco*a;
+                color -= 0.5;
+            }
         }
-    }
-    else {
-        if(!(floor(mod(floor((theta-(-1.0*u_time*(pi*3.0)*1.5))/(pi/3.0)), 2.0)) == 0.0)) {
-            
-            theta = mod((theta-(-1.0*u_time*(pi*3.0)*1.5)), (pi)/3.0);
-            float a = tan(theta);
+        else {
+            if(!(floor(mod(floor((theta-(-1.0*u_time*(pi*3.0)*1.5))/(pi/3.0)), 2.0)) == 0.0)) {
+                
+                theta = mod((theta-(-1.0*u_time*(pi*3.0)*1.5)), (pi)/3.0);
+                float a = tan(theta);
 
-            color = 1.0-(seco*a);
+                color = 1.0-(seco*a);
+            }
         }
     }
 

@@ -49,6 +49,7 @@ dec1 = -1
 dec2 = -1
 dec3 = -1
 difficultyName = "not loaded"
+local scanning = 0
 function roundThousand(mFloat)
     return math.floor(mFloat * 1000 + 0.1)
 end
@@ -251,7 +252,7 @@ function onLoad()
     e_eval([[s_setStyle("bc_kesd2")]])
     e_eval([[seeCheck()]])
     e_eval([[cwspawn()]])
-    e_eval([[shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, blackflash)]])
+    e_eval([[shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, spinscan)]])
     e_eval([[hardPulse()]])
     e_eval([[l_setRadiusMin(40)]])
     e_eval([[l_setBeatPulseMax(10)]])
@@ -320,7 +321,7 @@ function onUpdate(mFrameTime)
         --on beat events
         u_setFlashEffect(10)
         hardPulse()
-        shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, spinscan)
+        scanning = 1
         if notSkew < 0 then
             for i = 0,5 do
                 cw_setVertexColor4Same(cwborder[i], 0, 0, 0, 100)
@@ -346,7 +347,7 @@ function onUpdate(mFrameTime)
     end
 
     if ibeatCount == ((60 / BPM) * 240) / 2 then
-        shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, blackflash)
+        scanning = 0
         if roundThousand(u_getDifficultyMult()) > 999 then
             for i = 0,5 do
                 cw_setVertexColor4Same(cwborder[i], 0, 0, 0, 255)
@@ -449,6 +450,7 @@ function onRenderStage(rs) --cringe
     shdr_setUniformF(spinscan, "u_skew", notSkew)
     shdr_setUniformF(spinscan, "u_time", l_getLevelTime())
     shdr_setUniformF(spinscan, "u_rotation", math.rad(l_getRotation()))
+    shdr_setUniformI(spinscan, "u_scanning", scanning)
 
     shdr_setUniformFVec2(blackflash, "u_resolution", u_getWidth(), u_getHeight())
     shdr_setUniformF(blackflash, "u_skew", notSkew)
