@@ -263,9 +263,8 @@ function onLoad()
 end
 
 function onDeath()
-    shdr_setActiveFragmentShader(RenderStage.BACKGROUNDTRIS, blackflash)
     s_setStyle("bc_death")
-
+    scanning = 0
     for i = 0,5 do
         cw_setVertexColor4Same(cwborder[i], 0, 0, 0, 100)
         cw_setVertexColor4Same(cwrad1[i], 250, 0, 0, 255)
@@ -451,11 +450,7 @@ function onRenderStage(rs) --cringe
     shdr_setUniformF(spinscan, "u_time", l_getLevelTime())
     shdr_setUniformF(spinscan, "u_rotation", math.rad(l_getRotation()))
     shdr_setUniformI(spinscan, "u_scanning", scanning)
-
-    shdr_setUniformFVec2(blackflash, "u_resolution", u_getWidth(), u_getHeight())
-    shdr_setUniformF(blackflash, "u_skew", notSkew)
-    shdr_setUniformF(blackflash, "u_rotation", math.rad(l_getRotation()))
-    shdr_setUniformI(blackflash, "u_dead", killed)
+    shdr_setUniformI(spinscan, "u_dead", killed)
 
     shdr_setUniformF(arrow, "u_skew", notSkew)
     shdr_setUniformI(arrow, "u_dead", killed)

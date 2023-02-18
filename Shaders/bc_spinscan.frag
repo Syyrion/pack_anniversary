@@ -3,6 +3,7 @@ uniform float u_time;
 uniform float u_skew;
 uniform float u_rotation;
 uniform int u_scanning;
+uniform int u_dead;
 //inspired by ufo
 void main() {
     vec2 st = gl_FragCoord.xy/u_resolution.y;
@@ -47,7 +48,10 @@ void main() {
     }
 
     if(mod(atan(st.y, st.x)+(3.141592653589793642/6.0)+0.01,(3.141592653589793642/3.0)) < 0.02) {
-        if(u_skew > 0.0) {
+        if(u_dead == 1) {
+            color.xyz = vec3(1.0, 1.0, 1.0);
+        }
+        else if(u_skew > 0.0) {
             color.xyz = vec3(1.0, 1.0, 1.0);
         } else {
             color.yz = vec2(1.0);
