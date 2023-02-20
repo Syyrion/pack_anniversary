@@ -5,6 +5,16 @@ uniform float u_rotation;
 uniform int u_scanning;
 uniform int u_dead;
 //inspired by ufo
+
+//this is really ugly but otherwise the floor function acts up on certain machines
+float bfloor(float n) {
+    n = abs(n);
+    int i = -1;
+    while(float(i)<n) {
+        i++;
+    }
+    return i-1;
+}
 void main() {
     vec2 st = gl_FragCoord.xy/u_resolution.y;
     st.y -= 0.5;
@@ -27,7 +37,7 @@ void main() {
     }
     if(u_scanning == 1) {
         if(u_skew > 0.0) {
-            if(!(floor(mod(floor((theta-(u_time*(pi*3.0)*1.5))/(pi/3.0)), 2.0)) == 0.0)) {
+            if(!(bfloor(mod(bfloor((theta-(u_time*(pi*3.0)*1.5))/(pi/3.0)), 2.0)) == 0.0)) {
                 
                 theta = mod((theta-(u_time*(pi*3.0)*1.5)), (pi)/3.0);
                 float a = tan(theta);
@@ -37,7 +47,7 @@ void main() {
             }
         }
         else {
-            if(!(floor(mod(floor((theta-(-1.0*u_time*(pi*3.0)*1.5))/(pi/3.0)), 2.0)) == 0.0)) {
+            if(!(bfloor(mod(bfloor((theta-(-1.0*u_time*(pi*3.0)*1.5))/(pi/3.0)), 2.0)) == 0.0)) {
                 
                 theta = mod((theta-(-1.0*u_time*(pi*3.0)*1.5)), (pi)/3.0);
                 float a = tan(theta);
