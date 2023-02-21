@@ -10,10 +10,12 @@ uniform int u_dead;
 float bfloor(float n) {
     n = abs(n);
     int i = -1;
-    while(float(i)<n) {
-        i++;
+    for(int i = 0; i >-2; i++) {
+        if(float(i)>n) {
+    		return float(i-1);
+        }
     }
-    return i-1;
+    return float(i-1);
 }
 void main() {
     vec2 st = gl_FragCoord.xy/u_resolution.y;
