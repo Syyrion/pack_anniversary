@@ -70,8 +70,10 @@ void main() {
         }
     }
 
-    if(u_skew < 0.0) {
-        color.x = 0.0;
+    if(u_dead != 1) {
+        if(u_skew < 0.0) {
+            color.x = 0.0;
+        }
     }
 
     gl_FragColor = vec4(color,1.0);
