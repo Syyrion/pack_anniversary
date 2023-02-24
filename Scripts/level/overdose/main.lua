@@ -38,7 +38,7 @@ function cWall(mSide)
     WALLTYPES[math.random(1, #WALLTYPES)](mSide)
 end
 
-function SetColorScheme(mScheme)
+function setColorScheme(mScheme)
     MAIN_COLOR[1], MAIN_COLOR[2], MAIN_COLOR[3] = COLORSCHEMES[mScheme][1][1], COLORSCHEMES[mScheme][1][2],
         COLORSCHEMES[mScheme][1][3]
     BG_COLOR1[1], BG_COLOR1[2], BG_COLOR1[3] = COLORSCHEMES[mScheme][2][1], COLORSCHEMES[mScheme][2][2],
@@ -49,22 +49,24 @@ end
 
 function randomize()
     local oldScheme = currentScheme
-    local oldBGShader = currentBackgroundShader
-    local oldWallShader = currentWallShader
+    local oldBGIndex = bgIndex
+    local oldWallIndex = wallIndex
 
 
     while oldScheme == currentScheme do
         currentScheme = math.random(1, #COLORSCHEMES)
-        SetColorScheme(currentScheme)
+        setColorScheme(currentScheme)
     end
 
-    while oldBGShader == currentBackgroundShader do
-        setBackgroundShader(BG_SHADERS[math.random(1, #BG_SHADERS)])
+    while oldBGIndex == bgIndex do
+        bgIndex = math.random(1, #BG_SHADERS)
     end
+    BG_SHADERS[bgIndex]()
 
-    while oldWallShader == currentWallShader do
-        setWallShader(WALL_SHADERS[math.random(1, #WALL_SHADERS)])
+    while oldWallIndex == wallIndex do
+        wallIndex = math.random(1, #WALL_SHADERS)
     end
+    WALL_SHADERS[wallIndex]()
 end
 
 addPattern = {
@@ -95,7 +97,6 @@ TIME = 0
 
 SONG_LENGTH = 292
 trueSongLength = SONG_LENGTH
-
 
 MAIN_COLOR = { 0, 0, 0 }
 BG_COLOR1 = { 0, 0, 0 }
@@ -154,33 +155,36 @@ COLORSCHEMES = { -- main, bg1, bg2
 }
 
 BG_SHADERS = {
-    "checkerboard.frag",
-    "gradient_radial.frag",
-    "gradient_sixths.frag",
-    "hexagon_chops.frag",
-    "hexagon_tiles.frag",
-    "hexagon_tiles2.frag",
-    "hypno1.frag",
-    "squares.frag",
-    "static.frag",
-    "voronoi.frag",
-    "wood.frag",
-    "wtf1.frag",
-    "wtf2.frag",
-    "wtf3.frag",
-    "wtf4.frag",
-    "wtf5.frag",
-    "wtf_blinds.frag"
+    function() setBackgroundShader("checkerboard.frag") end,
+    function() setBackgroundShader("gradient_radial.frag") end,
+    function() setBackgroundShader("gradient_sixths.frag") end,
+    function() setBackgroundShader("hexagon_chops.frag") end,
+    function() setBackgroundShader("hexagon_tiles.frag") end,
+    function() setBackgroundShader("hexagon_tiles2.frag") end,
+    function() setBackgroundShader("hypno1.frag") end,
+    function() setBackgroundShader("squares.frag") end,
+    function() setBackgroundShader("static.frag") end,
+    function() setBackgroundShader("voronoi.frag") end,
+    function() setBackgroundShader("wood.frag") end,
+    function() setBackgroundShader("wtf1.frag") end,
+    function() setBackgroundShader("wtf2.frag") end,
+    function() setBackgroundShader("wtf3.frag") end,
+    function() setBackgroundShader("wtf4.frag") end,
+    function() setBackgroundShader("wtf5.frag") end,
+    function() setBackgroundShader("wtf_blinds.frag") end
 }
 
 WALL_SHADERS = {
-    "wall_hexagon_tiles.frag",
-    "wall_hexial.frag",
-    "wall_hypno.frag",
-    "wall_radial.frag",
-    "wall_static.frag",
-    "wall_straight.frag"
+    function() setWallShader("wall_hexagon_tiles.frag") end,
+    function() setWallShader("wall_hexial.frag") end,
+    function() setWallShader("wall_hypno.frag") end,
+    function() setWallShader("wall_radial.frag") end,
+    function() setWallShader("wall_static.frag") end,
+    function() setWallShader("wall_straight.frag") end
 }
+
+bgIndex = 1
+wallIndex = 1
 
 difficulty = roundThousand(u_getDifficultyMult())
 if difficulty == 1000 then
