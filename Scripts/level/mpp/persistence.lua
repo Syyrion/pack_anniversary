@@ -223,7 +223,6 @@ end
 -- `onLoad` is an hardcoded function that is called when the level is started
 -- or restarted.
 killed = 0
-blackflash = shdr_getShaderId("bc_blackflash.frag")
 spinscan = shdr_getShaderId("bc_spinscan.frag")
 arrow = shdr_getShaderId("bc_arrow.frag")
 
