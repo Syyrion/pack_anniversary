@@ -14,6 +14,7 @@ invis = shdr_getShaderId("transparent.frag")
 active = 2
 graybg = 0
 bgtime = {0,0}
+bgspeed = 1
 previnc = 0
 swapdelay = 2
 tracked = "2 sec"
@@ -28,9 +29,9 @@ keyframes = {{2,2},{2,4},{4,1},{127,1/14},{1,1/2},{7,1},{164,1/5},{1,1},{64,0}}
 function addPattern(key)
 	key = (l_getSides() > 5 or key < 7) and key or u_rndInt(0,6)
 		if key == 0 then pAltBarrage(u_rndInt(3,6),2)
-	elseif key == 1 then pBarrageSpiral(u_rndInt(4,7))
+	elseif key == 1 then pBarrageSpiral(u_rndInt(4,7),l_getSides() > 5 and 1 or .7)
 	elseif key == 2 then pSpiral(l_getSides()*u_rndInt(2,3),0)
-	elseif key == 3 then pAltTunnel(u_rndInt(3,5),1)
+	elseif key == 3 then THICKNESS = l_getSides() > 5 and 40 or 20 pAltTunnel(u_rndInt(3,5),1) THICKNESS = 40
 	elseif key == 4 then pInverseBarrage(u_rndInt(1,2))
 	elseif key == 5 then pRandomBarrage(u_rndInt(4,7),2.3)
 	elseif key == 6 then pTunnel(1)
@@ -96,7 +97,6 @@ function onIncrement(self)
 	self.shader = self.shader or {}
 	local hue,alpha,colornum = randomFloat(0,360),randomFloat(.4,.55),u_rndInt(2,3)
 	self.shader.colors = {fromHL(hue,alpha),fromHL(hue,alpha*.75),fromHL(hue,alpha*.5)}
-	self.deathColor = fromHL(hue+180,.5,255)
 	self.shader.uses3C = self.sides ~= 6 or colornum > 2
 	self.shader.revLoop = colornum > 2 and u_rndInt(0,1) == 1
 	local inverse = u_rndInt(0,1) == 1
@@ -160,7 +160,7 @@ function onUpdate(dt)
 		instance.incrementing = instance.incrementing or previnc ~= l_getCurrentIncrements()
 		if active == index or multiplayer then
 			instance:update(dt)
-			bgtime[index] = bgtime[index] + dt
+			bgtime[index] = bgtime[index] + bgspeed*dt
 		end
 	end
 	previnc = l_getCurrentIncrements()
@@ -181,7 +181,14 @@ function onInput(_,p1dir,left,right)
 	return true
 end
 
-function onRenderStage(stage)
+function onDeath()
+	dead = true
+	if not multiplayer then
+		graybg = active == 1 and 2 or 1
+	end
+end
+
+function onRenderStage(stage,dt)
 	if stage ~= RenderStage.BACKGROUNDTRIS then return end
 	shdr_setUniformFVec2(shader,"u_resolution",u_getWidth(),u_getHeight())
 	-- Scrolling Design
@@ -210,6 +217,17 @@ function onRenderStage(stage)
 	shdr_setUniformF(shader,"u_s2_sides",LVI[2].sides)
 	shdr_setUniformF(shader,"u_s2_angle",-LVI[2].rotation)
 	shdr_setUniformF(shader,"u_s2_skew",LVI[2].skew)
+	
+	if not dead then return end
+	dt = dt/60
+	bgspeed = math.max(0,bgspeed-dt/2)
+	for index,instance in ipairs(LVI) do
+		if active == index or multiplayer then
+			bgtime[index] = bgtime[index] + bgspeed*dt
+			instance.rotationSpeed = math.max(0,math.abs(instance.rotationSpeed) - 2*dt) * getSign(instance.rotationSpeed)
+			instance:update(dt)
+		end
+	end
 end
 
 function onStep() end
