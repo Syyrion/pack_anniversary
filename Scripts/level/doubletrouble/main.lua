@@ -3,21 +3,13 @@ u_execScript("level/doubletrouble/lvlinst.lua")
 shader = shdr_getShaderId("splitscreenbg.frag")
 invis = shdr_getShaderId("transparent.frag")
 
--- TODO for next pull request:
--- * Add singleplayer difficulty. Active screen will swap every couple of seconds. Inactive screen will be frozen and darkened
---   Redo patterns to be more interesting now that there will be a playable singleplayer option. No need for repetitive patterns to make playing multiplayer alone barely possible
--- * Potentially more speed options
--- * Make death effect that mimics OH's
--- * Respect invincibility setting when official mode is turned off
---   Fix any bugs if they arise
-
 active = 2
 graybg = 0
 bgtime = {0,0}
 bgspeed = 1
 previnc = 0
 swapdelay = 2
-tracked = "2 sec"
+tracked = "2.00 sec"
 
 -- Music Sync Config
 spb = .48 -- 125 bpm
@@ -26,15 +18,33 @@ beatstart = 13.922
 musiclen = 203.950
 keyframes = {{2,2},{2,4},{4,1},{127,1/14},{1,1/2},{7,1},{164,1/5},{1,1},{64,0}}
 
+function pInverseBarrage(times,delayMult)
+    local delay = getPerfectDelay(THICKNESS) * 9.9 * (delayMult or 1)
+    local startSide = getRandomSide()
+    for i = 1,times do
+        cBarrage(startSide)
+        t_wait(delay)
+        cBarrage(startSide + getHalfSides())
+        t_wait(delay)
+    end
+    t_wait(getPerfectDelay(THICKNESS) * 2.5)
+end
+
 function addPattern(key)
 	key = (l_getSides() > 5 or key < 7) and key or u_rndInt(0,6)
 		if key == 0 then pAltBarrage(u_rndInt(3,6),2)
 	elseif key == 1 then pBarrageSpiral(u_rndInt(4,7),l_getSides() > 5 and 1 or .7)
 	elseif key == 2 then pSpiral(l_getSides()*u_rndInt(2,3),0)
-	elseif key == 3 then THICKNESS = l_getSides() > 5 and 40 or 20 pAltTunnel(u_rndInt(3,5),1) THICKNESS = 40
-	elseif key == 4 then pInverseBarrage(u_rndInt(1,2))
-	elseif key == 5 then pRandomBarrage(u_rndInt(4,7),2.3)
-	elseif key == 6 then pTunnel(1)
+	elseif key == 3 then
+		THICKNESS = l_getSides() > 5 and 40 or 20
+		pAltTunnel(u_rndInt(3,5),1)
+		THICKNESS = 40
+		if l_getSides() < 6 then t_wait(getPerfectDelay(THICKNESS)*2) end
+	elseif key == 4 then pInverseBarrage(u_rndInt(2,3),l_getSides() < 5 and .8 or 1)
+	elseif key == 5 then pRandomBarrage(u_rndInt(4,7),l_getSides() < 5 and 2.45 or 2.6)
+	elseif key == 6 then
+		pTunnel(1)
+		t_wait(getPerfectDelay(THICKNESS))
 	elseif key == 7 then pWallExVortex(0,3,1) end
 end
 
@@ -168,13 +178,16 @@ function onUpdate(dt)
 	LVI.radius = 40 + 15 * easeInQuad(beatalpha)
 end
 
-function onInput(_,p1dir,left,right)
+function onInput(_,p1dir,p2left,p2right)
 	local p2dir = p1dir
 	if multiplayer then
-		if left and not right then p2dir,lastdir = lastdir,-1
-		elseif right and not left then p2dir,lastdir = lastdir,1
-		elseif left and right then p2dir = -lastdir
+		if p2left and not p2right then p2dir,lastdir = lastdir,-1
+		elseif p2right and not p2left then p2dir,lastdir = lastdir,1
+		elseif p2left and p2right then p2dir = -lastdir
 		else p2dir,lastdir = 0,0 end
+	else
+		local speed = p2left and 4.625 or 9.45
+		LVI[1].plrSpeed,LVI[2].plrSpeed = speed,speed
 	end
 	LVI[1].plrDirection = (active == 1 or multiplayer) and p1dir or 0
 	LVI[2].plrDirection = (active == 2 or multiplayer) and p2dir or 0
