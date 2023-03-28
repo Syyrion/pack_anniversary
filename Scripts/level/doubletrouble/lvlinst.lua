@@ -3,7 +3,7 @@ LVI = { -- Defaults
 	skew = 1,     skewMin = 1,     skewMax = 2,      skewSpeed = 0,
 	plrAngle = 0, plrSpeed = 9.45, plrDirection = 0, plrDistance = 15,
 	plrSize = 8,  radius = 40,     keys = {1},       keyindex = 1,
-	speed = 1,    anticrash = 0,   color = {255,255,255}, deathColor = {0,255,0}}
+	speed = 1,    anticrash = 0,   color = {255,255,255}}
 LVI.__index = LVI
 
 function LVI:addWall(side,thickness)
@@ -47,17 +47,16 @@ function LVI:increment()
 end
 
 function LVI:update(dt)
-	lt_update(self.timeline,dt)
+	if not dead then lt_update(self.timeline,dt) end
 	self.rotation = self.rotation + self.rotationSpeed * dt
 	self.skew = clamp(self.skew + self.skewSpeed * dt, self.skewMin, self.skewMax)
 	self.skewSpeed = (self.skew == self.skewMin or self.skew == self.skewMax) and -self.skewSpeed or self.skewSpeed
-	local sliding,dead
+	local sliding,hit
 	local color = {reunpack{self.color,255,self.color,255,self.color,255,self.color,255}}
-	local deathColor = {reunpack{self.deathColor,255,self.deathColor,255,self.deathColor,255,self.deathColor,255}}
 	-- Update Walls
 	if self.incrementing and #self.walldata == 0 then self:increment() else
 		for index,wall in bipairs(self.walldata) do
-			wall.position = wall.position - self.speed * 240 * dt
+			if not dead then wall.position = wall.position - self.speed * 240 * dt end
 			if wall.position + wall.thickness < 0 then
 				table.remove(self.walldata,index)
 				for _,v in ipairs(wall.polygons) do cw_destroy(v) end
@@ -83,7 +82,7 @@ function LVI:update(dt)
 					if (iy>movPos[2]) ~= (jy>movPos[2]) and movPos[1] < (jx-ix)*(movPos[2]-iy)/(jy-iy)+ix then slideCollision = not slideCollision end
 					j = i
 				end
-				dead = dead or killCollision
+				hit = hit or killCollision
 				sliding = sliding or slideCollision
 				-- Cut quads that cross between screens, based on https://www.desmos.com/calculator/5khkhcrgvx
 				if intersect then
@@ -149,32 +148,19 @@ function LVI:update(dt)
 	end
 	-- Update Player
 	self.plrAngle = self.plrAngle + (sliding and 0 or (self.plrSpeed * self.plrDirection * dt))
-	cw_setVertexColor4(self.polygons.player,unpack(dead and deathColor or color))
+	cw_setVertexColor4(self.polygons.player,unpack(color))
 	cw_setVertexPos4(self.polygons.player,reunpack{
 		getWallCoords(self.rotation+self.plrAngle,self.radius+self.plrDistance,self.skew,0,unpack(self.position)),
 		getWallCoords(self.rotation+self.plrAngle,self.radius+self.plrDistance,self.skew,0,unpack(self.position)),
 		getWallCoords(self.rotation+self.plrAngle,self.radius+self.plrDistance-self.plrSize/1.25,self.skew,-self.plrSize,unpack(self.position)),
 		getWallCoords(self.rotation+self.plrAngle,self.radius+self.plrDistance-self.plrSize/1.25,self.skew,self.plrSize,unpack(self.position)),
 	})
-	-- Kill Player + Death Effect
-	if dead then
+	-- Kill Player
+	if hit then
 		local wsd = l_getWallSpawnDistance()
 		t_eval("l_setWallSpawnDistance(60)")
 		w_wallAdj(0,100,10)
 		t_eval("l_setWallSpawnDistance("..wsd..")")
-		function onDeath()
-			local plrPos = getWallCoords(self.rotation+self.plrAngle,self.radius+self.plrDistance,self.skew,0,unpack(self.position))
-			for side = 1,self.sides do
-				local polygon = cw_createNoCollision()
-				cw_setVertexColor4(polygon,unpack(deathColor))
-				cw_setVertexPos4(polygon,reunpack{
-					getWallCoords(side*math.tau/self.sides,self.radius*.9,self.skew,0,unpack(plrPos)),
-					getWallCoords((side+1)*math.tau/self.sides,self.radius*.9,self.skew,0,unpack(plrPos)),
-					getWallCoords((side+1)*math.tau/self.sides,self.radius*.65,self.skew,0,unpack(plrPos)),
-					getWallCoords(side*math.tau/self.sides,self.radius*.65,self.skew,0,unpack(plrPos)),
-				})
-			end
-		end
 	end
 end
 

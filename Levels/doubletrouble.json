@@ -2,7 +2,7 @@
 	"id": "doubletrouble",
 	"name": "Double Trouble",
 	"description": "Have some trouble, and make it double!\n\nDifficulty Format: X.X00M\nX = Speed Mult & M = Multiplayer Mode\nI'd recommend making new keybinds for P2 controls",
-	"author": "Apeiro331",	
+	"author": "Apeirobyte",	
 	"menuPriority": 10,
 	"selectable": true,
 	"styleId": "doubletrouble",
