@@ -5,7 +5,13 @@ SIDES = 6
 local speedInc
 
 function onInit()
-    speedInc = Incrementer:new(1, 4, 24)
+    function getWallSpeedInUnitsPerFrame()
+        return l_getSpeedMult() * 5
+    end
+
+    a_syncMusicToDM(false)
+    local diff = u_getDifficultyMult()
+    speedInc = Incrementer:new(diff, 2, 14 - diff * 8)
     l_setSpeedMult(speedInc:get())
     l_setSpeedMax(math.huge)
 
@@ -59,7 +65,7 @@ function onLoad()
         ]],
         -- Spiral
         [[
-            8 12 rnd for
+            12 for
                 r 1 i p:..
                 1 rmv
             end
@@ -91,7 +97,7 @@ function onLoad()
         -- Alt-Half
         [[
             1
-            4 6 rnd for
+            6 rnd for
                 swap
                 dup if
                     a 40 p:|_-|.
@@ -109,7 +115,7 @@ function onLoad()
             a 80 p:.
             1 rmv
             0 1 rnd
-            3 5 rnd for
+            5 rnd for
                 swap
                 dup if
                     a 40 p:.|._
@@ -126,7 +132,7 @@ function onLoad()
         ]],
         -- Inverse
         [[
-            4 6 rnd for
+            7 rnd for
                 r 40 p:_|.
                 $hsides 0 1 rnd if floor else ceil end rmv
                 spath 1 i + thsleep
@@ -134,7 +140,7 @@ function onLoad()
         ]],
         -- Barrage Spiral
         [[
-            10 for
+            7 for
                 r 40 p:_|.
                 1 rmv
                 dup if
@@ -145,7 +151,7 @@ function onLoad()
         ]],
         -- Barrage Spiral
         [[
-            10 for
+            7 for
                 r 40 p:_|.
                 2 rmv
                 dup if
@@ -183,7 +189,7 @@ function onLoad()
             a 80 p:r
             1 rmv
             -2
-            5 8 rnd for
+            7 for
                 r 1 i p:_rr
                 dup if
                     a 125 p:r
