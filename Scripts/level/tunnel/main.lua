@@ -97,7 +97,7 @@ function onLoad()
         -- Alt-Half
         [[
             1
-            6 rnd for
+            6 for
                 swap
                 dup if
                     a 40 p:|_-|.
@@ -115,7 +115,7 @@ function onLoad()
             a 80 p:.
             1 rmv
             0 1 rnd
-            5 rnd for
+            5 for
                 swap
                 dup if
                     a 40 p:.|._
@@ -132,7 +132,7 @@ function onLoad()
         ]],
         -- Inverse
         [[
-            7 rnd for
+            7 for
                 r 40 p:_|.
                 $hsides 0 1 rnd if floor else ceil end rmv
                 spath 1 i + thsleep
