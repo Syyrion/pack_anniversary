@@ -14,5 +14,5 @@
 
 	"luaFile": "Scripts/level/tunnel/main.lua",
 
-	"difficultyMults": []
+	"difficultyMults": [0.75, 1.5, 1.75]
 }
