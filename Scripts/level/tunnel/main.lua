@@ -1,4 +1,5 @@
 u_execDependencyScript("library_patternizer", "patternizer", "syyrion", "master.lua")
+u_execDependencyScript("library_slider", "slider", "syyrion", "master.lua")
 
 SIDES = 6
 
